@@ -1,8 +1,21 @@
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
 import Login from './Components/Auth/Login'
+import NavBar from './Components/Layout/NavBar';
+
 function App() {
   return (
-    <div className="App">
-      <Login/>
+    <div>
+      <BrowserRouter>
+          <NavBar />
+          <Switch>
+            {/* <Route path={'/'} exact component={Home}></Route> */}
+            {/* <Route path={'/register'} exact component={Register} /> */}
+            <Route path={'/login'} exact component={Login} />
+            {/* <Route path="" component={NotFound} /> */}
+          </Switch>
+        {/* <Footer/> */}
+      </BrowserRouter>
     </div>
   );
 }
