@@ -1,5 +1,4 @@
 import express from "express";
-import User from "../Models/User.js";
 import Module from '../Models/Module.js'
 
 const router = express.Router();
@@ -44,7 +43,7 @@ export const getModule = (async(req, res)=>{
 });
 
 //create a module
-export const createUser = (async(req, res)=>{
+export const createModule = (async(req, res)=>{
   try {
     const { module_code } = req.body;
     const checkModule = await Module.findOne({ module_code });

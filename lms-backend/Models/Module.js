@@ -1,22 +1,5 @@
 import mongoose from 'mongoose';
 
-const lecture = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-    },
-    week: {
-        type: String,
-        required: true,
-    },
-    filePath: {
-        type: String,
-    },
-    description: {
-        type: String,
-    },
-})
-
 const ModuleSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -35,14 +18,26 @@ const ModuleSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
-  lectures: {
-      type: [lecture]
+  year: {
+    type: String,
   },
-  labs: {
-      type: [lecture]
+  semester: {
+    type: String
   }
+  // lectures: {
+  //     type: [{
+  //       type: mongoose.Schema.Types.ObjectId,
+  //       ref: 'Lecture'
+  //     }]
+  // },
+  // labs: {
+  //     type: [{
+  //       type: mongoose.Schema.Types.ObjectId,
+  //       ref: 'Lecture'
+  //     }]
+  // }
 });
 
-const User = mongoose.model("Module", ModuleSchema);
+const Module = mongoose.model("Module", ModuleSchema);
 
-export default User;
+export default Module;
