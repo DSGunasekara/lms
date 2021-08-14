@@ -37,16 +37,19 @@ export const createModules = (module) => async (dispatch) =>{
 //remove single module
 export const removeModule = (id) => async (dispatch) =>{
     try{
-        const res = await api.deleteModule(id);
+        await api.deleteModule(id);
+        dispatch({type:DELETE_MODULE, payload: id})
     }catch (error){
         console.log("delete module" + error);
     }
 }
 
 //update single module
-export const updateSingleModule = (module) => async (dispatch) =>{
+export const updateSingleModule = (id, module) => async (dispatch) =>{
     try {
-        const res = await api.updateModules(module);
+        const {data} = await api.updateModules(id, module);
+        dispatch({type: UPDATE_MODULE, payload:data})
+
     }catch (error){
         console.log("update module" + error);
     }
