@@ -18,6 +18,12 @@ const ModuleSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
+  year: {
+    type: String,
+  },
+  semester: {
+    type: String
+  }
   // lectures: {
   //     type: [{
   //       type: mongoose.Schema.Types.ObjectId,
@@ -32,6 +38,6 @@ const ModuleSchema = new mongoose.Schema({
   // }
 });
 
-const User = mongoose.model("Module", ModuleSchema);
+const Module = mongoose.model("Module", ModuleSchema);
 
-export default User;
+export default Module;
