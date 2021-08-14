@@ -15,6 +15,7 @@ const NoticeSchema = new mongoose.Schema({
   },
   createdOn: {
     type: Date,
+    default: new Date(),
   },
 });
 

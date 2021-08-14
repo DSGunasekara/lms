@@ -6,6 +6,7 @@ import userRoute from './Routes/user.js';
 import authRoute from './Routes/auth.js';
 import moduleRoute from './Routes/module.js'
 import lectureRoute from './Routes/lecture.js'
+import noticeRoute from './Routes/notice.js'
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use('/api/user', userRoute);
 app.use('/api/login', authRoute);
 app.use('/api/module', moduleRoute);
 app.use('/api/lecture', lectureRoute);
+app.use('/api/notice', noticeRoute);
 
 const PORT = process.env.PORT || 5000;
 
