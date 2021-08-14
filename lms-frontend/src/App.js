@@ -5,6 +5,7 @@ import Login from './Components/Auth/Login'
 import NavBar from './Components/Layout/NavBar';
 import NotFound from './Components/Common/NotFound';
 import modulePage from "./Pages/modulePage";
+import Register from './Components/Auth/Register';
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
           <NavBar />
           <Switch>
             {/* <Route path={'/'} exact component={Home}></Route> */}
-            {/* <Route path={'/register'} exact component={Register} /> */}
+            <Route path={'/register'} exact component={Register} />
             <Route path={'/login'} exact component={Login} />
             <Route path="" component={NotFound} />
             <Route path={'/modulePage'} exact component={modulePage}></Route>
