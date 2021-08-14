@@ -1,4 +1,5 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { ToastProvider } from 'react-toast-notifications';
 
 import Login from './Components/Auth/Login'
 import NavBar from './Components/Layout/NavBar';
@@ -9,6 +10,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
+        <ToastProvider>
           <NavBar />
           <Switch>
             {/* <Route path={'/'} exact component={Home}></Route> */}
@@ -17,7 +19,8 @@ function App() {
             <Route path="" component={NotFound} />
             <Route path={'/modulePage'} exact component={modulePage}></Route>
           </Switch>
-        {/* <Footer/> */}
+          {/* <Footer/> */}
+        </ToastProvider>
       </BrowserRouter>
     </div>
   );
