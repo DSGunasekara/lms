@@ -11,4 +11,17 @@ API.interceptors.request.use((req) => {
 
 //users auth urls
 export const login = (credentials) => axios.post('http://localhost:5000/api/login', credentials);
+
 export const register = (user) => axios.post('http://localhost:5000/api/user', user);
+
+
+//LMS modules
+export const fetchModules = () => API.get('/getModules');
+
+export const fetchSingleModule = (id) => API.get(`/getModule/${id}`);
+
+export const createModules = () => API.post('/createModule');
+
+export const updateModules = (id, updateModule) => API.patch(`/updateModule/${id}`, updateModule);
+
+export const deleteModule = (id) => API.delete(`deleteModule/${id}`);
