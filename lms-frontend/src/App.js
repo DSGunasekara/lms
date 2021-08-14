@@ -15,7 +15,7 @@ function App() {
             {/* <Route path={'/register'} exact component={Register} /> */}
             <Route path={'/login'} exact component={Login} />
             <Route path="" component={NotFound} />
-            <Route path={'/modulePage'} exact compoent={modulePage}></Route>
+            <Route path={'/modulePage'} exact component={modulePage}></Route>
           </Switch>
         {/* <Footer/> */}
       </BrowserRouter>

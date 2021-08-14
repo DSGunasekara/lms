@@ -9,9 +9,11 @@ const ModuleReducer = (state = {modules:null, module:null}, action) =>{
         case FETCH_SINGLE_MODULE:
             return {...state, module: action?.payload};
         case UPDATE_MODULE:
-            return
+            return state;
         case DELETE_MODULE:
-
+            return state;
+        default:
+            return state;
     }
 }
 
