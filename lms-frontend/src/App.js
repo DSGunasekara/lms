@@ -73,13 +73,6 @@ function App() {
               className="site-layout-background"
               style={{ margin: '24px 16px 0', overflow: 'initial' }}
             >
-              <Login/>
-              <Login/>
-              <Login/>
-              <Login/>
-              <Login/>
-              <Login/>
-              <Login/>
               <Switch>
                 <Route path={'/'} exact component={Login}></Route>
                 <Route path={'/register'} exact component={Register} />
