@@ -6,6 +6,7 @@
 body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
+    position: relative;
 }
 
 p {
@@ -27,6 +28,7 @@ a:focus {
 .navbar {
     padding: 15px 10px;
     background: #fff;
+    position: relative;
     border: none;
     border-radius: 0;
     margin-bottom: 40px;

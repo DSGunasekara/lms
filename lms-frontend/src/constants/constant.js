@@ -15,3 +15,6 @@ export const FETCH_SINGLE_MODULE = 'FETCH_SINGLE_MODULE';
 export const CREATE_MODULE = 'CREATE_MODULE';
 export const UPDATE_MODULE = 'UPDATE_MODULE';
 export const DELETE_MODULE = 'DELETE_MODULE';
+
+//users
+export const FETCH_USERS= 'FETCH_USERS';

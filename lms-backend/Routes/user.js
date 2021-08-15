@@ -4,7 +4,7 @@ const router = express.Router();
 import verify from '../Middleware/verify.js'
 import  {getUsers, getUser, createUser, updateUser, updatePassword, deleteUser } from '../Controllers/userController.js';
 
-router.get('/', verify, getUsers);
+router.get('/', getUsers);
 router.get('/:id', verify, getUser);
 router.post('/', createUser);
 router.patch('/:id', verify, updateUser);
