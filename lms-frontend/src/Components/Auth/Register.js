@@ -27,7 +27,7 @@ export default function Register() {
 
   let options =  [
       { value: 'admin', label: 'Admin' },
-      { value: 'lecture', label: 'Lecture' },
+      { value: 'lecturer', label: 'Lecturer' },
       { value: 'labInstructor', label: 'Lab Instructor' },
       { value: 'student', label: 'Student' },
     ];
