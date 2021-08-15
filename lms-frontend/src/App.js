@@ -10,7 +10,6 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-          <NavBar />
           <Switch>
             {/* <Route path={'/'} exact component={Home}></Route> */}
             {/* <Route path={'/register'} exact component={Register} /> */}

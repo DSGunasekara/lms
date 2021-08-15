@@ -16,12 +16,15 @@ export const register = (user) => axios.post('http://localhost:5000/api/user', u
 
 
 //LMS modules
-export const fetchModules = () => API.get('/getModules');
+export const fetchModules = () => API.get('/module');
 
-export const fetchSingleModule = (id) => API.get(`/getModule/${id}`);
+export const fetchSingleModule = (id) => API.get(`/module/${id}`);
 
-export const createModules = () => API.post('/createModule');
+export const createModules = () => API.post('/module');
 
-export const updateModules = (id, updateModule) => API.patch(`/updateModule/${id}`, updateModule);
+export const updateModules = (id, updateModule) => API.patch(`/module/${id}`, updateModule);
 
-export const deleteModule = (id) => API.delete(`deleteModule/${id}`);
+export const deleteModule = (id) => API.delete(`module/${id}`);
+
+//LMS users
+export const fetchUsers = () => API.get('/user');
