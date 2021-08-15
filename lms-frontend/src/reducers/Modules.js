@@ -1,4 +1,4 @@
-import {FETCH_MODULE, FETCH_SINGLE_MODULE, CREATE_MODULE, UPDATE_MODULE, DELETE_MODULE} from "../constants/constant.js";
+import {FETCH_MODULE, FETCH_SINGLE_MODULE, CREATE_MODULE, UPDATE_MODULE, DELETE_MODULE} from "../constants/constant";
 
 const ModuleReducer = (state = {modules:null, module:null}, action) =>{
     switch (action.type){
