@@ -18,31 +18,44 @@ const CreateModuleForm = () =>{
     const [moduleData, setModuleData] = useState({
         name: '',
         module_code: '',
-        lecture_in_charge: '',
-        lab_assistant: '',
+        lecture_in_charge: undefined,
+        lab_assistant: undefined,
         year: '',
         semester:''
     })
 
-    useEffect(() =>{
+    useEffect   (() =>{
         dispatch(getUsers());
-    }, []);
-        const userData = useSelector((state) => state)
-    console.log(userData)
+    }, [dispatch]);
+    const userData = useSelector((state) => state.UserReducer.users)
+
+    option_lab = userData?.filter((user) => user.role === "labInstructor").map((lab) => ({
+        value: lab._id, label: lab.name}))
+
+    option_lec = userData?.filter((user)=> user.role === "lecturer").map((lec) =>({
+        value:lec._id, label: lec.name}))
 
 
 
     const handleSubmit = async (e) =>{
         e.preventDefault();
-        let formData = new FormData();
-        formData.append('name', moduleData.name)
-        formData.append('module_code', moduleData.module_code)
-        formData.append('lecture_in_charge', moduleData.lecture_in_charge)
-        formData.append('lab_assistant', moduleData.lab_assistant)
-        formData.append('year', moduleData.year)
-        formData.append('semester', moduleData.semester)
-
-        const res = await dispatch(createModules(formData));
+        // let formData = new FormData();
+        // formData.append('name', moduleData.name)
+        // formData.append('module_code', moduleData.module_code)
+        // formData.append('lecture_in_charge', moduleData.lecture_in_charge)
+        // formData.append('lab_assistant', moduleData.lab_assistant)
+        // formData.append('year', moduleData.year)
+        // formData.append('semester', moduleData.semester)
+        const passData ={
+            name: moduleData.name,
+            module_code:moduleData.module_code,
+            lecture_in_charge:moduleData.lecture_in_charge,
+            lab_assistant:moduleData.lab_assistant,
+            year:moduleData.year,
+            semester:moduleData.semester
+        }
+        console.log(passData)
+        const res = await dispatch(createModules({...passData}));
         setModuleData({name:'', module_code: '', lecture_in_charge: '', lab_assistant: '',year: '', semester: ''})
     }
 
@@ -81,12 +94,12 @@ const CreateModuleForm = () =>{
                                 Lecture In Charge
                             </label>
                             <Select
-                                isMulti
+
                                 name="option_lec"
                                 options={option_lec}
                                 className="basic-multi-select"
                                 classNamePrefix="select"
-                                onChange={setSelectLec}
+                                onChange={(e) => setModuleData({...moduleData, lecture_in_charge: e.value})}
                             />
                         </div>
                     </div>
@@ -96,12 +109,12 @@ const CreateModuleForm = () =>{
                                 Lab Assistant
                             </label>
                             <Select
-                                isMulti
+
                                 name="options"
                                 options={option_lab}
                                 className="basic-multi-select"
                                 classNamePrefix="select"
-                                onChange={setSelectLab}
+                                onChange={(e) => setModuleData({...moduleData, lab_assistant: e.value})}
                             />
                         </div>
                     </div>
