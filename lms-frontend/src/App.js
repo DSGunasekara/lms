@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import { ToastProvider } from 'react-toast-notifications';
+import { useHistory } from 'react-router';
 
 import Login from './Components/Auth/Login'
 import NavBar from './Components/Layout/navBar/NavBar';
@@ -8,6 +9,7 @@ import NotFound from './Components/Common/NotFound';
 import modulePage from "./Pages/modulePage";
 import Register from './Components/Auth/Register';
 import CreateModuleForm from "./Components/module/CreateModuleForm";
+import Users from './Components/Users/Users';
 
 import 'antd/dist/antd.css';
 import './index.css';
@@ -23,7 +25,7 @@ import {
 const { Header, Sider, Content } = Layout;
 
 function App() {
-
+  const history = useHistory();
   const [collapsed, setCollapsed] = useState(false);
 
   const toggle = () => {
@@ -45,10 +47,12 @@ function App() {
             <div className="logo" />
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
               <Menu.Item key="1" icon={<UserOutlined />}>
-                nav 1
+                <Link to="users"></Link>
+                  User Module
               </Menu.Item>
               <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-                nav 2
+                <Link to="modulePage"></Link>
+                Course Module
               </Menu.Item>
               <Menu.Item key="3" icon={<UploadOutlined />}>
                 nav 3
@@ -75,6 +79,7 @@ function App() {
             >
               <Switch>
                 <Route path={'/'} exact component={Login}></Route>
+                <Route path={'/users'} exact component={Users}></Route>
                 <Route path={'/register'} exact component={Register} />
                 <Route path={'/login'} exact component={Login} />
                 <Route path={'/modulePage'} exact component={modulePage}></Route>
