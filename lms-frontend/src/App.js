@@ -3,10 +3,11 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { ToastProvider } from 'react-toast-notifications';
 
 import Login from './Components/Auth/Login'
-import NavBar from './Components/Layout/NavBar';
+import NavBar from './Components/Layout/navBar/NavBar';
 import NotFound from './Components/Common/NotFound';
 import modulePage from "./Pages/modulePage";
 import Register from './Components/Auth/Register';
+import CreateModuleForm from "./Components/module/CreateModuleForm";
 
 import 'antd/dist/antd.css';
 import './index.css';
@@ -84,6 +85,7 @@ function App() {
                 <Route path={'/register'} exact component={Register} />
                 <Route path={'/login'} exact component={Login} />
                 <Route path={'/modulePage'} exact component={modulePage}></Route>
+                <Route path={'/createModule'} exact component={CreateModuleForm}></Route>
                 <Route path="" component={NotFound} />
               </Switch>
             </Content>
