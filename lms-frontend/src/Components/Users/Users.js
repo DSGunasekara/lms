@@ -1,86 +1,84 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import 'antd/dist/antd.css';
-import { Table, Tag, Space, Button, Tooltip } from 'antd';
+import { Table, Tag, Space, Button, Tooltip, Popconfirm, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { getUsers } from '../../actions/Users';
 
 function Users() {
     const history = useHistory();
+    const dispatch = useDispatch();
+
+    const [users, setUsers] = useState([])
+    useEffect(() => {
+      dispatch(getUsers())
+    }, []);
+
+    let userData = useSelector((state) => state.UserReducer.users);
+
+    useEffect(()=>{
+      setUsers(userData)
+    }, [userData])
+
+    function confirm(e) {
+      setUsers(users.filter((user) => user._id !== e.key))
+      message.success('User Removed');
+    }
+
     const columns = [
         {
           title: 'Name',
           dataIndex: 'name',
           key: 'name',
-          render: text => <a>{text}</a>,
+          // render: text => <a>{text}</a>,
         },
         {
-          title: 'Age',
-          dataIndex: 'age',
-          key: 'age',
+          title: 'Email',
+          dataIndex: 'email',
+          key: 'email',
         },
         {
-          title: 'Address',
-          dataIndex: 'address',
-          key: 'address',
+          title: 'Contact Number',
+          dataIndex: 'contactNo',
+          key: 'contactNo',
         },
         {
-          title: 'Tags',
-          key: 'tags',
-          dataIndex: 'tags',
-          render: tags => (
-            <>
-              {tags.map(tag => {
-                let color = tag.length > 5 ? 'geekblue' : 'green';
-                if (tag === 'loser') {
-                  color = 'volcano';
-                }
-                return (
-                  <Tag color={color} key={tag}>
-                    {tag.toUpperCase()}
-                  </Tag>
-                );
-              })}
-            </>
-          ),
+          title: 'Role',
+          dataIndex: 'role',
+          key: 'role',
         },
         {
           title: 'Action',
           key: 'action',
           render: (text, record) => (
             <Space size="middle">
-              <a>Invite {record.name}</a>
-              <a>Delete</a>
+              <Popconfirm
+                title="Are you sure to delete this user?"
+                onConfirm={() => confirm(record)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <a href="#">Delete</a>
+              </Popconfirm>
             </Space>
           ),
         },
       ];
       
-      const data = [
-        {
-          key: '1',
-          name: 'John Brown',
-          age: 32,
-          address: 'New York No. 1 Lake Park',
-          tags: ['nice', 'developer'],
-        },
-        {
-          key: '2',
-          name: 'Jim Green',
-          age: 42,
-          address: 'London No. 1 Lake Park',
-          tags: ['loser'],
-        },
-        {
-          key: '3',
-          name: 'Joe Black',
-          age: 32,
-          address: 'Sidney No. 1 Lake Park',
-          tags: ['cool', 'teacher'],
-        },
-      ];
+      const data = users?.map((user) => ({
+        key: user._id,
+        name: user.name,
+        email: user.email,
+        contactNo: user.contactNo,
+        role: user.role
+      }))
+      ;
       const handleCreateUser = ()=> {
         history.push('register')
       }
+
     return (
         <div>
             <Table columns={columns} dataSource={data} />
