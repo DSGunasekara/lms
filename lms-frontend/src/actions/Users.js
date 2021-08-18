@@ -13,8 +13,17 @@ export const getUsers = () => async (dispatch) =>{
 export const deleteUser = (userID) => async() => {
     try {
         const res = await api.deleteUser(userID);
-        console.log(res);
         return res;
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
+
+export const getUser = (userID) => async() => {
+    try {
+        const { data } = await api.fetchUser(userID);
+        return data;
     } catch (error) {
         console.log(error);
         return error;

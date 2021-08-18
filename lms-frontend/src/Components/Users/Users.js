@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import 'antd/dist/antd.css';
-import { Table, Tag, Space, Button, Tooltip, Popconfirm, message } from 'antd';
+import { Table, Space, Button, Tooltip, Popconfirm, message, Collapse, Input, Row, Col, Skeleton } from 'antd';
 import { PlusOutlined, DeleteFilled, EditFilled, EyeFilled } from '@ant-design/icons';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,8 +11,13 @@ function Users() {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const [users, setUsers] = useState([])
+    const { Panel } = Collapse;
+
+    const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
+      setLoading(true);
       dispatch(getUsers())
     }, []);
 
@@ -20,6 +25,9 @@ function Users() {
 
     useEffect(()=>{
       setUsers(userData)
+      if (userData) {
+        setLoading(false)
+      }
     }, [userData])
     
     const removeUser = async(e) => {
@@ -73,15 +81,15 @@ function Users() {
                 okText="Yes"
                 cancelText="No"
               >
-                <Tooltip title="Delete User">
+                <Tooltip placement="bottom" title="Delete User">
                   <DeleteFilled/>
                 </Tooltip>
               </Popconfirm>
-                <Tooltip title="Edit User">
+                <Tooltip placement="bottom" title="Edit User">
                   <EditFilled onClick={() => editUser(record)} />
                 </Tooltip>
-                <Tooltip title="View Profile">
-                <EyeFilled onClick={() => profile(record)} />
+                <Tooltip placement="bottom" title="View Profile">
+                  <EyeFilled onClick={() => profile(record)} />
                 </Tooltip>
             </Space>
           ),
@@ -101,11 +109,40 @@ function Users() {
       }
 
     return (
-        <div>
-            <Table columns={columns} dataSource={data} />
-            <Tooltip title="Create New User">
-                <Button type="primary" shape="circle" icon={<PlusOutlined />} size='large' className="fabBtn" onClick={handleCreateUser} />
-            </Tooltip>
+      <div>
+      { loading ? 
+        <>
+                <Skeleton active /> 
+                <Skeleton active /> 
+                <Skeleton active /> 
+                <Skeleton active /> 
+            </> : 
+            <>
+            <Collapse defaultActiveKey={['1']} style={{marginBottom: 50}}>
+              <Panel header="Search" key="1">
+                <Row>
+                  <Col span={8} style={{margin: '10px',}}>
+                    <Input placeholder="Name" />
+                  </Col>
+                  <Col span={6} style={{margin: '10px'}}>
+                    <Input placeholder="Email" />
+                  </Col>
+                  <Col span={6} style={{margin: '10px'}}>
+                    <Input placeholder="Contact Number" />
+                  </Col>
+                  <Col span={6} style={{margin: '10px'}}>
+                    <Input placeholder="Role" />
+                  </Col>
+                </Row>
+              </Panel>
+            </Collapse>
+
+              <Table columns={columns} dataSource={data} />
+              <Tooltip title="Create New User">
+                  <Button type="primary" shape="circle" icon={<PlusOutlined />} size='large' className="fabBtn" onClick={handleCreateUser} />
+              </Tooltip>
+            </>
+      }
         </div>
     )
 }
