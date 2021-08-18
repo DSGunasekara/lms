@@ -41,7 +41,7 @@ function App() {
         <Layout>
           <Sider trigger={null} collapsible collapsed={collapsed}
           style={{
-            overflow: 'auto',
+            overflow: 'none',
             height: '100vh',
             position: 'fixed',
             left: 0,
