@@ -9,3 +9,14 @@ export const getUsers = () => async (dispatch) =>{
         console.log("getting user error" + error);
     }
 }
+
+export const deleteUser = (userID) => async() => {
+    try {
+        const res = await api.deleteUser(userID);
+        console.log(res);
+        return res;
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}

@@ -28,3 +28,5 @@ export const deleteModule = (id) => API.delete(`module/${id}`);
 
 //LMS users
 export const fetchUsers = () => API.get('/user');
+
+export const deleteUser = (userID) => API.delete(`/user/${userID}`);

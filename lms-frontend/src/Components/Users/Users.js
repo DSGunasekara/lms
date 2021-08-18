@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import 'antd/dist/antd.css';
 import { Table, Tag, Space, Button, Tooltip, Popconfirm, message } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, DeleteFilled, EditFilled, EyeFilled } from '@ant-design/icons';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getUsers } from '../../actions/Users';
+import { getUsers, deleteUser } from '../../actions/Users';
 
 function Users() {
     const history = useHistory();
@@ -21,12 +21,25 @@ function Users() {
     useEffect(()=>{
       setUsers(userData)
     }, [userData])
-
-    function confirm(e) {
-      setUsers(users.filter((user) => user._id !== e.key))
-      message.success('User Removed');
+    
+    const removeUser = async(e) => {
+      const res = await dispatch(deleteUser(e.key));
+      if (res.status === 200) {
+        setUsers(users.filter((user) => user._id !== e.key))
+        message.success('User Removed');
+      } else {
+        message.error('An Error Occurred');
+      }
     }
 
+    const editUser = (e) => {
+      history.push(`updateUser/${e.key}`)
+    }
+
+    const profile = (e) => {
+      history.push(`profile/${e.key}`)
+    }
+    
     const columns = [
         {
           title: 'Name',
@@ -56,12 +69,20 @@ function Users() {
             <Space size="middle">
               <Popconfirm
                 title="Are you sure to delete this user?"
-                onConfirm={() => confirm(record)}
+                onConfirm={() => removeUser(record)}
                 okText="Yes"
                 cancelText="No"
               >
-                <a href="#">Delete</a>
+                <Tooltip title="Delete User">
+                  <DeleteFilled/>
+                </Tooltip>
               </Popconfirm>
+                <Tooltip title="Edit User">
+                  <EditFilled onClick={() => editUser(record)} />
+                </Tooltip>
+                <Tooltip title="View Profile">
+                <EyeFilled onClick={() => profile(record)} />
+                </Tooltip>
             </Space>
           ),
         },
