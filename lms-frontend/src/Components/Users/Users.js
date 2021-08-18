@@ -17,7 +17,7 @@ function Users() {
     }, []);
 
     let userData = useSelector((state) => state.UserReducer.users);
-
+    console.log(userData)
     useEffect(()=>{
       setUsers(userData)
     }, [userData])
