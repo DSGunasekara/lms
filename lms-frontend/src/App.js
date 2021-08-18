@@ -10,6 +10,8 @@ import modulePage from "./Pages/modulePage";
 import Register from './Components/Auth/Register';
 import CreateModuleForm from "./Components/module/CreateModuleForm";
 import Users from './Components/Users/Users';
+import UserProfile from './Components/Users/UserProfile'
+import EditUser from './Components/Users/EditUser';
 
 import 'antd/dist/antd.css';
 import './index.css';
@@ -44,14 +46,14 @@ function App() {
             position: 'fixed',
             left: 0,
           }}>
-            <div className="logo" />
+            <div className="logo">LMS</div>
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
               <Menu.Item key="1" icon={<UserOutlined />}>
-                <Link to="users"></Link>
+                <Link to="/users"></Link>
                   User Module
               </Menu.Item>
               <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-                <Link to="modulePage"></Link>
+                <Link to="/modulePage"></Link>
                 Course Module
               </Menu.Item>
               <Menu.Item key="3" icon={<UploadOutlined />}>
@@ -81,6 +83,8 @@ function App() {
                 <Route path={'/'} exact component={Login}></Route>
                 <Route path={'/users'} exact component={Users}></Route>
                 <Route path={'/register'} exact component={Register} />
+                <Route path={'/updateUser/:id'} component={EditUser} />
+                <Route path={'/profile/:id'} component={UserProfile} />
                 <Route path={'/login'} exact component={Login} />
                 <Route path={'/modulePage'} exact component={modulePage}></Route>
                 <Route path={'/createModule'} exact component={CreateModuleForm}></Route>
