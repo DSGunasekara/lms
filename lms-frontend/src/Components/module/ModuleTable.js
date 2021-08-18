@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getModules, removeModule} from "../../actions/Modules";
+import {getModules, removeModule, updateSingleModule} from "../../actions/Modules";
 import 'antd/dist/antd.css';
 import {Table, Tag, Space, Button, Tooltip, message, Popconfirm} from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import {DeleteFilled, EditFilled, EyeFilled, PlusOutlined} from '@ant-design/icons';
 
 const ModuleTable = () =>{
 
@@ -22,11 +22,22 @@ const ModuleTable = () =>{
         setModule(moduleData)
     }, [moduleData])
 
-   const deleteConfirm = (e) =>{
-
+   const deleteConfirm = async (e) =>{
+      const res = await dispatch(removeModule(e.key));
+      console.log(res)
+      if(res?.status === 200){
+          setModule(module.filter((mod) => mod._id !== e.key))
+          message.success('module Removed');
+      }else {
+          message.error('An Error Occurred');
+      }
    }
 
     const editConfirm = (e) =>{
+
+    }
+
+    const SingleModuleLook = (e) =>{
 
     }
 
@@ -67,7 +78,7 @@ const ModuleTable = () =>{
 
         },
         {
-            title: 'Delete',
+            title: 'Action',
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
@@ -77,24 +88,16 @@ const ModuleTable = () =>{
                         okText="Yes"
                         cancelText="No"
                     >
-                        <a href="#"> Delete</a>
+                        <Tooltip title="Delete User">
+                            <DeleteFilled/>
+                        </Tooltip>
                     </Popconfirm>
-                </Space>
-            ),
-        },
-        {
-            title: 'Edit',
-            key: 'action',
-            render: (text, record) => (
-                <Space size="middle">
-                    <Popconfirm
-                        title="Are you sure to edit this user?"
-                        onConfirm={() => editConfirm(record)}
-                        okText="Yes"
-                        cancelText="No"
-                    >
-                        <a href="#"> Edit</a>
-                    </Popconfirm>
+                    <Tooltip title="Edit User">
+                        <EditFilled onClick={() => editConfirm(record)} />
+                    </Tooltip>
+                    <Tooltip title="View Profile">
+                        <EyeFilled onClick={() => SingleModuleLook(record)} />
+                    </Tooltip>
                 </Space>
             ),
         },
