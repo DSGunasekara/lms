@@ -29,3 +29,14 @@ export const getUser = (userID) => async() => {
         return error;
     }
 }
+
+export const updateUser = (user) => async(dispatch) => {
+    try {
+        const res = await api.updateUser(user);
+        dispatch(getUsers())
+        return res;
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}

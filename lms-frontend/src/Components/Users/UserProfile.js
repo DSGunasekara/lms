@@ -19,7 +19,7 @@ function UserProfile() {
 
     const [user, setUser] = useState('');
     const [loading, setLoading] = useState(false);
-    const [isEdit, setIsEdit] = useState(false);
+    const [isEdit, setIsEdit] = useState(true);
     const [isGPA, setIsGPA] = useState(false);
     const [isModule, setIsModule] = useState(false);
     
@@ -49,6 +49,10 @@ function UserProfile() {
         setIsEdit(false);
         setIsGPA(false);
         setIsModule(true);
+    }
+
+    const updateUser = (user) => {
+        setUser(user)
     }
     return (
         <Layout>
@@ -105,7 +109,7 @@ function UserProfile() {
                     </div>
                 </Sider>
                 <Content>
-                    {isEdit? <EditUser/>: isGPA ? <GPA/>: isModule ? 'user modules': ''}
+                    {isEdit? <EditUser user={user} userUpdate={updateUser} />: isGPA ? <GPA/>: isModule ? 'user modules': ''}
                 </Content>
             </>
             }
