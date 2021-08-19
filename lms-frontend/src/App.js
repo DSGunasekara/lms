@@ -12,6 +12,7 @@ import CreateModuleForm from "./Components/module/CreateModuleForm";
 import Users from './Components/Users/Users';
 import UserProfile from './Components/Users/UserProfile'
 import EditUser from './Components/Users/EditUser';
+import SingleModule from "./Components/module/SingleModule";
 
 import 'antd/dist/antd.css';
 import './index.css';
@@ -88,6 +89,7 @@ function App() {
                 <Route path={'/login'} exact component={Login} />
                 <Route path={'/modulePage'} exact component={modulePage}></Route>
                 <Route path={'/createModule'} exact component={CreateModuleForm}></Route>
+                <Route pat={'/singleModulePage'} exacy component={SingleModule}></Route>
                 <Route path="" component={NotFound} />
               </Switch>
             </Content>
