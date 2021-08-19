@@ -37,8 +37,9 @@ export const createModules = (module) => async (dispatch) =>{
 //remove single module
 export const removeModule = (id) => async (dispatch) =>{
     try{
-        await api.deleteModule(id);
-        dispatch({type:DELETE_MODULE, payload: id})
+        const res = await api.deleteModule(id);
+        return res;
+
     }catch (error){
         console.log("delete module" + error);
     }
