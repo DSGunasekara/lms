@@ -4,7 +4,6 @@ import { ToastProvider } from 'react-toast-notifications';
 import { useHistory } from 'react-router';
 
 import Login from './Components/Auth/Login'
-import NavBar from './Components/Layout/navBar/NavBar';
 import NotFound from './Components/Common/NotFound';
 import modulePage from "./Pages/modulePage";
 import Register from './Components/Auth/Register';
@@ -15,6 +14,7 @@ import EditUser from './Components/Users/EditUser';
 import SingleModule from "./Components/module/SingleModule";
 import AddNotice from './Components/Notices/AddNotice';
 import NoticeAdmin from './Components/Notices/NoticeAdmin';
+import EditSingleModule from "./Components/module/EditModule";
 
 import 'antd/dist/antd.css';
 import './index.css';
@@ -25,7 +25,7 @@ import {
   UserOutlined,
   VideoCameraOutlined,
   UploadOutlined,
-  NotificationOutlined, 
+  NotificationOutlined,
 } from '@ant-design/icons';
 
 const { Header, Sider, Content } = Layout;
@@ -103,6 +103,13 @@ function App() {
                 <Route path={'/singleModulePage'} exact component={SingleModule}></Route>
                 <Route path={'/addNoticeForm'} exact component={AddNotice}></Route>
                 <Route path={'/noticeAdmin'} exact component={NoticeAdmin}></Route>
+
+
+                <Route path={'/modulePage'} exact component={modulePage}/>
+                <Route path={'/createModule'} exact component={CreateModuleForm}/>
+                <Route path={'/viewModule/:id'}  component={SingleModule}/>
+                <Route path={'/editModule/:id'}  component={EditSingleModule}/>
+
 
                 <Route path="" component={NotFound} />
               </Switch>

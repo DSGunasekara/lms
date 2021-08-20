@@ -1,5 +1,6 @@
 import {FETCH_MODULE, FETCH_SINGLE_MODULE, CREATE_MODULE, UPDATE_MODULE, DELETE_MODULE} from "../constants/constant.js";
 import * as api from '../api/index.js';
+import {updateModules} from "../api/index.js";
 
 //getting all the modules
 export const getModules = () => async (dispatch) =>{
@@ -46,10 +47,11 @@ export const removeModule = (id) => async (dispatch) =>{
 }
 
 //update single module
-export const updateSingleModule = (id, module) => async (dispatch) =>{
+export const updateSingleModule = (module) => async (dispatch) =>{
     try {
-        const {data} = await api.updateModules(id, module);
-        dispatch({type: UPDATE_MODULE, payload:data})
+        const res = await api.updateModules(module);
+        dispatch(getModules())
+        return res;
 
     }catch (error){
         console.log("update module" + error);
