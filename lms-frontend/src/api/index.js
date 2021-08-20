@@ -31,3 +31,4 @@ export const fetchUsers = () => API.get('/user');
 export const fetchUser = (id) => API.get(`/user/${id}`);
 export const deleteUser = (userID) => API.delete(`/user/${userID}`);
 export const updateUser = (user) => API.patch(`/user/${user.id}`, user);
+export const updatePassword = (user) => API.patch(`/user/resetPassword/${user.id}`, user);
