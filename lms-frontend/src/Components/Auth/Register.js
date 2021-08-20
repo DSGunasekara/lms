@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import Select from 'react-select';
 // import { useToasts } from 'react-toast-notifications';
@@ -20,20 +20,20 @@ export default function Register() {
 
   const admin = useSelector((state) => state.auth.user);
 
-    const tailFormItemLayout = {
-      wrapperCol: {
-          xs: {
-          span: 24,
-          offset: 0,
-          },
-          sm: {
-          span: 16,
-          offset: 8,
-          },
-      },
-      };
+  const tailFormItemLayout = {
+    wrapperCol: {
+        xs: {
+        span: 24,
+        offset: 0,
+        },
+        sm: {
+        span: 16,
+        offset: 8,
+        },
+    },
+  };
 
-      const [form] = Form.useForm();
+  const [form] = Form.useForm();
 
   const handleSubmit = async (values) => {
     console.log(values);
