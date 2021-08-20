@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 import { login as loginUser } from '../../actions/auth';
 import { useDispatch } from 'react-redux';
@@ -6,15 +6,17 @@ import { Form, Input, Button, message, } from 'antd';
 
 function Login() {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async(values) => {
-    console.log(values);
-      const res = await dispatch(loginUser(values));
-      if(res.status === 200){
-        message.success('Logged in  Successfully');
-      } else {
-        message.error('Login Error');
-      }
+    setLoading(true)
+    const res = await dispatch(loginUser(values));
+    if(res.status === 200){
+      message.success('Logged in  Successfully');
+    } else {
+      message.error('Login Error');
+    }
+    setLoading(false);
   }
 
   const tailFormItemLayout = {
@@ -70,7 +72,7 @@ function Login() {
           </Form.Item>
 
           <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={loading}>
                 Login
             </Button>
           </Form.Item>

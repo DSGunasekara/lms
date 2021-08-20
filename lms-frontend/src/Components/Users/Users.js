@@ -117,8 +117,8 @@ function Users() {
                 <Skeleton active /> 
             </> : 
             <>
-            <Collapse defaultActiveKey={['1']} style={{marginBottom: 50}}>
-              <Panel header="Search Users" key="1">
+            <Collapse style={{marginBottom: 50}}>
+              <Panel header="Search Users">
                 <Row>
                   <Col span={6} style={{margin: '10px'}}>
                     <Input placeholder="Name" />

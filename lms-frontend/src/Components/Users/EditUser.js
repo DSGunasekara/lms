@@ -11,6 +11,8 @@ function EditUser({user, userUpdate}) {
     let { id } = useParams();
 
     const [loading, setLoading] = useState(false);
+    const [loadingBtn, setLoadingBtn] = useState(false);
+    const [loadingPass, setLoadingPass] = useState(false);
     const [ hidePass, setHidePass] = useState(false);
 
     const fetchUser = async(userId) => {
@@ -28,7 +30,6 @@ function EditUser({user, userUpdate}) {
     }, [])
 
     function onPasswordChange(checked) {
-      console.log(`switch to ${checked}`);
       setHidePass(checked);
     }
 
@@ -45,33 +46,37 @@ function EditUser({user, userUpdate}) {
     },
     };
 
-
   const [form] = Form.useForm();
   const [passForm] = Form.useForm();
 
   const onFinish = async(values) => {
+    setLoadingBtn(true)
     const updatedUser = {id, ...values};
     const res = await dispatch(updateUser(updatedUser))
 
     if (res.status === 200) {
-      userUpdate(updatedUser, user.role)
+      if (user) {
+        userUpdate(updatedUser, user.role)
+      }
       message.success("Profile Updated Successfully")
     } else if (res.status === 401) {
       message.error("Your Password is wrong")
     }else {
       message.error("An Error Occurred")
     }
+    setLoadingBtn(false)
   };
 
   const onPasswordUpdate = async(values) => {
-    console.log(values);
+    setLoadingPass(true)
     const updatePass = {id, ...values};
-      const res = await dispatch(updatePassword(updatePass));
-      if (res.status === 200) {
-        message.success("Password Updated Successfully")
-      } else {
-        message.error(res.data)
-      }
+    const res = await dispatch(updatePassword(updatePass));
+    if (res.status === 200) {
+      message.success("Password Updated Successfully")
+    } else {
+      message.error(res.data)
+    }
+    setLoadingPass(false)
   }
 
     return (
@@ -140,11 +145,12 @@ function EditUser({user, userUpdate}) {
                 </Form.Item>
 
                 <Form.Item {...tailFormItemLayout}>
-                  <Button type="primary" htmlType="submit">
+                  <Button type="primary" htmlType="submit" loading={loadingBtn}>
                       Update Profile
                   </Button>
                 </Form.Item>
               </Form>
+
               <Switch onChange={onPasswordChange}/> Update Password?
               { hidePass ? 
                 <Form
@@ -183,7 +189,7 @@ function EditUser({user, userUpdate}) {
                 <Input.Password />
               </Form.Item>
               <Form.Item {...tailFormItemLayout}>
-                  <Button type="primary" htmlType="submit">
+                  <Button type="primary" htmlType="submit" loading={loadingPass}>
                       Update Password
                   </Button>
                 </Form.Item>

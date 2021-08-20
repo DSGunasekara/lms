@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import Select from 'react-select';
-// import { useToasts } from 'react-toast-notifications';
 import { useHistory } from 'react-router';
 
 import { Form, Input, Button, message, Select } from 'antd';
@@ -10,9 +8,10 @@ import { getUser, register as registerUser } from '../../actions/auth';
 
 export default function Register() {
   const dispatch = useDispatch();
-  // const { addToast } = useToasts();
   const history = useHistory();
   const { Option } = Select;
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(()=>{
     dispatch(getUser())
@@ -36,18 +35,18 @@ export default function Register() {
   const [form] = Form.useForm();
 
   const handleSubmit = async (values) => {
-    console.log(values);
-      const res = await dispatch(registerUser(values));
-      console.log(res);
-      if(res.status === 200){
-        message.success('Registered Successfully');
-        history.push('/login')
-      } else if(res.response.status === 409){
-        message.error('User already exits. Please Login');
-      } else {
-        message.error('Register Error');
-      }
-    
+    setLoading(true)
+    const res = await dispatch(registerUser(values));
+    console.log(res);
+    if(res.status === 200){
+      message.success('Registered Successfully');
+      history.push('/login')
+    } else if(res.response.status === 409){
+      message.error('User already exits. Please Login');
+    } else {
+      message.error('Register Error');
+    }
+    setLoading(false)
   };
 
   return (
@@ -146,7 +145,7 @@ export default function Register() {
                 </Form.Item>
 
                 <Form.Item {...tailFormItemLayout}>
-                  <Button type="primary" htmlType="submit">
+                  <Button type="primary" htmlType="submit" loading={loading}>
                       Register
                   </Button>
                 </Form.Item>
