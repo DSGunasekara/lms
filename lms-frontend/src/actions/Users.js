@@ -40,3 +40,12 @@ export const updateUser = (user) => async(dispatch) => {
         return error;
     }
 }
+
+export const updatePassword = (user) => async() => {
+    try {
+        const res = await api.updatePassword(user);
+        return res;
+    } catch (error) {
+        return {...error.response};
+    }
+}
