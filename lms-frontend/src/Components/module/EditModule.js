@@ -17,7 +17,6 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
     let { id } = useParams();
     const { Option } = Select;
 
-    const [module2, setModule] = useState('');
     const [loading, setLoading] = useState(false);
 
     const [moduleData, setModuleData] = useState({
@@ -28,7 +27,7 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
     const fetchUser = async (modId) =>{
         const res = await dispatch(getSingleModule(modId));
         form.setFieldsValue(res);
-        setModule(res);
+        setModuleData(res);
         setLoading(false);
     }
 
@@ -62,25 +61,30 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
     }, [dispatch]);
     const userData = useSelector((state) => state.UserReducer.users)
 
+
     option_lec = userData?.filter((user)=> user.role === "lecturer").map((lec) =>({
         value:lec._id, label: lec.name}))
 
     option_lab = userData?.filter((user) => user.role === "labInstructor").map((lab) => ({
         value: lab._id, label: lab.name}))
 
-    const [form, form2] = Form.useForm();
+    const [form] = Form.useForm();
 
     const SubmitEdit = async (value) =>{
-        const updateModule = {id, ...value}
+        const updateModule = {id, ...value, ...moduleData}
+        console.log(updateModule)
         const res = await dispatch(updateSingleModule(updateModule))
         if(res.status === 200){
-            moduleUpdate(updateModule, module.name)
             message.success("Profile Updated Successfully")
         } else {
             message.error("An Error Occurred")
         }
     }
 
+    const lec = (e) =>{
+        setModuleData({...moduleData, lecture_in_charge: e});
+        console.log(e)
+    }
 
     return(
         <div>
@@ -125,12 +129,12 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
                                 Lecture In Charge
                             </label>
                             <Select
-                                placeholder={module2.lecture_in_charge?.name}
+                                value={moduleData.lecture_in_charge?.name}
                                 name="option_lec"
                                 options={option_lec}
                                 className="basic-multi-select"
                                 classNamePrefix="select"
-                                onChange={(e) => setModuleData({...moduleData, lecture_in_charge: e.value})}
+                                onChange={(e) => lec(e)}
                             />
                         </div>
 
@@ -139,12 +143,12 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
                             Lab Assistant
                         </label>
                         <Select
-                            placeholder={module2.lab_assistant?.name}
+                            value={moduleData.lab_assistant?.name}
                             name="option_lec"
                             options={option_lab}
                             className="basic-multi-select"
                             classNamePrefix="select"
-                            onChange={(e) => setModuleData({...moduleData, lab_assistant: e.value})}
+                            onChange={(e) => setModuleData({...moduleData, lab_assistant: e})}
                         />
                     </div>
 
