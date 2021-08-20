@@ -114,17 +114,24 @@ const ModuleTable = () =>{
         semester:mod.semester
     }));
 
-
+    const newModule = () =>{
+        history.push('createModule')
+    }
 
     return(
         <div>
            <Table columns={columns} dataSource={data}/>
-
-                <a href="/createModule">
                   <Tooltip title="Create New Module">
-                    <Button type="primary" shape="circle" icon={<PlusOutlined />} size='large' className="fabBtn" />
+                    <Button
+                        type="primary"
+                        shape="circle"
+                        icon={<PlusOutlined />}
+                        size='large'
+                        className="fabBtn"
+                        onClick={newModule}
+                    />
                   </Tooltip>
-                </a>
+
         </div>
     )
 }

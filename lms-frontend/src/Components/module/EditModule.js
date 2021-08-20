@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Select} from "antd";
 
 import { Form, Input, Button, message } from 'antd';
@@ -17,13 +17,17 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
     let { id } = useParams();
     const { Option } = Select;
 
-    const [module2, setModule] = useState('');
     const [loading, setLoading] = useState(false);
+
+    const [moduleData, setModuleData] = useState({
+        lecture_in_charge: undefined,
+        lab_assistant: undefined,
+    })
 
     const fetchUser = async (modId) =>{
         const res = await dispatch(getSingleModule(modId));
         form.setFieldsValue(res);
-        setModule(res);
+        setModuleData(res);
         setLoading(false);
     }
 
@@ -52,21 +56,35 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
         },
     };
 
+    useEffect   (() =>{
+        dispatch(getUsers());
+    }, [dispatch]);
+    const userData = useSelector((state) => state.UserReducer.users)
 
 
-    const [form, form2] = Form.useForm();
+    option_lec = userData?.filter((user)=> user.role === "lecturer").map((lec) =>({
+        value:lec._id, label: lec.name}))
+
+    option_lab = userData?.filter((user) => user.role === "labInstructor").map((lab) => ({
+        value: lab._id, label: lab.name}))
+
+    const [form] = Form.useForm();
 
     const SubmitEdit = async (value) =>{
-        const updateModule = {id, ...value}
+        const updateModule = {id, ...value, ...moduleData}
+        console.log(updateModule)
         const res = await dispatch(updateSingleModule(updateModule))
         if(res.status === 200){
-            moduleUpdate(updateModule, module.name)
             message.success("Profile Updated Successfully")
         } else {
             message.error("An Error Occurred")
         }
     }
 
+    const lec = (e) =>{
+        setModuleData({...moduleData, lecture_in_charge: e});
+        console.log(e)
+    }
 
     return(
         <div>
@@ -104,32 +122,35 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
                     >
                         <Input />
                     </Form.Item>
-                    <Form.Item
-                        name="lecture_in_charge.name"
-                        label="Lecture In charge"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input your Module Code',
-                            },
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
+
 
                         <div className="mb-3 col">
                             <label htmlFor="option_lec" className="form-label">
                                 Lecture In Charge
                             </label>
                             <Select
-                                placeholder={module2.lecture_in_charge?.name}
+                                value={moduleData.lecture_in_charge?.name}
                                 name="option_lec"
                                 options={option_lec}
                                 className="basic-multi-select"
                                 classNamePrefix="select"
-
+                                onChange={(e) => lec(e)}
                             />
                         </div>
+
+                    <div className="mb-3 col">
+                        <label htmlFor="option_lec" className="form-label">
+                            Lab Assistant
+                        </label>
+                        <Select
+                            value={moduleData.lab_assistant?.name}
+                            name="option_lec"
+                            options={option_lab}
+                            className="basic-multi-select"
+                            classNamePrefix="select"
+                            onChange={(e) => setModuleData({...moduleData, lab_assistant: e})}
+                        />
+                    </div>
 
                     <Form.Item {...tailFormItemLayout}>
                         <Button type="primary" htmlType="submit">
