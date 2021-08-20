@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Select} from "antd";
 
 import { Form, Input, Button, message } from 'antd';
@@ -19,6 +19,11 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
 
     const [module2, setModule] = useState('');
     const [loading, setLoading] = useState(false);
+
+    const [moduleData, setModuleData] = useState({
+        lecture_in_charge: undefined,
+        lab_assistant: undefined,
+    })
 
     const fetchUser = async (modId) =>{
         const res = await dispatch(getSingleModule(modId));
@@ -52,7 +57,16 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
         },
     };
 
+    useEffect   (() =>{
+        dispatch(getUsers());
+    }, [dispatch]);
+    const userData = useSelector((state) => state.UserReducer.users)
 
+    option_lec = userData?.filter((user)=> user.role === "lecturer").map((lec) =>({
+        value:lec._id, label: lec.name}))
+
+    option_lab = userData?.filter((user) => user.role === "labInstructor").map((lab) => ({
+        value: lab._id, label: lab.name}))
 
     const [form, form2] = Form.useForm();
 
@@ -104,18 +118,7 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
                     >
                         <Input />
                     </Form.Item>
-                    <Form.Item
-                        name="lecture_in_charge.name"
-                        label="Lecture In charge"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input your Module Code',
-                            },
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
+
 
                         <div className="mb-3 col">
                             <label htmlFor="option_lec" className="form-label">
@@ -127,9 +130,23 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
                                 options={option_lec}
                                 className="basic-multi-select"
                                 classNamePrefix="select"
-
+                                onChange={(e) => setModuleData({...moduleData, lecture_in_charge: e.value})}
                             />
                         </div>
+
+                    <div className="mb-3 col">
+                        <label htmlFor="option_lec" className="form-label">
+                            Lab Assistant
+                        </label>
+                        <Select
+                            placeholder={module2.lab_assistant?.name}
+                            name="option_lec"
+                            options={option_lab}
+                            className="basic-multi-select"
+                            classNamePrefix="select"
+                            onChange={(e) => setModuleData({...moduleData, lab_assistant: e.value})}
+                        />
+                    </div>
 
                     <Form.Item {...tailFormItemLayout}>
                         <Button type="primary" htmlType="submit">
