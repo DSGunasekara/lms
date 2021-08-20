@@ -109,7 +109,7 @@ const ModuleTable = () =>{
         name: mod.name,
         module_code: mod.module_code,
         lecture_in_charge: mod.lecture_in_charge?.name,
-        lab_assistant:mod.lab_assistant.name,
+        lab_assistant:mod.lab_assistant?.name,
         year:mod.year,
         semester:mod.semester
     }));

@@ -94,7 +94,6 @@ const CreateModuleForm = () =>{
                                 Lecture In Charge
                             </label>
                             <Select
-
                                 name="option_lec"
                                 options={option_lec}
                                 className="basic-multi-select"

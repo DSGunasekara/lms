@@ -10,33 +10,24 @@ import { updateSingleModule, getSingleModule } from '../../actions/Modules';
 import {getUsers} from "../../actions/Users";
 let option_lec = [], option_lab = [];
 
-const EditSingleModule = ({module, module2, moduleUpdate}) =>{
+const EditSingleModule = ({module, moduleUpdate}) =>{
 
 
     const dispatch = useDispatch();
     let { id } = useParams();
     const { Option } = Select;
 
+    const [module2, setModule] = useState('');
+    const [loading, setLoading] = useState(false);
+
     const fetchUser = async (modId) =>{
         const res = await dispatch(getSingleModule(modId));
         form.setFieldsValue(res);
-        // let lecture_in_charge = res.lecture_in_charge.name;
-        // let lab_assistant = res.lab_assistant.name;
+        setModule(res);
+        setLoading(false);
     }
 
-    // const fetchUser2 = async (ModId) =>{
-    //     const res2 = await dispatch(getSingleModule(ModId));
-    //     form2.setFieldsValue(res2.lecture_in_charge.name);
-    // }
 
-    // useEffect( ()=>{
-    //     if(module2){
-    //         console.log("test2")
-    //         form2.setFieldsValue(module2)
-    //     }else{
-    //         fetchUser2( id )
-    //     }
-    // }, [])
 
     useEffect( ()=>{
         if(module){
@@ -125,6 +116,20 @@ const EditSingleModule = ({module, module2, moduleUpdate}) =>{
                     >
                         <Input />
                     </Form.Item>
+
+                        <div className="mb-3 col">
+                            <label htmlFor="option_lec" className="form-label">
+                                Lecture In Charge
+                            </label>
+                            <Select
+                                placeholder={module2.lecture_in_charge?.name}
+                                name="option_lec"
+                                options={option_lec}
+                                className="basic-multi-select"
+                                classNamePrefix="select"
+
+                            />
+                        </div>
 
                     <Form.Item {...tailFormItemLayout}>
                         <Button type="primary" htmlType="submit">

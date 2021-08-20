@@ -4,7 +4,6 @@ import { ToastProvider } from 'react-toast-notifications';
 import { useHistory } from 'react-router';
 
 import Login from './Components/Auth/Login'
-import NavBar from './Components/Layout/navBar/NavBar';
 import NotFound from './Components/Common/NotFound';
 import modulePage from "./Pages/modulePage";
 import Register from './Components/Auth/Register';
