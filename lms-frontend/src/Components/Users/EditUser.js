@@ -52,7 +52,7 @@ function EditUser({user, userUpdate}) {
   const onFinish = async(values) => {
     const updatedUser = {id, ...values};
     const res = await dispatch(updateUser(updatedUser))
-    console.log(res);
+
     if (res.status === 200) {
       userUpdate(updatedUser, user.role)
       message.success("Profile Updated Successfully")

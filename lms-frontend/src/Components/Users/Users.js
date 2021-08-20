@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import 'antd/dist/antd.css';
 import { Table, Space, Button, Tooltip, Popconfirm, message, Collapse, Input, Row, Col, Skeleton } from 'antd';
-import { PlusOutlined, DeleteFilled, EditFilled, EyeFilled } from '@ant-design/icons';
+import { PlusOutlined, DeleteFilled, EditFilled, EyeFilled, SearchOutlined, ClearOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -22,7 +22,6 @@ function Users() {
     }, []);
 
     let userData = useSelector((state) => state.UserReducer.users);
-    console.log(userData)
     useEffect(()=>{
       setUsers(userData)
       if (userData) {
@@ -119,9 +118,9 @@ function Users() {
             </> : 
             <>
             <Collapse defaultActiveKey={['1']} style={{marginBottom: 50}}>
-              <Panel header="Search" key="1">
+              <Panel header="Search Users" key="1">
                 <Row>
-                  <Col span={8} style={{margin: '10px',}}>
+                  <Col span={6} style={{margin: '10px'}}>
                     <Input placeholder="Name" />
                   </Col>
                   <Col span={6} style={{margin: '10px'}}>
@@ -132,6 +131,14 @@ function Users() {
                   </Col>
                   <Col span={6} style={{margin: '10px'}}>
                     <Input placeholder="Role" />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col span={17} style={{margin: '10px'}}>
+                    <Button type="secondary" icon={<ClearOutlined />}>Clear All</Button>
+                  </Col>
+                  <Col span={6} style={{margin: '10px'}}>
+                    <Button type="primary" icon={<SearchOutlined />}>Search</Button>
                   </Col>
                 </Row>
               </Panel>
