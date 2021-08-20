@@ -13,6 +13,8 @@ import Users from './Components/Users/Users';
 import UserProfile from './Components/Users/UserProfile'
 import EditUser from './Components/Users/EditUser';
 import SingleModule from "./Components/module/SingleModule";
+import AddNotice from './Components/Notices/AddNotice';
+import NoticeAdmin from './Components/Notices/NoticeAdmin';
 
 import 'antd/dist/antd.css';
 import './index.css';
@@ -23,6 +25,7 @@ import {
   UserOutlined,
   VideoCameraOutlined,
   UploadOutlined,
+  NotificationOutlined, 
 } from '@ant-design/icons';
 
 const { Header, Sider, Content } = Layout;
@@ -60,6 +63,10 @@ function App() {
               <Menu.Item key="3" icon={<UploadOutlined />}>
                 nav 3
               </Menu.Item>
+              <Menu.Item key="4" icon={<NotificationOutlined />}>
+                Notices
+                <Link to="/noticeAdmin"></Link>
+              </Menu.Item>
             </Menu>
           </Sider>
           <Layout className="site-layout" style={{marginLeft: collapsed ? 75 : 200}}>
@@ -89,7 +96,10 @@ function App() {
                 <Route path={'/login'} exact component={Login} />
                 <Route path={'/modulePage'} exact component={modulePage}></Route>
                 <Route path={'/createModule'} exact component={CreateModuleForm}></Route>
-                <Route pat={'/singleModulePage'} exacy component={SingleModule}></Route>
+                <Route path={'/singleModulePage'} exact component={SingleModule}></Route>
+                <Route path={'/addNoticeForm'} exact component={AddNotice}></Route>
+                <Route path={'/noticeAdmin'} exact component={NoticeAdmin}></Route>
+
                 <Route path="" component={NotFound} />
               </Switch>
             </Content>
