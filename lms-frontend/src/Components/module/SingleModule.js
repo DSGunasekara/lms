@@ -4,7 +4,7 @@ import {useParams} from "react-router-dom";
 
 import {getSingleModule} from "../../actions/Modules";
 
-import { Row, Col, Layout, Avatar, Tag, Divider, Skeleton, Tooltip, Button } from 'antd';
+import { Row, Col, Layout, Avatar, Tag, Divider, Skeleton, Tooltip, Button, PageHeader } from 'antd';
 import {
     UserOutlined,
     MailOutlined,
@@ -12,6 +12,7 @@ import {
     SettingOutlined,
     ReadOutlined,
     UngroupOutlined,
+    CaretRightOutlined,
 } from '@ant-design/icons';
 
 
@@ -40,53 +41,63 @@ const SingleModule = () =>{
 
     }
 
-    return(
-        <Layout>
-            {loading ?
-                <>
-                    <Skeleton active />
-                    <Skeleton active />
-                    <Skeleton active />
-                    <Skeleton active />
-                </>
-                :
-                <>
-                    <Sider style={{height: '80vh'}} theme='light' width='300'>
-                        <div style={{margin: 15}}>
 
-                            <div style={{padding: 5}}>
-                                <UserOutlined style={{marginRight: 10}} />{ module.name }
-                            </div>
-                            <div style={{padding: 5}}>
-                                <MailOutlined style={{marginRight: 10}} />{ module.module_code }
-                            </div>
-                            <div style={{padding: 5}}>
-                                <PhoneOutlined style={{marginRight: 10}} />{ module.lecture_in_charge?.name }
-                            </div>
-                            <div style={{padding: 5}}>
-                                <PhoneOutlined style={{marginRight: 10}} />{ module?.lab_assistant?.name }
-                            </div>
-                            <div style={{padding: 5}}>
-                                <PhoneOutlined style={{marginRight: 10}} />{ module.year }
-                            </div>
-                            <div style={{padding: 5}}>
-                                <PhoneOutlined style={{marginRight: 10}} />{ module.semester }
-                            </div>
+
+    return(
+<div>
+
+    <Layout>
+        {loading ?
+            <>
+                <Skeleton active />
+                <Skeleton active />
+                <Skeleton active />
+                <Skeleton active />
+            </>
+            :
+            <>
+                <Sider style={{height: '80vh'}} theme='light' width='500'>
+                    <div style={{margin: 30}}>
+
+                        <div style={{padding: 5}}>
+                            <h4>Name:
+                                 { module.name }
+                            </h4>
                         </div>
-                        <Divider />
-                        <div style={{margin: 15}}>
-                            <div style={{padding: 5}}>
-                                <Tooltip placement="right" title="Update Module">
-                                    <Button type="text" onClick={handleEditModule}>
-                                        <SettingOutlined style={{marginRight: 10}} /> Settings
-                                    </Button>
-                                </Tooltip>
-                            </div>
+
+                        <div style={{padding: 5}}>
+                            <h4>Module Code:
+                                { module.module_code }
+                            </h4>
                         </div>
-                    </Sider>
-                </>
-            }
-        </Layout>
+                        <div style={{padding: 5}}>
+                            <CaretRightOutlined style={{marginRight: 10}} />{ module.lecture_in_charge?.name }
+                        </div>
+                        <div style={{padding: 5}}>
+                            <CaretRightOutlined style={{marginRight: 10}} />{ module?.lab_assistant?.name }
+                        </div>
+                        <div style={{padding: 5}}>
+                            <CaretRightOutlined style={{marginRight: 10}} />{ module.year }
+                        </div>
+                        <div style={{padding: 5}}>
+                            <CaretRightOutlined style={{marginRight: 10}} />{ module.semester }
+                        </div>
+                    </div>
+                    <Divider />
+                    <div style={{margin: 15}}>
+                        <div style={{padding: 5}}>
+                            <Tooltip placement="right" title="Update Module">
+                                <Button type="text" onClick={handleEditModule}>
+                                    <SettingOutlined style={{marginRight: 10}} /> Settings
+                                </Button>
+                            </Tooltip>
+                        </div>
+                    </div>
+                </Sider>
+            </>
+        }
+    </Layout>
+</div>
     )
 }
 

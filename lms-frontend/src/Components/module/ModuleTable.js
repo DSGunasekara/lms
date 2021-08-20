@@ -36,11 +36,11 @@ const ModuleTable = () =>{
    }
 
     const editConfirm = (e) =>{
-
+        history.push(`editModule/${e.key}`)
     }
 
     const SingleModuleLook = (e) =>{
-        history.push(`singleModulePage/${e.key}`)
+        history.push(`viewModule/${e.key}`)
     }
 
     const columns = [

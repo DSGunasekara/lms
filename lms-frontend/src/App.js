@@ -13,6 +13,7 @@ import Users from './Components/Users/Users';
 import UserProfile from './Components/Users/UserProfile'
 import EditUser from './Components/Users/EditUser';
 import SingleModule from "./Components/module/SingleModule";
+import EditSingleModule from "./Components/module/EditModule";
 
 import 'antd/dist/antd.css';
 import './index.css';
@@ -87,9 +88,13 @@ function App() {
                 <Route path={'/updateUser/:id'} component={EditUser} />
                 <Route path={'/profile/:id'} component={UserProfile} />
                 <Route path={'/login'} exact component={Login} />
-                <Route path={'/modulePage'} exact component={modulePage}></Route>
-                <Route path={'/createModule'} exact component={CreateModuleForm}></Route>
-                <Route pat={'/singleModulePage'} exacy component={SingleModule}></Route>
+
+                <Route path={'/modulePage'} exact component={modulePage}/>
+                <Route path={'/createModule'} exact component={CreateModuleForm}/>
+                <Route path={'/viewModule/:id'}  component={SingleModule}/>
+                <Route path={'/editModule/:id'}  component={EditSingleModule}/>
+
+
                 <Route path="" component={NotFound} />
               </Switch>
             </Content>

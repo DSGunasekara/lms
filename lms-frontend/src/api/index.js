@@ -22,7 +22,7 @@ export const fetchSingleModule = (id) => API.get(`/module/${id}`);
 
 export const createModules = (module) => API.post('/module', module);
 
-export const updateModules = (id, updateModule) => API.patch(`/module/${id}`, updateModule);
+export const updateModules = (updateModule) => API.patch(`/module/${updateModule.id}`, updateModule);
 
 export const deleteModule = (id) => API.delete(`module/${id}`);
 
