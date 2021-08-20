@@ -13,13 +13,13 @@ export const getModules = () => async (dispatch) =>{
 }
 
 //getting a single module
-export const getSingleModule = (id) => async (dispatch) =>{
+export const getSingleModule = (id) => async () =>{
     try{
         const  {data} = await api.fetchSingleModule(id);
-        dispatch ({type: FETCH_SINGLE_MODULE, payload: data});
+        return data;
 
     }catch (error){
-        console.log("getting single module error" + error)
+        console.log("getting single module error" + error);
     }
 }
 

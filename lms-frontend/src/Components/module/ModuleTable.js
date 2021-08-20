@@ -4,10 +4,12 @@ import {getModules, removeModule, updateSingleModule} from "../../actions/Module
 import 'antd/dist/antd.css';
 import {Table, Tag, Space, Button, Tooltip, message, Popconfirm} from 'antd';
 import {DeleteFilled, EditFilled, EyeFilled, PlusOutlined} from '@ant-design/icons';
+import {useHistory} from "react-router";
 
 const ModuleTable = () =>{
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const [module, setModule] = useState([]);
 
@@ -38,7 +40,7 @@ const ModuleTable = () =>{
     }
 
     const SingleModuleLook = (e) =>{
-
+        history.push(`singleModulePage/${e.key}`)
     }
 
     const columns = [
@@ -88,14 +90,14 @@ const ModuleTable = () =>{
                         okText="Yes"
                         cancelText="No"
                     >
-                        <Tooltip title="Delete User">
+                        <Tooltip placement="bottom" title="Delete Module">
                             <DeleteFilled/>
                         </Tooltip>
                     </Popconfirm>
-                    <Tooltip title="Edit User">
+                    <Tooltip placement="bottom" title="Edit Module">
                         <EditFilled onClick={() => editConfirm(record)} />
                     </Tooltip>
-                    <Tooltip title="View Profile">
+                    <Tooltip placement="bottom" title="View Module">
                         <EyeFilled onClick={() => SingleModuleLook(record)} />
                     </Tooltip>
                 </Space>
