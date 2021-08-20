@@ -50,7 +50,11 @@ function App() {
             position: 'fixed',
             left: 0,
           }}>
-            <div className="logo">LMS</div>
+            <div className="logo">
+              <Link to="/">
+                LMS
+              </Link>
+            </div>
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
               <Menu.Item key="1" icon={<UserOutlined />}>
                 <Link to="/users"></Link>
