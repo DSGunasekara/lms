@@ -1,0 +1,35 @@
+.trigger {
+    padding: 0 24px;
+    font-size: 18px;
+    line-height: 64px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .trigger:hover {
+    color: #1890ff;
+  }
+  
+  .title {
+    padding: 0 24px;
+    font-size: 18px;
+    line-height: 64px;
+  }
+  .logo {
+    height: 32px;
+    margin: 16px;
+    font-size: large;
+    color: #fff;
+    text-align: center;
+  }
+  
+  .site-layout .site-layout-background {
+    background: #fff;
+  }
+
+  .fabBtn {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    z-index: 999
+  }

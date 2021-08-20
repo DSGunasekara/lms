@@ -1,28 +1,22 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-      height: '100vh',
-    },
-    image: {
-      backgroundImage: 'url(https://error404.fun/img/full-preview/2x/24.png)',
-      backgroundRepeat: 'no-repeat',
-      backgroundColor:
-        theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      height: '100vh'
-    },
-  }));
+import { Result, Button } from 'antd';
+import { useHistory } from 'react-router';
 
 function NotFound() {
-    const classes = useStyles();
-    return (
-        <div container component="main" className={classes.image}>
-            {/* <h1>''</h1> */}
-        </div>
-    )
+  const history = useHistory();
+
+  const handleClick = () => {
+    history.push('/')
+  }
+
+  return (
+    <Result
+    status="404"
+    title="404"
+    subTitle="Sorry, the page you visited does not exist."
+    extra={<Button type="primary" onClick={handleClick}>Back Home</Button>}
+  />
+  )
 }
 
 export default NotFound

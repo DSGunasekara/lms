@@ -1,9 +1,10 @@
 import React from "react";
+import ModuleTable from "../Components/module/ModuleTable";
 
 const ModulePageOverview = () =>{
     return(
         <div>
-            <h1>this is the module overview</h1>
+            <ModuleTable/>
 
         </div>
     )
