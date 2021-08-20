@@ -18,3 +18,9 @@ export const DELETE_MODULE = 'DELETE_MODULE';
 
 //users
 export const FETCH_USERS= 'FETCH_USERS';
+
+//notices
+export const FETCH_NOTICE = 'FETCH_NOTICE';
+export const CREATE_NOTICE = 'CREATE_NOTICE';
+export const UPDATE_NOTICE = 'UPDATE_NOTICE';
+export const DELETE_NOTICE = 'DELETE_NOTICE';
