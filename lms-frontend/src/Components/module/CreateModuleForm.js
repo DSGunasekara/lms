@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {createModules} from "../../actions/Modules";
 import {getUsers} from "../../actions/Users";
 import 'antd/dist/antd.css';
-import { DatePicker, Space } from 'antd';
+import { DatePicker } from 'antd';
 
 let option_lec = [], option_lab = [];
 

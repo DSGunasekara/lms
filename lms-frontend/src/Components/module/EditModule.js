@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux';
-import {Select} from "antd";
-
+import {DatePicker, Select} from "antd";
+import 'antd/dist/antd.css';
 import { Form, Input, Button, message } from 'antd';
 
 import { updateSingleModule, getSingleModule } from '../../actions/Modules';
@@ -10,7 +10,7 @@ import { updateSingleModule, getSingleModule } from '../../actions/Modules';
 import {getUsers} from "../../actions/Users";
 let option_lec = [], option_lab = [];
 
-const EditSingleModule = ({module, moduleUpdate}) =>{
+const EditSingleModule = ({module}) =>{
 
 
     const dispatch = useDispatch();
@@ -72,9 +72,18 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
     const [form] = Form.useForm();
 
     //updating data by passing the new added data
-    const SubmitEdit = async (value) =>{
-        const updateModule = {id, ...value, ...moduleData}
-        const res = await dispatch(updateSingleModule(updateModule))
+    const SubmitEdit = async (values) =>{
+        const updateModule = {
+            id,
+            name: values.name,
+            module_code: values.module_code,
+            year: values.year,
+            semester: values.semester,
+            lecture_in_charge: moduleData.lecture_in_charge,
+            lab_assistant:  moduleData.lab_assistant
+        }
+        console.log(updateModule)
+       const res = await dispatch(updateSingleModule(updateModule))
         if(res.status === 200){
             message.success("Profile Updated Successfully")
         } else {
@@ -148,6 +157,30 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
                         />
                     </div>
 
+                    <Form.Item
+                        name="year"
+                        label="Year"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your Semester',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        name="semester"
+                        label="Semester"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your Semester',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
                     <Form.Item {...tailFormItemLayout}>
                         <Button type="primary" htmlType="submit">
                             Update
