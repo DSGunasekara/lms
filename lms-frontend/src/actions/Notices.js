@@ -12,6 +12,17 @@ export const getNotices = () => async (dispatch) =>{
     }
 }
 
+//getting a single notice
+export const getSingleNotice = (id) => async () =>{
+    try{
+        const {data} = await api.fetchSingleNotice(id);
+        return data;
+
+    }catch (error){
+        console.log("getting single notice error" + error);
+    }
+}
+
 //create a notice
 export const createNotice = (notice) => async (dispatch) =>{
     try{
@@ -39,8 +50,9 @@ export const updateSingleNotice = (id, notice) => async (dispatch) =>{
     try {
         const {data} = await api.updateNotice(id, notice);
         dispatch({type: UPDATE_NOTICE, payload:data})
-
+        return data;
     }catch (error){
         console.log("update notice" + error);
+        return error;
     }
 }

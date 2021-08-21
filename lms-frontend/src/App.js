@@ -6,7 +6,6 @@ import { useHistory } from 'react-router';
 import Login from './Components/Auth/Login'
 import NotFound from './Components/Common/NotFound';
 import modulePage from "./Pages/modulePage";
-import AddLecture from './Components/module/AddLecture'
 import Register from './Components/Auth/Register';
 import CreateModuleForm from "./Components/module/CreateModuleForm";
 import Users from './Components/Users/Users';
@@ -15,6 +14,7 @@ import EditUser from './Components/Users/EditUser';
 import SingleModule from "./Components/module/SingleModule";
 import AddNotice from './Components/Notices/AddNotice';
 import NoticeAdmin from './Components/Notices/NoticeAdmin';
+import EditNotice from './Components/Notices/EditNotice';
 import EditSingleModule from "./Components/module/EditModule";
 import AddEditLecture from './Components/Lectures/AddEditLectures'
 
@@ -106,6 +106,7 @@ function App() {
                 <Route path={'/singleModulePage'} exact component={SingleModule}></Route>
                 <Route path={'/addNoticeForm'} exact component={AddNotice}></Route>
                 <Route path={'/noticeAdmin'} exact component={NoticeAdmin}></Route>
+                <Route path={'/editNotice/:id'} component={EditNotice}></Route>
                 <Route path={'/lecture/add'} exact component={AddEditLecture} />
 
                 <Route path={'/modulePage'} exact component={modulePage}/>

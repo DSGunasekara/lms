@@ -35,11 +35,14 @@ export const updateUser = (user) => API.patch(`/user/${user.id}`, user);
 //notices
 export const fetchNotice = () => API.get('/notice');
 
+export const fetchSingleNotice = (id) => API.get(`/notice/${id}`);
+
 export const createNotice = (notice) => API.post('/notice', notice);
 
 export const updateNotice = (id, updateNotice) => API.patch(`/notice/${id}`, updateNotice);
 
 export const deleteNotice = (id) => API.delete(`notice/${id}`);
+
 export const updatePassword = (user) => API.patch(`/user/resetPassword/${user.id}`, user);
 
 // LMS Lectures

@@ -4,6 +4,7 @@ import { createNotice } from "../../actions/Notices";
 import "./Notices.css";
 import Lottie from 'react-lottie';
 import noticeAnimation from './notice.json';
+import { DatePicker } from "antd";
 
 const AddNotice = () => {
 
@@ -11,8 +12,8 @@ const AddNotice = () => {
 
     const [noticeData, setNoticeData] = useState({
         title: '',
-        date: '',
-        message: '',
+        createdOn: '',
+        description: '',
         inquiries: ''
     })
 
@@ -23,13 +24,13 @@ const AddNotice = () => {
 
         const passData = {
             title: noticeData.title,
-            date: noticeData.date,
-            message: noticeData.message,
+            createdOn: noticeData.createdOn,
+            description: noticeData.description,
             inquiries: noticeData.inquiries
         }
         console.log(passData);
         const res = await dispatch(createNotice({...passData}));
-        setNoticeData({title: '', date: '', message: '', inquiries: ''});
+        setNoticeData({title: '', createdOn: '', description: '', inquiries: ''});
     }
 
     const defaultOptions = {
@@ -63,22 +64,22 @@ const AddNotice = () => {
                         />
                     </div>
                     <div className="fieldsDiv">
-                        <label htmlFor="date" className="Label">Date</label>
+                        <label htmlFor="createdOn" className="Label">Date</label>
                         <input 
-                            className="date" 
+                            className="createdOn" 
                             type="date"
-                            id="date"
-                            value={noticeData.date}
-                            onChange={(e) => setNoticeData({...noticeData, date: e.target.value})}
+                            id="createdOn"
+                            value={noticeData.createdOn}
+                            onChange={(e) => setNoticeData({...noticeData, createdOn: e.target.value})}
                         />
                     </div>
                     <div className="fieldsDiv">
-                        <label htmlFor="message" className="Label">Message</label>
+                        <label htmlFor="description" className="Label">Message</label>
                         <textarea
-                            className="message"
-                            id="message"
-                            value={noticeData.message}
-                            onChange={(e) => setNoticeData({...noticeData, message: e.target.value})}
+                            className="description"
+                            id="description"
+                            value={noticeData.description}
+                            onChange={(e) => setNoticeData({...noticeData, description: e.target.value})}
                         />
                     </div>
                     <div className="fieldsDiv">

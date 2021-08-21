@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import './NoticeAdmin.css';
 import {Table, Button, Tooltip, message, Space, Popconfirm } from 'antd';
 import {DeleteFilled, EditFilled, PlusOutlined} from '@ant-design/icons';
 import { useHistory } from 'react-router';
@@ -18,14 +17,14 @@ const NoticeAdmin = () => {
         dispatch(getNotices());
     },[dispatch]);
 
-    const noticeData = useSelector((state) => state);
+    const noticeData = useSelector((state) => state.NoticeReducer.notices);
     console.log(noticeData);
-
+    //setNotice(noticeData)
     //const {id, title, date, messages, inquiries} = noticeData[0];
 
-    useEffect( ()=>{
-        setNotice(noticeData)
-    }, [noticeData])
+     useEffect( ()=>{
+         setNotice(noticeData)
+     }, [noticeData])
 
    const deleteConfirm = async (e) =>{
         const res = await dispatch(removeNotice(e.key));
@@ -42,7 +41,7 @@ const NoticeAdmin = () => {
        history.push(`editNotice/${e.key}`);
    }
 
-   const columns = [
+    const columns = [
        {
            title: 'Title',
            dataIndex: 'title',
@@ -50,19 +49,19 @@ const NoticeAdmin = () => {
        },
        {
            title: 'Date',
-           dataIndex: 'date',
-           key: 'date',
+           dataIndex: 'createdOn',
+           key: 'createdOn',
        },
        {
            title: 'Message',
-           dataIndex: 'message',
-           key: 'message',
+           dataIndex: 'description',
+           key: 'description',
        },
-       {
-           title: 'Inquiries',
-           dataIndex: 'inquiries',
-           key: 'inquiries',
-       },
+    //    {
+    //        title: 'Inquiries',
+    //        dataIndex: 'inquiries',
+    //        key: 'inquiries',
+    //    },
        {
            title: 'Action',
            key: 'action',
@@ -86,22 +85,22 @@ const NoticeAdmin = () => {
        },
    ];
 
-   const data = module?.map((mod) => ({
+    const data = notice?.map((mod) => ({
        key: mod._id,
        title: mod.title,
-       date: mod.date,
-       message: mod.message,
-       inquiries: mod.inquiries
+       createdOn: mod.createdOn,
+       description: mod.description,
+       //inquiries: mod.inquiries
    }));
 
    const newNotice = () => {
-       history.push('createNotice')
+       history.push('addNoticeForm')
    }
 
 
     return (
         <div className="NoticeAdmin">
-            <Table columns={columns} dataSource={data} />
+            <Table columns={columns} dataSource={data} /> 
             
             <Tooltip title="Create New Module">
                     <Button

@@ -58,6 +58,7 @@ export const updateNotice = (async(req, res)=>{
     await Notice.updateOne({ _id: req.params.id }, req.body);
     return res.status(200).send("Notice updated");
   } catch (error) {
+    console.log(error);
     return res.status(500).send(error);
   }
 });
