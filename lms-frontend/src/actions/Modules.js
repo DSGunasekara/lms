@@ -49,6 +49,7 @@ export const removeModule = (id) => async (dispatch) =>{
 //update single module
 export const updateSingleModule = (module) => async (dispatch) =>{
     try {
+        console.log(module);
         const res = await api.updateModules(module);
         dispatch(getModules())
         return res;

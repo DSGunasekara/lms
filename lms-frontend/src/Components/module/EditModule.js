@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux';
-import {Select} from "antd";
-
+import {DatePicker, Select} from "antd";
+import 'antd/dist/antd.css';
 import { Form, Input, Button, message } from 'antd';
 
 import { updateSingleModule, getSingleModule } from '../../actions/Modules';
@@ -10,7 +10,7 @@ import { updateSingleModule, getSingleModule } from '../../actions/Modules';
 import {getUsers} from "../../actions/Users";
 let option_lec = [], option_lab = [];
 
-const EditSingleModule = ({module, moduleUpdate}) =>{
+const EditSingleModule = ({module}) =>{
 
 
     const dispatch = useDispatch();
@@ -19,11 +19,13 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
 
     const [loading, setLoading] = useState(false);
 
+    //initial state of lec and lab
     const [moduleData, setModuleData] = useState({
         lecture_in_charge: undefined,
         lab_assistant: undefined,
     })
 
+    //getting single modules data to the fetchUser function
     const fetchUser = async (modId) =>{
         const res = await dispatch(getSingleModule(modId));
         form.setFieldsValue(res);
@@ -31,11 +33,8 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
         setLoading(false);
     }
 
-
-
     useEffect( ()=>{
         if(module){
-            console.log("test")
             form.setFieldsValue(module)
         }else {
             fetchUser( id )
@@ -56,24 +55,35 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
         },
     };
 
+    //calling Users to the Component
     useEffect   (() =>{
         dispatch(getUsers());
     }, [dispatch]);
     const userData = useSelector((state) => state.UserReducer.users)
 
-
+    //filter lecturer from the UserData
     option_lec = userData?.filter((user)=> user.role === "lecturer").map((lec) =>({
         value:lec._id, label: lec.name}))
 
+    //filter labInstructor from the UserData
     option_lab = userData?.filter((user) => user.role === "labInstructor").map((lab) => ({
         value: lab._id, label: lab.name}))
 
     const [form] = Form.useForm();
 
-    const SubmitEdit = async (value) =>{
-        const updateModule = {id, ...value, ...moduleData}
+    //updating data by passing the new added data
+    const SubmitEdit = async (values) =>{
+        const updateModule = {
+            id,
+            name: values.name,
+            module_code: values.module_code,
+            year: values.year,
+            semester: values.semester,
+            lecture_in_charge: moduleData.lecture_in_charge,
+            lab_assistant:  moduleData.lab_assistant
+        }
         console.log(updateModule)
-        const res = await dispatch(updateSingleModule(updateModule))
+       const res = await dispatch(updateSingleModule(updateModule))
         if(res.status === 200){
             message.success("Profile Updated Successfully")
         } else {
@@ -81,10 +91,6 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
         }
     }
 
-    const lec = (e) =>{
-        setModuleData({...moduleData, lecture_in_charge: e});
-        console.log(e)
-    }
 
     return(
         <div>
@@ -123,7 +129,6 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
                         <Input />
                     </Form.Item>
 
-
                         <div className="mb-3 col">
                             <label htmlFor="option_lec" className="form-label">
                                 Lecture In Charge
@@ -134,7 +139,7 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
                                 options={option_lec}
                                 className="basic-multi-select"
                                 classNamePrefix="select"
-                                onChange={(e) => lec(e)}
+                                onChange={(e) => setModuleData({...moduleData, lecture_in_charge: e})}
                             />
                         </div>
 
@@ -152,6 +157,30 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
                         />
                     </div>
 
+                    <Form.Item
+                        name="year"
+                        label="Year"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your Semester',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        name="semester"
+                        label="Semester"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your Semester',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
                     <Form.Item {...tailFormItemLayout}>
                         <Button type="primary" htmlType="submit">
                             Update
