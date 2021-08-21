@@ -42,4 +42,7 @@ export const deleteNotice = (id) => API.delete(`notice/${id}`);
 export const updatePassword = (user) => API.patch(`/user/resetPassword/${user.id}`, user);
 
 // LMS Lectures
-export const uploadLecture = (lecture) => API.post('/lecture', lecture)
+export const uploadLecture = (lecture) => API.post('/lecture', lecture);
+export const fetchLectures = () => API.get('/lecture'); 
+export const deleteLecture = (id) => API.delete(`lecture/${id}`);
+export const updateLecture = (lecture) => API.patch(`/lecture/${lecture.id}`, lecture);

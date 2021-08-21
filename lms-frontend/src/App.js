@@ -17,6 +17,7 @@ import NoticeAdmin from './Components/Notices/NoticeAdmin';
 import EditNotice from './Components/Notices/EditNotice';
 import EditSingleModule from "./Components/module/EditModule";
 import AddEditLecture from './Components/Lectures/AddEditLectures'
+import Lectures from './Components/Lectures/Lectures';
 
 import 'antd/dist/antd.css';
 import './index.css';
@@ -67,7 +68,7 @@ function App() {
                 Course Module
               </Menu.Item>
               <Menu.Item key="3" icon={<ReadOutlined />}>
-              <Link to="/lecture/add"></Link>
+              <Link to="/lectures"></Link>
                 Lecture Module
               </Menu.Item>
               <Menu.Item key="4" icon={<NotificationOutlined />}>
@@ -108,6 +109,7 @@ function App() {
                 <Route path={'/noticeAdmin'} exact component={NoticeAdmin}></Route>
                 <Route path={'/editNotice/:id'} component={EditNotice}></Route>
                 <Route path={'/lecture/add'} exact component={AddEditLecture} />
+                <Route path={'/lectures'} exact component={Lectures} />
 
                 <Route path={'/modulePage'} exact component={modulePage}/>
                 <Route path={'/createModule'} exact component={CreateModuleForm}/>
