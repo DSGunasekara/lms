@@ -1,19 +1,17 @@
 import * as api from '../api/index.js';
 
-export const uploadLecture = (lecture) => async (dispatch) => {
+export const uploadLecture = (lecture) => async () => {
     try{
         const res = await api.uploadLecture(lecture);
-        dispatch({type: UPLOAD_LECTURE, payload:res.data})
+        // dispatch({type: UPLOAD_LECTURE, payload:res.data})
         return{...res}
     }catch(error){
-        console.log("Uploding lecture" + error)
-        return {...error}
+        return {...error.response}
     }
 }
 
-export const updateLecture = (Lecture) => async (dispatch) => {
-    try{
-        const res = await api.updateLecture
-    }
-}
-
+// export const updateLecture = (Lecture) => async (dispatch) => {
+//     try{
+//         const res = await api.updateLecture
+//     }
+// }
