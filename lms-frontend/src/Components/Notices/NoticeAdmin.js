@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import './NoticeAdmin.css';
-import {Button, Tooltip, message } from 'antd';
+import {Table, Button, Tooltip, message, Space, Popconfirm } from 'antd';
 import {DeleteFilled, EditFilled, PlusOutlined} from '@ant-design/icons';
 import { useHistory } from 'react-router';
 import { getNotices, removeNotice } from '../../actions/Notices';
@@ -38,36 +38,81 @@ const NoticeAdmin = () => {
         }
    }
 
+   const editConfirm = (e) => {
+       history.push(`editNotice/${e.key}`);
+   }
+
+   const columns = [
+       {
+           title: 'Title',
+           dataIndex: 'title',
+           key: 'name',
+       },
+       {
+           title: 'Date',
+           dataIndex: 'date',
+           key: 'date',
+       },
+       {
+           title: 'Message',
+           dataIndex: 'message',
+           key: 'message',
+       },
+       {
+           title: 'Inquiries',
+           dataIndex: 'inquiries',
+           key: 'inquiries',
+       },
+       {
+           title: 'Action',
+           key: 'action',
+           render: (text, record) => (
+               <Space size="middle">
+                   <Popconfirm
+                        title="Do you want to delete this notice?"
+                        onConfirm={() => deleteConfirm(record)}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <Tooltip placement="bottom" title="Delete Notice">
+                            <DeleteFilled/>
+                        </Tooltip>
+                    </Popconfirm>  
+                    <Tooltip placement="bottom" title="Edit Notice">
+                        <EditFilled onClick={() => editConfirm(record)} />
+                    </Tooltip>
+               </Space>
+           ),
+       },
+   ];
+
+   const data = module?.map((mod) => ({
+       key: mod._id,
+       title: mod.title,
+       date: mod.date,
+       message: mod.message,
+       inquiries: mod.inquiries
+   }));
+
+   const newNotice = () => {
+       history.push('createNotice')
+   }
+
 
     return (
         <div className="NoticeAdmin">
-            <div className="noticeCard">
-                <div className="noticeContent">
-                    <p className="titleText">title</p>
-                    <p className="dateText">date</p>
-                    <p className="messageText">messages</p>
-                    <p className="contactText">inquiries</p>
-                </div>
-                <div className="buttonWrap">
-                    
-                    <button className="editBtn" type="submit">
-                        Edit 
-                        <EditFilled className="editIcon" />
-                    </button>
-                    <button className="deleteBtn" type="submit">
-                        Delete
-                        <DeleteFilled className="deleteIcon" />
-                    </button>
-                </div>
-                
-            </div>
-
-            <a href="/addNoticeForm">
-                <Tooltip title="Add New Notice">
-                    <Button type="primary" shape="circle" icon={<PlusOutlined />} size='large' className="fabBtn" />
-                </Tooltip>
-            </a>
+            <Table columns={columns} dataSource={data} />
             
+            <Tooltip title="Create New Module">
+                    <Button
+                        type="primary"
+                        shape="circle"
+                        icon={<PlusOutlined />}
+                        size='large'
+                        className="fabBtn"
+                        onClick={newNotice}
+                    />
+            </Tooltip>
         </div>
     )
 }
