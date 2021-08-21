@@ -19,11 +19,13 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
 
     const [loading, setLoading] = useState(false);
 
+    //initial state of lec and lab
     const [moduleData, setModuleData] = useState({
         lecture_in_charge: undefined,
         lab_assistant: undefined,
     })
 
+    //getting single modules data to the fetchUser function
     const fetchUser = async (modId) =>{
         const res = await dispatch(getSingleModule(modId));
         form.setFieldsValue(res);
@@ -31,11 +33,8 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
         setLoading(false);
     }
 
-
-
     useEffect( ()=>{
         if(module){
-            console.log("test")
             form.setFieldsValue(module)
         }else {
             fetchUser( id )
@@ -56,23 +55,25 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
         },
     };
 
+    //calling Users to the Component
     useEffect   (() =>{
         dispatch(getUsers());
     }, [dispatch]);
     const userData = useSelector((state) => state.UserReducer.users)
 
-
+    //filter lecturer from the UserData
     option_lec = userData?.filter((user)=> user.role === "lecturer").map((lec) =>({
         value:lec._id, label: lec.name}))
 
+    //filter labInstructor from the UserData
     option_lab = userData?.filter((user) => user.role === "labInstructor").map((lab) => ({
         value: lab._id, label: lab.name}))
 
     const [form] = Form.useForm();
 
+    //updating data by passing the new added data
     const SubmitEdit = async (value) =>{
         const updateModule = {id, ...value, ...moduleData}
-        console.log(updateModule)
         const res = await dispatch(updateSingleModule(updateModule))
         if(res.status === 200){
             message.success("Profile Updated Successfully")
@@ -81,10 +82,6 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
         }
     }
 
-    const lec = (e) =>{
-        setModuleData({...moduleData, lecture_in_charge: e});
-        console.log(e)
-    }
 
     return(
         <div>
@@ -123,7 +120,6 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
                         <Input />
                     </Form.Item>
 
-
                         <div className="mb-3 col">
                             <label htmlFor="option_lec" className="form-label">
                                 Lecture In Charge
@@ -134,7 +130,7 @@ const EditSingleModule = ({module, moduleUpdate}) =>{
                                 options={option_lec}
                                 className="basic-multi-select"
                                 classNamePrefix="select"
-                                onChange={(e) => lec(e)}
+                                onChange={(e) => setModuleData({...moduleData, lecture_in_charge: e})}
                             />
                         </div>
 

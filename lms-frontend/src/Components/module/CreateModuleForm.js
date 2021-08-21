@@ -1,20 +1,18 @@
 import React, {useEffect, useState} from "react";
-//import {useLocation} from "react-router-dom";
 import Select from "react-select";
 import {useDispatch, useSelector} from "react-redux";
 import {createModules} from "../../actions/Modules";
 import {getUsers} from "../../actions/Users";
+import 'antd/dist/antd.css';
+import { DatePicker, Space } from 'antd';
 
 let option_lec = [], option_lab = [];
 
 const CreateModuleForm = () =>{
 
-    // const location = useLocation();
     const dispatch = useDispatch();
 
-    const [selectLec, setSelectLec] = useState([]);
-    const [selectLab, setSelectLab] = useState([]);
-
+    //initial data in the Form
     const [moduleData, setModuleData] = useState({
         name: '',
         module_code: '',
@@ -24,28 +22,24 @@ const CreateModuleForm = () =>{
         semester:''
     })
 
+    //calling Users to the Component
     useEffect   (() =>{
         dispatch(getUsers());
     }, [dispatch]);
     const userData = useSelector((state) => state.UserReducer.users)
 
+    //filter labInstructor from the UserData
     option_lab = userData?.filter((user) => user.role === "labInstructor").map((lab) => ({
         value: lab._id, label: lab.name}))
 
+    //filter lecturer from the UserData
     option_lec = userData?.filter((user)=> user.role === "lecturer").map((lec) =>({
         value:lec._id, label: lec.name}))
 
 
-
+    //Passing Module Data to the Database
     const handleSubmit = async (e) =>{
         e.preventDefault();
-        // let formData = new FormData();
-        // formData.append('name', moduleData.name)
-        // formData.append('module_code', moduleData.module_code)
-        // formData.append('lecture_in_charge', moduleData.lecture_in_charge)
-        // formData.append('lab_assistant', moduleData.lab_assistant)
-        // formData.append('year', moduleData.year)
-        // formData.append('semester', moduleData.semester)
         const passData ={
             name: moduleData.name,
             module_code:moduleData.module_code,
@@ -54,10 +48,11 @@ const CreateModuleForm = () =>{
             year:moduleData.year,
             semester:moduleData.semester
         }
-        console.log(passData)
         const res = await dispatch(createModules({...passData}));
         setModuleData({name:'', module_code: '', lecture_in_charge: '', lab_assistant: '',year: '', semester: ''})
     }
+
+
 
     return(
         <div className={"container"}>
@@ -121,12 +116,10 @@ const CreateModuleForm = () =>{
                         <label htmlFor="yearLabel" className="form-label">
                            Year
                         </label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="yearLabel"
+                        <DatePicker
+                            picker="year"
                             value={moduleData.year}
-                            onChange={(e) =>setModuleData({...moduleData, year: e.target.value})}
+                            onChange={(e) => setModuleData({...moduleData, year: e})}
                         />
                     </div>
                     <div className="mb-3 col">
