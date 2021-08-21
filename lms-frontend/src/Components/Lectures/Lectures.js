@@ -28,7 +28,7 @@ export default function Lectures(){
         const res = await dispatch(deleteLecture(e.key));
         console.log(res)
         if(res?.status === 200){
-            setLecture(module.filter((mod) => mod._id !== e.key))
+            setLecture(lecture.filter((lec) => lec._id !== e.key))
             message.success('Lecture deleted successflly');
         }else {
             message.error('Delete Error');
