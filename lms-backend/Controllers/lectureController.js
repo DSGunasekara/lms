@@ -29,10 +29,10 @@ export const createLecture = async(req, res) => {
         const checkModule = await Module.findOne({ module_code });
         if (!checkModule) return res.status(404).send("Module does not exits");
         const lecture = new Lecture({...req.body});
-        if (req.file.path) {
-            lecture.filePath = req.file.path;
-        }
-        console.log(req.file.path);
+        // if (req.file.path) {
+        //     lecture.filePath = req.file.path;
+        // }
+        // console.log(req.file.path);
         lecture.save((error, savedLecture) => {
             if (error) return res.status(400).send(error);
             return res.status(201).send(savedLecture);
@@ -51,10 +51,10 @@ export const updateLecture = async(req, res) => {
         const checkModule = await Module.findOne({ module_code });
         if (!checkModule) return res.status(404).send("Module does not exits");
 
-        const updatedLecture = new Lecture({...req.body});
-        if (req.file.path) {
-            updatedLecture.filePath = req.file.path;
-        }
+        // const updatedLecture = new Lecture({...req.body});
+        // if (req.file.path) {
+        //     updatedLecture.filePath = req.file.path;
+        // }
         await Lecture.updateOne({ _id: req.params.id }, updateLecture)
         return res.status(200).send('Lecture updated')
     } catch (error) {

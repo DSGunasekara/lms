@@ -70,20 +70,20 @@ export const updatePassword = (async(req, res)=>{
   try {
     const oldPass = req.body.oldPassword;
     const newPass = req.body.password;
-
+    
     const found_user = await User.findOne({ _id: req.body.id });
     if (!found_user) return res.status(404).send("No user found");
-
+    
     const isMatch = await bcrypt.compare(oldPass, found_user.password);
-
+    
     if (!isMatch) return res.status(401).send("Old Password is incorrect");
-
+    
     if (req.body.password) {
       const salt = await bcrypt.genSalt(10);
-      enPass = await bcrypt.hash(newPass, salt);
+      const enPass = await bcrypt.hash(newPass, salt);
       found_user.password = enPass;
     }
-
+    
     found_user.save((err, _) => {
       if (err) {
         return res.status(400).send(err);

@@ -36,11 +36,11 @@ const ModuleTable = () =>{
    }
 
     const editConfirm = (e) =>{
-
+        history.push(`editModule/${e.key}`)
     }
 
     const SingleModuleLook = (e) =>{
-        history.push(`singleModulePage/${e.key}`)
+        history.push(`viewModule/${e.key}`)
     }
 
     const columns = [
@@ -109,22 +109,29 @@ const ModuleTable = () =>{
         name: mod.name,
         module_code: mod.module_code,
         lecture_in_charge: mod.lecture_in_charge?.name,
-        lab_assistant:mod.lab_assistant.name,
+        lab_assistant:mod.lab_assistant?.name,
         year:mod.year,
         semester:mod.semester
     }));
 
-
+    const newModule = () =>{
+        history.push('createModule')
+    }
 
     return(
         <div>
            <Table columns={columns} dataSource={data}/>
-
-                <a href="/createModule">
                   <Tooltip title="Create New Module">
-                    <Button type="primary" shape="circle" icon={<PlusOutlined />} size='large' className="fabBtn" />
+                    <Button
+                        type="primary"
+                        shape="circle"
+                        icon={<PlusOutlined />}
+                        size='large'
+                        className="fabBtn"
+                        onClick={newModule}
+                    />
                   </Tooltip>
-                </a>
+
         </div>
     )
 }

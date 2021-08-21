@@ -22,7 +22,7 @@ export const fetchSingleModule = (id) => API.get(`/module/${id}`);
 
 export const createModules = (module) => API.post('/module', module);
 
-export const updateModules = (id, updateModule) => API.patch(`/module/${id}`, updateModule);
+export const updateModules = (updateModule) => API.patch(`/module/${updateModule.id}`, updateModule);
 
 export const deleteModule = (id) => API.delete(`module/${id}`);
 
@@ -40,3 +40,4 @@ export const createNotice = (notice) => API.post('/notice', notice);
 export const updateNotice = (id, updateNotice) => API.patch(`/notice/${id}`, updateNotice);
 
 export const deleteNotice = (id) => API.delete(`notice/${id}`);
+export const updatePassword = (user) => API.patch(`/user/resetPassword/${user.id}`, user);

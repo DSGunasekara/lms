@@ -1,68 +1,84 @@
-import React, { useState } from 'react'
-import { useToasts } from 'react-toast-notifications';
+import React, {useState} from 'react'
 
 import { login as loginUser } from '../../actions/auth';
 import { useDispatch } from 'react-redux';
+import { Form, Input, Button, message, } from 'antd';
 
 function Login() {
-  const { addToast } = useToasts();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
-  const [ email, setEmail ] = useState('');
-  const [ password, setPassword ] = useState('');
-  const [ emailError, setEmailError ] = useState(false);
-  const [ passwordError, setPasswordError ] = useState(false);
-
-  const handleSubmit = async(e) => {
-    e.preventDefault();
-    if (email && password){
-      const res = await dispatch(loginUser({ email, password }));
-      if(res.status === 200){
-        addToast('Logged in  Successfully', { appearance: 'success', autoDismiss: true, });
-      } else {
-        addToast('Login Error', { appearance: 'error', autoDismiss: true, });
-      }
-      setEmail('')
-      setPassword('')
+  const handleSubmit = async(values) => {
+    setLoading(true)
+    const res = await dispatch(loginUser(values));
+    if(res.status === 200){
+      message.success('Logged in  Successfully');
     } else {
-      handleErrors();
+      message.error('Login Error');
     }
+    setLoading(false);
   }
 
-  const handleErrors = () => {
-    addToast('Please Enter the Details', { appearance: 'error', autoDismiss: true, });
-    if (!password) {
-      setPasswordError(true);
-    }
-
-    if (!email) {
-      setEmailError(true);
-    }
+  const tailFormItemLayout = {
+    wrapperCol: {
+        xs: {
+        span: 24,
+        offset: 0,
+        },
+        sm: {
+        span: 16,
+        offset: 8,
+        },
+    },
   };
 
+  const [form] = Form.useForm();
+
+
   return (
-    <div className="container">
-      <form noValidate onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="form-label">Email address</label>
-          <input type="email" className="form-control" placeholder="name@example.com"
-            value={email} onChange={(e) => {
-              setEmail(e.target.value);
-              setEmailError(false)
-            }}
-          />
-           {emailError ? <div className="text-danger">Please enter your email.</div> : ''}
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Password</label>
-          <input type="password" className="form-control" value={password}
-            onChange={(e) => setPassword(e.target.value)} />
-            {passwordError ? <div className="text-danger">Please enter your password.</div> : ''}
-        </div>
-        <button type="submit" className="btn btn-primary">Sign In</button>
-      </form>
+    <div style={{width:'400px', margin: 'auto'}}>
+      <h2 style={{textAlign: 'center'}}>Login</h2>
+      <Form
+        layout="vertical"
+        form={form}
+        name="register"
+        onFinish={handleSubmit}
+        scrollToFirstError
+      >
+        <Form.Item name="email" label="E-mail"
+          rules={[
+            {
+              type: 'email',
+              message: 'The input is not valid E-mail!',
+            },
+            {
+              required: true,
+              message: 'Please input your E-mail!',
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+          <Form.Item name="password" label="Password"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your password!',
+              },
+            ]}
+            hasFeedback
+          >
+          <Input.Password />
+          </Form.Item>
+
+          <Form.Item {...tailFormItemLayout}>
+            <Button type="primary" htmlType="submit" loading={loading}>
+                Login
+            </Button>
+          </Form.Item>
+        </Form>
     </div>
-  )
+  );
 }
 
 export default Login
