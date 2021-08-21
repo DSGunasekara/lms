@@ -31,10 +31,18 @@ export const fetchUsers = () => API.get('/user');
 export const fetchUser = (id) => API.get(`/user/${id}`);
 export const deleteUser = (userID) => API.delete(`/user/${userID}`);
 export const updateUser = (user) => API.patch(`/user/${user.id}`, user);
+
+//notices
+export const fetchNotice = () => API.get('/notice');
+export const fetchSingleNotice = (id) => API.get(`/notice/${id}`);
+export const createNotice = (notice) => API.post('/notice', notice);
+export const updateNotice = (updateNotice) => API.patch(`/notice/${updateNotice.id}`, updateNotice);
+export const deleteNotice = (id) => API.delete(`notice/${id}`);
+
 export const updatePassword = (user) => API.patch(`/user/resetPassword/${user.id}`, user);
 
 // LMS Lectures
-export const uploadLecture = (lecture) => API.post('/lecture/add', lecture);
+export const uploadLecture = (lecture) => API.post('/lecture', lecture);
 export const fetchLectures = () => API.get('/lecture'); 
 //export const fetchLecture = (id) => API.get(`/lecture/${id}`);
 export const deleteLecture = (id) => API.delete(`lecture/${id}`);
