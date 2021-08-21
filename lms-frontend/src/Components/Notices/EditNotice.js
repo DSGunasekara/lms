@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch } from 'react-redux';
 import { Form, Input, Button, message, DatePicker } from 'antd';
 import { getSingleNotice, updateSingleNotice } from '../../actions/Notices';
+import moment from 'moment';
 
 const EditNotice = ({notice}) => {
 
@@ -10,7 +11,8 @@ const EditNotice = ({notice}) => {
     let { id } = useParams();
 
     const fetchNotice = async (modId) => {
-        const res = await dispatch(getSingleNotice(modId));
+        let res = await dispatch(getSingleNotice(modId));
+        res = {...res, createdOn: moment(res.createdOn)}
         form.setFieldsValue(res);
     }
 
@@ -37,6 +39,8 @@ const EditNotice = ({notice}) => {
     };
 
     const [form] = Form.useForm();
+
+    const { TextArea } = Input;
 
     const SubmitEdit = async (value) => {
         const updateNotice = {
@@ -87,7 +91,7 @@ const EditNotice = ({notice}) => {
                             },
                         ]}
                     >
-                        <input />
+                        <DatePicker style={{width: '100%'}} />
 
                     </Form.Item>
 
@@ -101,7 +105,7 @@ const EditNotice = ({notice}) => {
                             },
                         ]}
                     >
-                        <textarea />
+                        <TextArea rows={4} />
                     </Form.Item>
 
                     <Form.Item {...tailFormItemLayout}>

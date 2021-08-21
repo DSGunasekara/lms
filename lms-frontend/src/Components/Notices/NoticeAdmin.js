@@ -4,6 +4,7 @@ import {Table, Button, Tooltip, message, Space, Popconfirm } from 'antd';
 import {DeleteFilled, EditFilled, PlusOutlined} from '@ant-design/icons';
 import { useHistory } from 'react-router';
 import { getNotices, removeNotice } from '../../actions/Notices';
+import moment from 'moment';
 
 
 const NoticeAdmin = () => {
@@ -88,7 +89,7 @@ const NoticeAdmin = () => {
     const data = notice?.map((mod) => ({
        key: mod._id,
        title: mod.title,
-       createdOn: mod.createdOn,
+       createdOn: moment(mod.createdOn).format('yyyy-MM-D'),
        description: mod.description,
        //inquiries: mod.inquiries
    }));
