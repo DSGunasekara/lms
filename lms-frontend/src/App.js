@@ -6,9 +6,7 @@ import { useHistory } from 'react-router';
 import Login from './Components/Auth/Login'
 import NotFound from './Components/Common/NotFound';
 import modulePage from "./Pages/modulePage";
-<<<<<<< HEAD
 import AddLecture from './Components/module/AddLecture'
-=======
 import Register from './Components/Auth/Register';
 import CreateModuleForm from "./Components/module/CreateModuleForm";
 import Users from './Components/Users/Users';
@@ -32,7 +30,6 @@ import {
 } from '@ant-design/icons';
 
 const { Header, Sider, Content } = Layout;
->>>>>>> fdd692a7d424aa85702b885d0907edf97e9f84c0
 
 function App() {
   const history = useHistory();
@@ -45,18 +42,6 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-<<<<<<< HEAD
-          <NavBar />
-          <Switch>
-            {/* <Route path={'/'} exact component={Home}></Route> */}
-            {/* <Route path={'/register'} exact component={Register} /> */}
-            <Route path={'/login'} exact component={Login} />
-            <Route path="" component={NotFound} />
-            <Route path={'/modulePage'} exact compoent={modulePage}></Route>
-            <Route path={'/lecture/add'} />
-          </Switch>
-        {/* <Footer/> */}
-=======
         <ToastProvider>
         <Layout>
           <Sider trigger={null} collapsible collapsed={collapsed}
@@ -119,7 +104,7 @@ function App() {
                 <Route path={'/singleModulePage'} exact component={SingleModule}></Route>
                 <Route path={'/addNoticeForm'} exact component={AddNotice}></Route>
                 <Route path={'/noticeAdmin'} exact component={NoticeAdmin}></Route>
-
+                <Route path={'/lecture/add'} exact component={AddLecture} />
 
                 <Route path={'/modulePage'} exact component={modulePage}/>
                 <Route path={'/createModule'} exact component={CreateModuleForm}/>
@@ -134,7 +119,6 @@ function App() {
         </Layout>
           {/* <Footer/> */}
         </ToastProvider>
->>>>>>> fdd692a7d424aa85702b885d0907edf97e9f84c0
       </BrowserRouter>
     </div>
   );
