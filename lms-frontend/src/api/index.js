@@ -41,3 +41,6 @@ export const updateNotice = (id, updateNotice) => API.patch(`/notice/${id}`, upd
 
 export const deleteNotice = (id) => API.delete(`notice/${id}`);
 export const updatePassword = (user) => API.patch(`/user/resetPassword/${user.id}`, user);
+
+// LMS Lectures
+export const uploadLecture = (lecture) => API.post('/lecture', lecture)
