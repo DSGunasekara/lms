@@ -6,7 +6,6 @@ import { useHistory } from 'react-router';
 import Login from './Components/Auth/Login'
 import NotFound from './Components/Common/NotFound';
 import modulePage from "./Pages/modulePage";
-import AddLecture from './Components/module/AddLecture'
 import Register from './Components/Auth/Register';
 import CreateModuleForm from "./Components/module/CreateModuleForm";
 import Users from './Components/Users/Users';
@@ -17,6 +16,7 @@ import AddNotice from './Components/Notices/AddNotice';
 import NoticeAdmin from './Components/Notices/NoticeAdmin';
 import EditSingleModule from "./Components/module/EditModule";
 import AddEditLecture from './Components/Lectures/AddEditLectures'
+import Lectures from './Components/Lectures/Lectures';
 
 import 'antd/dist/antd.css';
 import './index.css';
@@ -67,7 +67,7 @@ function App() {
                 Course Module
               </Menu.Item>
               <Menu.Item key="3" icon={<ReadOutlined />}>
-              <Link to="/lecture/add"></Link>
+              <Link to="/lectures"></Link>
                 Lecture Module
               </Menu.Item>
               <Menu.Item key="4" icon={<NotificationOutlined />}>
@@ -106,7 +106,9 @@ function App() {
                 <Route path={'/singleModulePage'} exact component={SingleModule}></Route>
                 <Route path={'/addNoticeForm'} exact component={AddNotice}></Route>
                 <Route path={'/noticeAdmin'} exact component={NoticeAdmin}></Route>
+
                 <Route path={'/lecture/add'} exact component={AddEditLecture} />
+                <Route path={'/lectures'} exact component={Lectures} />
 
                 <Route path={'/modulePage'} exact component={modulePage}/>
                 <Route path={'/createModule'} exact component={CreateModuleForm}/>
