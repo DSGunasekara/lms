@@ -31,3 +31,12 @@ export const fetchUsers = () => API.get('/user');
 export const fetchUser = (id) => API.get(`/user/${id}`);
 export const deleteUser = (userID) => API.delete(`/user/${userID}`);
 export const updateUser = (user) => API.patch(`/user/${user.id}`, user);
+
+//notices
+export const fetchNotice = () => API.get('/notice');
+
+export const createNotice = (notice) => API.post('/notice', notice);
+
+export const updateNotice = (id, updateNotice) => API.patch(`/notice/${id}`, updateNotice);
+
+export const deleteNotice = (id) => API.delete(`notice/${id}`);

@@ -1,17 +1,52 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import './NoticeAdmin.css';
+import {Button, Tooltip, message } from 'antd';
 import {DeleteFilled, EditFilled, PlusOutlined} from '@ant-design/icons';
-import { Tooltip, Button } from 'antd';
+import { useHistory } from 'react-router';
+import { getNotices, removeNotice } from '../../actions/Notices';
+
 
 const NoticeAdmin = () => {
+
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const [notice, setNotice] = useState([]);
+
+    useEffect(() => {
+        dispatch(getNotices());
+    },[dispatch]);
+
+    const noticeData = useSelector((state) => state);
+    console.log(noticeData);
+
+    //const {id, title, date, messages, inquiries} = noticeData[0];
+
+    useEffect( ()=>{
+        setNotice(noticeData)
+    }, [noticeData])
+
+   const deleteConfirm = async (e) =>{
+        const res = await dispatch(removeNotice(e.key));
+        console.log(res)
+        if(res?.status === 200){
+            setNotice(notice.filter((mod) => mod._id !== e.key))
+            message.success('Notice Removed');
+        }else {
+            message.error('An Error Occurred');
+        }
+   }
+
+
     return (
         <div className="NoticeAdmin">
             <div className="noticeCard">
                 <div className="noticeContent">
-                    <p className="titleText">Title</p>
-                    <p className="dateText">Date</p>
-                    <p className="messageText">Message Message Message Message Message Message Message Message Message</p>
-                    <p className="contactText">For inquiries</p>
+                    <p className="titleText">title</p>
+                    <p className="dateText">date</p>
+                    <p className="messageText">messages</p>
+                    <p className="contactText">inquiries</p>
                 </div>
                 <div className="buttonWrap">
                     
