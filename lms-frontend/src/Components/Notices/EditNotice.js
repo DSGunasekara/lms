@@ -4,12 +4,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import { Form, Input, Button, message, DatePicker } from 'antd';
 import { getSingleNotice, updateSingleNotice } from '../../actions/Notices';
 
-const EditNotice = ({notice, noticeUpdate}) => {
+const EditNotice = ({notice}) => {
 
     const dispatch = useDispatch();
     let { id } = useParams();
-    
-    const [loading, setLoading] = useState(false);
 
     const fetchNotice = async (modId) => {
         const res = await dispatch(getSingleNotice(modId));
@@ -41,22 +39,20 @@ const EditNotice = ({notice, noticeUpdate}) => {
     const [form] = Form.useForm();
 
     const SubmitEdit = async (value) => {
-        const updateNotice = {id, ...value}
-        console.log(updateNotice);
+        const updateNotice = {
+            id,
+            title: value.title,
+            createdOn: value.createdOn,
+            description: value.description
+        }
         const res = await dispatch(updateSingleNotice(updateNotice));
         if(res.status === 200){
-            message.success("Notice Updated Successfully");
+           message.success("Notice Updated Successfully");
         } else {
             message.error("Oops!! Error")
         }
     }
 
-    const [noticeData, setNoticeData] = useState({
-        title: '',
-        createdOn: '',
-        description: '',
-        inquiries: ''
-    })
 
     return (
         <div>
@@ -79,13 +75,7 @@ const EditNotice = ({notice, noticeUpdate}) => {
                             },
                         ]}
                     >
-                        <Input
-                            className="noticeTitle" 
-                            type="text"
-                            id="noticeTitle"
-                            value={noticeData.title}
-                            onChange={(e) => setNoticeData({...noticeData, title: e.target.value})}
-                        />
+                        <Input />
                     </Form.Item>
                     <Form.Item
                         name="createdOn"
@@ -97,13 +87,7 @@ const EditNotice = ({notice, noticeUpdate}) => {
                             },
                         ]}
                     >
-                        <input 
-                            className="createdOn" 
-                            type="date"
-                            id="createdOn"
-                            value={noticeData.createdOn}
-                            onChange={(e) => setNoticeData({...noticeData, createdOn: e.target.value})}
-                        />
+                        <input />
 
                     </Form.Item>
 
@@ -117,12 +101,7 @@ const EditNotice = ({notice, noticeUpdate}) => {
                             },
                         ]}
                     >
-                        <textarea
-                            className="description"
-                            id="description"
-                            value={noticeData.description}
-                            onChange={(e) => setNoticeData({...noticeData, description: e.target.value})}
-                        />
+                        <textarea />
                     </Form.Item>
 
                     <Form.Item {...tailFormItemLayout}>

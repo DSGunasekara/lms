@@ -20,6 +20,7 @@ export const getSingleNotice = (id) => async () =>{
 
     }catch (error){
         console.log("getting single notice error" + error);
+        return error;
     }
 }
 
@@ -46,11 +47,12 @@ export const removeNotice = (id) => async (dispatch) =>{
 }
 
 //update single notice
-export const updateSingleNotice = (id, notice) => async (dispatch) =>{
+export const updateSingleNotice = (notice) => async (dispatch) =>{
     try {
-        const {data} = await api.updateNotice(id, notice);
-        dispatch({type: UPDATE_NOTICE, payload:data})
-        return data;
+        console.log(notice);
+        const res = await api.updateNotice(notice);
+        dispatch(getNotices())
+        return res;
     }catch (error){
         console.log("update notice" + error);
         return error;
