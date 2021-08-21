@@ -14,6 +14,7 @@ import EditUser from './Components/Users/EditUser';
 import SingleModule from "./Components/module/SingleModule";
 import AddNotice from './Components/Notices/AddNotice';
 import NoticeAdmin from './Components/Notices/NoticeAdmin';
+import EditNotice from './Components/Notices/EditNotice';
 import EditSingleModule from "./Components/module/EditModule";
 import AddEditLecture from './Components/Lectures/AddEditLectures'
 import Lectures from './Components/Lectures/Lectures';
@@ -106,7 +107,7 @@ function App() {
                 <Route path={'/singleModulePage'} exact component={SingleModule}></Route>
                 <Route path={'/addNoticeForm'} exact component={AddNotice}></Route>
                 <Route path={'/noticeAdmin'} exact component={NoticeAdmin}></Route>
-
+                <Route path={'/editNotice/:id'} component={EditNotice}></Route>
                 <Route path={'/lecture/add'} exact component={AddEditLecture} />
                 <Route path={'/lectures'} exact component={Lectures} />
 
