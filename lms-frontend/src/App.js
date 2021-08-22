@@ -72,7 +72,7 @@ function App() {
                 Lecture Module
               </Menu.Item>
               <Menu.Item key="4" icon={<NotificationOutlined />}>
-                Notices
+                Notice Module
                 <Link to="/noticeAdmin"></Link>
               </Menu.Item>
             </Menu>

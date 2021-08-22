@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux';
-import {DatePicker, Select} from "antd";
+import {DatePicker } from "antd";
+import Select from 'react-select';
 import 'antd/dist/antd.css';
 import { Form, Input, Button, message, Skeleton } from 'antd';
 import moment from 'moment';
@@ -32,7 +33,16 @@ const EditSingleModule = ({module}) =>{
         const res = await dispatch(getSingleModule(modId));
         const mod = { ...res, year: moment(res.year)}
         form.setFieldsValue(mod);
-        setModuleData(res);
+        setModuleData({
+            lecture_in_charge: {
+                value: res.lecture_in_charge._id,
+                label: res.lecture_in_charge.name
+            },
+            lab_assistant: {
+                value: res.lab_assistant._id,
+                label: res.lab_assistant.name
+            }
+        });
         setLoading(false);
     }
 
@@ -84,8 +94,8 @@ const EditSingleModule = ({module}) =>{
             module_code: values.module_code,
             year: values.year,
             semester: values.semester,
-            lecture_in_charge: moduleData.lecture_in_charge,
-            lab_assistant:  moduleData.lab_assistant
+            lecture_in_charge: moduleData.lecture_in_charge.value,
+            lab_assistant:  moduleData.lab_assistant.value
         }
        const res = await dispatch(updateSingleModule(updateModule))
         if(res.status === 200){
@@ -140,7 +150,7 @@ const EditSingleModule = ({module}) =>{
                                 Lecture In Charge
                             </label>
                             <Select
-                                value={moduleData.lecture_in_charge?.name}
+                                value={moduleData.lecture_in_charge}
                                 name="option_lec"
                                 options={option_lec}
                                 className="basic-multi-select"
@@ -154,7 +164,7 @@ const EditSingleModule = ({module}) =>{
                             Lab Assistant
                         </label>
                         <Select
-                            value={moduleData.lab_assistant?.name}
+                            value={moduleData.lab_assistant}
                             name="option_lec"
                             options={option_lab}
                             className="basic-multi-select"
