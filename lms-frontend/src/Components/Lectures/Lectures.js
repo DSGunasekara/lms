@@ -97,7 +97,7 @@ export default function Lectures(){
         title: lec.title,
         module_code: lec.module_code,
         week: lec.week,
-        filePath:lec.filPath,
+        filePath:lec.filePath,
         description:lec.description
     }));
 
