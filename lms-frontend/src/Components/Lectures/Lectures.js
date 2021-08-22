@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getLectures, deleteLecture, } from "../../actions/lectures";
 import 'antd/dist/antd.css';
-import {Table, Space, Button, Tooltip, message, Popconfirm} from 'antd';
+import {Table, Space, Button, Tooltip, message, Popconfirm, Skeleton} from 'antd';
 import {DeleteFilled, EditFilled, PlusOutlined, DownloadOutlined} from '@ant-design/icons';
 import {useHistory} from "react-router";
 
@@ -12,21 +12,24 @@ export default function Lectures(){
     const history = useHistory();
 
     const [lecture, setLecture] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        setLoading(true)
         dispatch(getLectures());
     }, [dispatch])
 
     const lectureData = useSelector((state) => state.LectureReducer.lectures);
-    console.log(lectureData);
 
     useEffect(() => {
         setLecture(lectureData)
+        if(lectureData){
+            setLoading(false)
+        }
     }, [lectureData])
 
     const deleteConfirm = async (e) =>{
         const res = await dispatch(deleteLecture(e.key));
-        console.log(res)
         if(res?.status === 200){
             setLecture(lecture.filter((lec) => lec._id !== e.key))
             message.success('Lecture deleted successflly');
@@ -104,8 +107,16 @@ export default function Lectures(){
 
     return(
         <div>
-           <Table columns={columns} dataSource={data}/>
-                  <Tooltip title="Add Lecture">
+            {loading ? 
+                <>
+                    <Skeleton active/>
+                    <Skeleton active/>
+                    <Skeleton active/>
+                </>
+            :
+            <>
+                <Table columns={columns} dataSource={data}/>
+                <Tooltip title="Add Lecture">
                     <Button
                         type="primary"
                         shape="circle"
@@ -114,8 +125,9 @@ export default function Lectures(){
                         className="fabBtn"
                         onClick={newLecture}
                     />
-                  </Tooltip>
-
+                </Tooltip>
+            </>
+            }
         </div>
     )
 }

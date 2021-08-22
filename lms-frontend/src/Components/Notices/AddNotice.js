@@ -28,7 +28,6 @@ const AddNotice = () => {
             description: noticeData.description,
             inquiries: noticeData.inquiries
         }
-        console.log(passData);
         const res = await dispatch(createNotice({...passData}));
         setNoticeData({title: '', createdOn: '', description: '', inquiries: ''});
     }

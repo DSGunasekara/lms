@@ -18,7 +18,6 @@ const EditNotice = ({notice}) => {
 
     useEffect( () => {
         if(notice) {
-            console.log("test");
             form.setFieldsValue(notice);
         }else {
             fetchNotice( id )

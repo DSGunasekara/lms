@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getModules, removeModule, updateSingleModule} from "../../actions/Modules";
+import {getModules, removeModule} from "../../actions/Modules";
 import 'antd/dist/antd.css';
-import {Table, Tag, Space, Button, Tooltip, message, Popconfirm} from 'antd';
+import {Table, Space, Button, Tooltip, message, Popconfirm, Skeleton} from 'antd';
 import {DeleteFilled, EditFilled, EyeFilled, PlusOutlined} from '@ant-design/icons';
 import {useHistory} from "react-router";
 
@@ -12,21 +12,24 @@ const ModuleTable = () =>{
     const history = useHistory();
 
     const [module, setModule] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() =>{
+        setLoading(true)
         dispatch(getModules());
     }, [dispatch])
 
     const moduleData = useSelector( (state) => state.ModuleReducer.modules);
-    console.log(moduleData);
 
     useEffect( ()=>{
         setModule(moduleData)
+        if (moduleData){
+            setLoading(false)
+        }
     }, [moduleData])
 
    const deleteConfirm = async (e) =>{
       const res = await dispatch(removeModule(e.key));
-      console.log(res)
       if(res?.status === 200){
           setModule(module.filter((mod) => mod._id !== e.key))
           message.success('module Removed');
@@ -120,8 +123,16 @@ const ModuleTable = () =>{
 
     return(
         <div>
-           <Table columns={columns} dataSource={data}/>
-                  <Tooltip title="Create New Module">
+            {loading ? 
+                <>
+                    <Skeleton active/>
+                    <Skeleton active/>
+                    <Skeleton active/>
+                </>
+            :
+            <>
+                <Table columns={columns} dataSource={data}/>
+                <Tooltip title="Create New Module">
                     <Button
                         type="primary"
                         shape="circle"
@@ -130,8 +141,9 @@ const ModuleTable = () =>{
                         className="fabBtn"
                         onClick={newModule}
                     />
-                  </Tooltip>
-
+                </Tooltip>
+            </>
+}
         </div>
     )
 }

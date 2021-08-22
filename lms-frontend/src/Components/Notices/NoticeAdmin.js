@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {Table, Button, Tooltip, message, Space, Popconfirm } from 'antd';
+import {Table, Button, Tooltip, message, Space, Popconfirm, Skeleton } from 'antd';
 import {DeleteFilled, EditFilled, PlusOutlined} from '@ant-design/icons';
 import { useHistory } from 'react-router';
 import { getNotices, removeNotice } from '../../actions/Notices';
@@ -13,23 +13,26 @@ const NoticeAdmin = () => {
     const history = useHistory();
 
     const [notice, setNotice] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        setLoading(true)
         dispatch(getNotices());
     },[dispatch]);
 
     const noticeData = useSelector((state) => state.NoticeReducer.notices);
-    console.log(noticeData);
     //setNotice(noticeData)
     //const {id, title, date, messages, inquiries} = noticeData[0];
 
      useEffect( ()=>{
          setNotice(noticeData)
+         if(noticeData) {
+             setLoading(false)
+         }
      }, [noticeData])
 
    const deleteConfirm = async (e) =>{
         const res = await dispatch(removeNotice(e.key));
-        console.log(res)
         if(res?.status === 200){
             setNotice(notice.filter((mod) => mod._id !== e.key))
             message.success('Notice Removed');
@@ -101,9 +104,16 @@ const NoticeAdmin = () => {
 
     return (
         <div className="NoticeAdmin">
-            <Table columns={columns} dataSource={data} /> 
-            
-            <Tooltip title="Create New Module">
+            {loading ? 
+                <>
+                    <Skeleton active/>
+                    <Skeleton active/>
+                    <Skeleton active/>
+                </>
+            :
+            <>
+                <Table columns={columns} dataSource={data}/>
+                <Tooltip title="Create New Notice">
                     <Button
                         type="primary"
                         shape="circle"
@@ -112,7 +122,9 @@ const NoticeAdmin = () => {
                         className="fabBtn"
                         onClick={newNotice}
                     />
-            </Tooltip>
+                </Tooltip>
+            </>
+            }
         </div>
     )
 }

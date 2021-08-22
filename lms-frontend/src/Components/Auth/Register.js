@@ -37,7 +37,6 @@ export default function Register() {
   const handleSubmit = async (values) => {
     setLoading(true)
     const res = await dispatch(registerUser(values));
-    console.log(res);
     if(res.status === 200){
       message.success('Registered Successfully');
       history.push('/login')

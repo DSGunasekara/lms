@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux';
 import {DatePicker, Select} from "antd";
 import 'antd/dist/antd.css';
-import { Form, Input, Button, message } from 'antd';
+import { Form, Input, Button, message, Skeleton } from 'antd';
+import moment from 'moment';
 
 import { updateSingleModule, getSingleModule } from '../../actions/Modules';
 
@@ -15,9 +16,10 @@ const EditSingleModule = ({module}) =>{
 
     const dispatch = useDispatch();
     let { id } = useParams();
-    const { Option } = Select;
 
     const [loading, setLoading] = useState(false);
+    const [loadingBtn, setLoadingBtn] = useState(false);
+
 
     //initial state of lec and lab
     const [moduleData, setModuleData] = useState({
@@ -28,7 +30,8 @@ const EditSingleModule = ({module}) =>{
     //getting single modules data to the fetchUser function
     const fetchUser = async (modId) =>{
         const res = await dispatch(getSingleModule(modId));
-        form.setFieldsValue(res);
+        const mod = { ...res, year: moment(res.year)}
+        form.setFieldsValue(mod);
         setModuleData(res);
         setLoading(false);
     }
@@ -37,6 +40,7 @@ const EditSingleModule = ({module}) =>{
         if(module){
             form.setFieldsValue(module)
         }else {
+            setLoading(true)
             fetchUser( id )
 
         }
@@ -73,6 +77,7 @@ const EditSingleModule = ({module}) =>{
 
     //updating data by passing the new added data
     const SubmitEdit = async (values) =>{
+        setLoadingBtn(true)
         const updateModule = {
             id,
             name: values.name,
@@ -82,18 +87,19 @@ const EditSingleModule = ({module}) =>{
             lecture_in_charge: moduleData.lecture_in_charge,
             lab_assistant:  moduleData.lab_assistant
         }
-        console.log(updateModule)
        const res = await dispatch(updateSingleModule(updateModule))
         if(res.status === 200){
-            message.success("Profile Updated Successfully")
+            message.success("Module Updated Successfully")
         } else {
             message.error("An Error Occurred")
         }
+        setLoadingBtn(false);
     }
 
 
     return(
         <div>
+            {!loading ? 
             <div style={{width:'400px', margin: 'auto'}}>
                 <h2 style={{textAlign: 'center'}}>Update Module</h2>
                 <Form
@@ -138,7 +144,7 @@ const EditSingleModule = ({module}) =>{
                                 name="option_lec"
                                 options={option_lec}
                                 className="basic-multi-select"
-                                classNamePrefix="select"
+                                style={{width: '100%'}}
                                 onChange={(e) => setModuleData({...moduleData, lecture_in_charge: e})}
                             />
                         </div>
@@ -152,7 +158,7 @@ const EditSingleModule = ({module}) =>{
                             name="option_lec"
                             options={option_lab}
                             className="basic-multi-select"
-                            classNamePrefix="select"
+                            style={{width: '100%'}}
                             onChange={(e) => setModuleData({...moduleData, lab_assistant: e})}
                         />
                     </div>
@@ -167,7 +173,7 @@ const EditSingleModule = ({module}) =>{
                             },
                         ]}
                     >
-                        <Input />
+                        <DatePicker picker="year"/>
                     </Form.Item>
                     <Form.Item
                         name="semester"
@@ -182,13 +188,19 @@ const EditSingleModule = ({module}) =>{
                         <Input />
                     </Form.Item>
                     <Form.Item {...tailFormItemLayout}>
-                        <Button type="primary" htmlType="submit">
+                        <Button type="primary" htmlType="submit" loading={loadingBtn}>
                             Update
                         </Button>
                     </Form.Item>
                 </Form>
             </div>
-
+        :
+        <> 
+            <Skeleton active/>
+            <Skeleton active/>
+            <Skeleton active/>
+        </>
+        }
         </div>
     )
 }
