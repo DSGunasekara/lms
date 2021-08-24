@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 
-import { Form, Input, Button, message, Upload, Select, Skeleton } from 'antd';
-import { InboxOutlined } from '@ant-design/icons';
+import { Form, Input, Button, message, Upload, Select, Skeleton, Popconfirm, Tooltip } from 'antd';
+import { InboxOutlined, DownloadOutlined, DeleteOutlined } from '@ant-design/icons';
 
 import { uploadLecture, getLecture, updateLecture } from '../../actions/lectures';
 import { getModules } from '../../actions/Modules'
@@ -31,6 +31,7 @@ function AddEditLecture() {
     setLoading(true)
     const res = await dispatch(getLecture(id))
     form.setFieldsValue(res);
+    setFilePath(res.filePath)
     setLoading(false)
   }
 
@@ -177,18 +178,36 @@ function AddEditLecture() {
                   rows={4}
                 />
               </Form.Item>
-
-              <Form.Item>
-              <Dragger {...props}>
-                  <p className="ant-upload-drag-icon">
-                  <InboxOutlined />
-                  </p>
-                  <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                  <p className="ant-upload-hint">
-                  Support for a single uploads only.
-                  </p>
-              </Dragger>,
-              </Form.Item>
+              {(id && !filePath) || !id ?
+                <Form.Item>
+                    <Dragger {...props}>
+                        <p className="ant-upload-drag-icon">
+                        <InboxOutlined />
+                        </p>
+                        <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                        <p className="ant-upload-hint">
+                        Support for a single uploads only.
+                        </p>
+                    </Dragger>
+                </Form.Item>
+              :
+              <>
+                <h6>{filePath.slice(8)}</h6>
+                <Popconfirm
+                title="Are you sure to delete this user?"
+                onConfirm={() => setFilePath('')}
+                okText="Yes"
+                cancelText="No"
+                >
+                      <Tooltip placement="left" title="Delete Lecture File">
+                        <Button icon={<DeleteOutlined />} style={{marginRight: '5px'}}/>
+                      </Tooltip>
+                  </Popconfirm>
+                  <Tooltip placement="right" title="Download Lecture File">
+                    <Button icon={<DownloadOutlined />} onClick={() => window.open(`http://localhost:5000/${filePath}`)}/>
+                  </Tooltip>
+                </>
+              }
 
               <Form.Item {...tailFormItemLayout}>
                 <Button type="primary" htmlType="submit" loading={loadingBtn}>
