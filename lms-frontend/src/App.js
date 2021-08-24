@@ -117,6 +117,7 @@ function App() {
                 <Route path={'/noticeAdmin'} exact component={NoticeAdmin}></Route>
                 <Route path={'/editNotice/:id'} component={EditNotice}></Route>
                 <Route path={'/lecture/add'} exact component={AddEditLecture} />
+                <Route path={'/lecture/edit/:id'} component={AddEditLecture} />
                 <Route path={'/lectures'} exact component={Lectures} />
 
                 <Route path={'/modulePage'} exact component={modulePage}/>

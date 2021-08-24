@@ -1,23 +1,36 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom'
 
 import { Form, Input, Button, message, Upload, Select, Skeleton } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 
-import { uploadLecture } from '../../actions/lectures';
+import { uploadLecture, getLecture, updateLecture } from '../../actions/lectures';
 import { getModules } from '../../actions/Modules'
 
 
 function AddEditLecture() {
   const dispatch = useDispatch()
 
+  const { id } = useParams();
+
   useEffect(() => {
+    if(id) {
+      fetchLecture(id)
+    }
     fetchModules();
   }, [])
 
   const fetchModules = async() => {
     setLoading(true);
     await dispatch(getModules())
+    setLoading(false)
+  }
+
+  const fetchLecture = async(id) => {
+    setLoading(true)
+    const res = await dispatch(getLecture(id))
+    form.setFieldsValue(res);
     setLoading(false)
   }
 
@@ -53,6 +66,13 @@ function AddEditLecture() {
     setLoadingBtn(true)
     if (!filePath) {
         message.warning('Please Upload a file')
+    } else if (id) {
+      const res = await dispatch(updateLecture({id, ...values, filePath}))
+      if (res.status === 200) {
+        message.success('Lecture Updated Successfully')
+      } else {
+        message.error(res.data)
+      }
     } else {
         const res = await dispatch(uploadLecture({...values, filePath}))
         if (res.status === 201) {
@@ -99,7 +119,7 @@ function AddEditLecture() {
     </>
     :
       <div style={{width:'400px', margin: 'auto'}}>
-          <h2 style={{textAlign: 'center'}}>Upload Lecture</h2>
+          <h2 style={{textAlign: 'center'}}>{id ? 'Update' : 'Upload'} Lecture</h2>
           <Form
             layout="vertical"
             form={form}

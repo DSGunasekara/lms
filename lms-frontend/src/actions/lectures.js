@@ -1,6 +1,5 @@
 import {FETCH_LECTURE, CREATE_LECTURE, UPDATE_LECTURE} from "../constants/constant.js";
 import * as api from '../api/index.js';
-import {getLecture} from "../api/index.js";
 
 export const uploadLecture = (lecture) => async (dispatch) => {
     try{
@@ -35,15 +34,15 @@ export const deleteLecture = (lectureID) => async() => {
     }
 }
 
-// export const getLecture = (id) => async() => {
-//     try {
-//         const { data } = await api.fetchLecture(id);
-//         return data;
-//     } catch (error) {
-//         console.log(error);
-//         return error;
-//     }
-// }
+export const getLecture = (id) => async() => {
+    try {
+        const { data } = await api.fetchLecture(id);
+        return data;
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
 
 export const updateLecture = (lecture) => async(dispatch) => {
     try {
@@ -52,6 +51,6 @@ export const updateLecture = (lecture) => async(dispatch) => {
         return res;
     } catch (error) {
         console.log(error);
-        return error;
+        return {...error.response};
     }
 }

@@ -39,7 +39,7 @@ export default function Lectures(){
      }
 
     const editConfirm = (e) =>{
-        history.push(`editLecture/${e.key}`)
+        history.push(`lecture/edit/${e.key}`)
     }
 
     const columns = [
