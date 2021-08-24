@@ -47,3 +47,11 @@ export const fetchLectures = () => API.get('/lecture');
 //export const fetchLecture = (id) => API.get(`/lecture/${id}`);
 export const deleteLecture = (id) => API.delete(`lecture/${id}`);
 export const updateLecture = (lecture) => API.patch(`/lecture/${lecture.id}`, lecture);
+
+
+//events
+export const fetchEvent = () => API.get('/event');
+export const fetchSingleEvent = (id) => API.get(`/event/${id}`);
+export const createEvent = (event) => API.post('/event', event);
+export const updateEvent = (updateEvent) => API.patch(`/event/${updateEvent.id}`, updateEvent);
+export const deleteEvent = (id) => API.delete(`event/${id}`);

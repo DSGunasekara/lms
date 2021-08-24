@@ -5,6 +5,7 @@ import {DeleteFilled, EditFilled, PlusOutlined} from '@ant-design/icons';
 import { useHistory } from 'react-router';
 import { getNotices, removeNotice } from '../../actions/Notices';
 import moment from 'moment';
+import 'antd/dist/antd.css';
 
 
 const NoticeAdmin = () => {
@@ -61,11 +62,11 @@ const NoticeAdmin = () => {
            dataIndex: 'description',
            key: 'description',
        },
-    //    {
-    //        title: 'Inquiries',
-    //        dataIndex: 'inquiries',
-    //        key: 'inquiries',
-    //    },
+       {
+           title: 'Inquiries',
+           dataIndex: 'inquiries',
+           key: 'inquiries',
+       },
        {
            title: 'Action',
            key: 'action',
@@ -94,7 +95,7 @@ const NoticeAdmin = () => {
        title: mod.title,
        createdOn: moment(mod.createdOn).format('yyyy-MM-D'),
        description: mod.description,
-       //inquiries: mod.inquiries
+       inquiries: mod.inquiries
    }));
 
    const newNotice = () => {

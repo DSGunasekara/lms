@@ -18,6 +18,9 @@ import EditNotice from './Components/Notices/EditNotice';
 import EditSingleModule from "./Components/module/EditModule";
 import AddEditLecture from './Components/Lectures/AddEditLectures'
 import Lectures from './Components/Lectures/Lectures';
+import AddEvent from './Components/Events/AddEvent';
+import EventAdmin from './Components/Events/EventAdmin';
+import EditEvent from './Components/Events/EditEvent';
 
 import 'antd/dist/antd.css';
 import './index.css';
@@ -29,6 +32,7 @@ import {
   VideoCameraOutlined,
   ReadOutlined,
   NotificationOutlined,
+  CoffeeOutlined,
 } from '@ant-design/icons';
 
 const { Header, Sider, Content } = Layout;
@@ -75,6 +79,10 @@ function App() {
                 Notice Module
                 <Link to="/noticeAdmin"></Link>
               </Menu.Item>
+              <Menu.Item key="5" icon={<CoffeeOutlined /> }>
+                Event Module
+                <Link to="/eventAdmin"></Link>
+              </Menu.Item>
             </Menu>
           </Sider>
           <Layout className="site-layout" style={{marginLeft: collapsed ? 75 : 200}}>
@@ -116,6 +124,9 @@ function App() {
                 <Route path={'/viewModule/:id'}  component={SingleModule}/>
                 <Route path={'/editModule/:id'}  component={EditSingleModule}/>
 
+                <Route path={'/addEvent'} exact component={AddEvent}></Route>
+                <Route path={'/eventAdmin'} exact component={EventAdmin}></Route>
+                <Route path={'/editEvent/:id'} component={EditEvent}></Route>
 
                 <Route path="" component={NotFound} />
               </Switch>

@@ -32,3 +32,10 @@ export const FETCH_LECTURE = 'FETCH_LECTURE';
 export const CREATE_LECTURE= 'CREATE_LECTURE';
 export const UPDATE_LECTURE = 'UPDATE_LECTURE';
 // export const DELETE_LECTURE= 'DELETE_LECTURE';
+
+//events
+export const FETCH_EVENT = 'FETCH_EVENT';
+export const FETCH_SINGLE_EVENT = 'FETCH_SINGLE_EVENT';
+export const CREATE_EVENT = 'CREATE_EVENT';
+export const UPDATE_EVENT = 'UPDATE_EVENT';
+export const DELETE_EVENT = 'DELETE_EVENT';
