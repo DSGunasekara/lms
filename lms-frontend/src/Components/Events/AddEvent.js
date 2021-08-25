@@ -47,9 +47,9 @@ const AddEvent = () => {
 
     return (
         <div className={"container"}>
-            <h1 className="display-5 text-center my-5" fw-bold text-white >Create Notice</h1>
+            <h1 className="display-5 text-center my-5" fw-bold text-white >Create Event</h1>
             <form className="rounded border p-5 bg-light w-75 d-flex flex-column mx-auto mb-4">
-                <div className="row">
+                <div>
                     <div className="mb-3 col">
                         <label htmlFor="titleLabel" className="form-label">
                             Title

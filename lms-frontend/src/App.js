@@ -25,6 +25,7 @@ import EditEvent from './Components/Events/EditEvent';
 import 'antd/dist/antd.css';
 import './index.css';
 import { Layout, Menu } from 'antd';
+import Logo from './Images/logoooo.png'
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -33,6 +34,7 @@ import {
   ReadOutlined,
   NotificationOutlined,
   CoffeeOutlined,
+  FileExcelOutlined,
 } from '@ant-design/icons';
 
 const { Header, Sider, Content } = Layout;
@@ -44,6 +46,34 @@ function App() {
   const toggle = () => {
     setCollapsed(!collapsed);
   };
+
+  const logo = {
+    width: 60,
+    height: 45,
+    marginTop: 10,
+    marginBottom: 10
+  }
+
+  const headerBar = {
+    backgroundColor: '#278ea5',
+    display: 'flex'
+  }
+
+  const headerText = {
+    color: 'white',
+    fontSize: 15,
+    fontWeight: 'bold',
+    fontFamily: 'Besley',
+    padding: 0,
+    margin: 0
+  }
+
+  const logoDiv = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+
+  }
 
   return (
     <div>
@@ -57,10 +87,11 @@ function App() {
             position: 'fixed',
             left: 0,
           }}>
-            <div className="logo">
+            <div className="logo" style={logoDiv}>
               <Link to="/">
-                LMS
+                <img src={Logo} style={logo} alt="Logo" />
               </Link>
+              {/* <p style={headerText}>Institute of Science and Technology</p> */}
             </div>
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
               <Menu.Item key="1" icon={<UserOutlined />}>
@@ -88,14 +119,15 @@ function App() {
           <Layout className="site-layout" style={{marginLeft: collapsed ? 75 : 200}}>
             <Header className="site-layout-background" style={{ padding: 0 }}>
               <div className="row">
-                <div className="col-1">
+                <div className="col-1" style={headerBar}>
                   {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                     className: 'trigger',
                     onClick: toggle,
                   })}
                 </div>
-                <div className="col">
-                  <h5 className="title">LMS</h5>
+                <div className="col" style={headerBar}>
+                  {/* <img src={Logo} style={logo} alt="Logo" /> */}
+                  <p style={headerText}>Institute of Science and Technology</p>
                 </div>
               </div>
             </Header>

@@ -107,6 +107,14 @@ function Users() {
         history.push('register')
       }
 
+      const header = {
+        paddingLeft: 10,
+        fontFamily: 'Besley',
+        fontWeight: 'bold',
+        paddingTop: 25,
+        paddingBottom: 15
+      }
+
     return (
       <div>
       { loading ? 
@@ -117,6 +125,7 @@ function Users() {
                 <Skeleton active /> 
             </> : 
             <>
+            <h3 style={header}>Users</h3>
             <Collapse style={{marginBottom: 50}}>
               <Panel header="Search Users">
                 <Row>

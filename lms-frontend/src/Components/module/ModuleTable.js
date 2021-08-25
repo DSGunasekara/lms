@@ -121,6 +121,14 @@ const ModuleTable = () =>{
         history.push('createModule')
     }
 
+    const header = {
+        paddingLeft: 10,
+        fontFamily: 'Besley',
+        fontWeight: 'bold',
+        paddingTop: 25,
+        paddingBottom: 15
+    }
+
     return(
         <div>
             {loading ? 
@@ -131,6 +139,7 @@ const ModuleTable = () =>{
                 </>
             :
             <>
+                <h3 style={header}>Courses</h3>
                 <Table columns={columns} dataSource={data}/>
                 <Tooltip title="Create New Module">
                     <Button

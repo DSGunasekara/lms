@@ -102,6 +102,14 @@ const NoticeAdmin = () => {
        history.push('addNoticeForm')
    }
 
+   const header = {
+        paddingLeft: 10,
+        fontFamily: 'Besley',
+        fontWeight: 'bold',
+        paddingTop: 25,
+        paddingBottom: 15
+   }
+
 
     return (
         <div className="NoticeAdmin">
@@ -113,6 +121,7 @@ const NoticeAdmin = () => {
                 </>
             :
             <>
+                <h3 style={header}>Notices</h3>
                 <Table columns={columns} dataSource={data}/>
                 <Tooltip title="Create New Notice">
                     <Button

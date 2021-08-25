@@ -108,6 +108,15 @@ const EventAdmin = () =>{
         history.push('addEvent')
     }
 
+
+    const header = {
+        paddingLeft: 10,
+        fontFamily: 'Besley',
+        fontWeight: 'bold',
+        paddingTop: 25,
+        paddingBottom: 15
+    }
+
     return(
         <div>
             {loading ? 
@@ -118,6 +127,7 @@ const EventAdmin = () =>{
                 </>
             :
             <>
+                <h3 style={header}>Events</h3>
                 <Table columns={columns} dataSource={data}/>
                 <Tooltip title="Create New Event">
                     <Button

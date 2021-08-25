@@ -105,6 +105,14 @@ export default function Lectures(){
         history.push('/lecture/add')
     }
 
+    const header = {
+        paddingLeft: 10,
+        fontFamily: 'Besley',
+        fontWeight: 'bold',
+        paddingTop: 25,
+        paddingBottom: 15
+    }
+
     return(
         <div>
             {loading ? 
@@ -115,6 +123,7 @@ export default function Lectures(){
                 </>
             :
             <>
+                <h3 style={header}>Lectures</h3>
                 <Table columns={columns} dataSource={data}/>
                 <Tooltip title="Add Lecture">
                     <Button
