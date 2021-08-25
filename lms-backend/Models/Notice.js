@@ -10,7 +10,7 @@ const NoticeSchema = new mongoose.Schema({
     required: true,
   },
   inquiries: {
-    type: Number,
+    type: String,
     required: true,
   },
   createdOn: {
