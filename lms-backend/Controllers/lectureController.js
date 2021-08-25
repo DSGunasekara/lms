@@ -56,7 +56,7 @@ export const updateLecture = async(req, res) => {
         // if (req.file.path) {
         //     updatedLecture.filePath = req.file.path;
         // }
-        await Lecture.updateOne({ _id: req.params.id }, updateLecture)
+        await Lecture.updateOne({ _id: req.params.id }, req.body)
         return res.status(200).send('Lecture updated')
     } catch (error) {
         return res.status(500).send(error)
