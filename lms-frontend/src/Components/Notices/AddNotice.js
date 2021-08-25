@@ -42,64 +42,64 @@ const AddNotice = () => {
       };
 
     return (
-        <div className="AddNotice">
-            <div className="headingDiv">
-                <h1 className="heading">Add your notices here</h1>
-                <div className="animationDiv">
-                    <Lottie options={defaultOptions} height={400} width={400} />
-                </div>
-            </div>
-            
-            <div className="formDiv">
-                <form className="noticesForm">
-                    <div className="fieldsDiv">
-                        <label htmlFor="noticeTitle" className="Label">Title</label>
-                        <input 
-                            className="noticeTitle" 
+        <div className={"container"}>
+            <h1 className="display-5 text-center my-5" fw-bold text-white >Create Notice</h1>
+            <form className="rounded border p-5 bg-light w-75 d-flex flex-column mx-auto mb-4">
+                <div>
+                    <div className="mb-3 col">
+                        <label htmlFor="titleLabel" className="form-label">
+                            Title
+                        </label>
+                        <input
                             type="text"
-                            id="noticeTitle"
+                            className="form-control"
+                            id="titleLabel"
                             value={noticeData.title}
                             onChange={(e) => setNoticeData({...noticeData, title: e.target.value})}
                         />
                     </div>
-                    <div className="fieldsDiv">
-                        <label htmlFor="createdOn" className="Label">Date</label>
-                        <input 
-                            className="createdOn" 
+                    <div className="mb-3 col">
+                        <label htmlFor="dateLabel" className="form-label">
+                            Date
+                        </label>
+                        <input
                             type="date"
-                            id="createdOn"
+                            className="form-control"
+                            id="dateLabel"
                             value={noticeData.createdOn}
-                            onChange={(e) => setNoticeData({...noticeData, createdOn: e.target.value})}
+                            onChange={(e) =>setNoticeData({...noticeData, createdOn: e.target.value})}
                         />
                     </div>
-                    <div className="fieldsDiv">
-                        <label htmlFor="description" className="Label">Message</label>
-                        <textarea
-                            className="description"
-                            id="description"
+                    <div className="mb-3 col">
+                        <label htmlFor="descriptionLabel" className="form-label">
+                            Description
+                        </label>
+                        <input
+                            type="textArea"
+                            className="form-control"
+                            id="descriptionLabel"
                             value={noticeData.description}
-                            onChange={(e) => setNoticeData({...noticeData, description: e.target.value})}
+                            onChange={(e) =>setNoticeData({...noticeData, description: e.target.value})}
                         />
                     </div>
-                    <div className="fieldsDiv">
-                        <label htmlFor="inquiries" className="Label">For inquiries</label>
-                        <input 
-                            className="inquiries" 
-                            type="tel"
-                            id="inquiries"
+                    <div className="mb-3 col">
+                        <label htmlFor="inquiriesLabel" className="form-label">
+                           Inquiries
+                        </label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="inquiriesLabel"
                             value={noticeData.inquiries}
-                            onChange={(e) => setNoticeData({...noticeData, inquiries: e.target.value})}
+                            onChange={(e) =>setNoticeData({...noticeData, inquiries: e.target.value})}
                         />
                     </div>
-                    <div className="buttonDiv">
-                        <button className="submitBtn" type="submit" onClick={handleSubmit}>Submit</button>
-                    </div> 
-                
-                </form>
-            </div>
-            
-            
-            
+                    
+                    <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+                        Submit
+                    </button>
+                </div>
+            </form>
         </div>
         
     );

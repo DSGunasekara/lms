@@ -9,9 +9,9 @@ const NoticeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+  inquiries: {
+    type: Number,
+    required: true,
   },
   createdOn: {
     type: Date,
