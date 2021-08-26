@@ -74,7 +74,7 @@ const AddEvent = () => {
                             onChange={(e) =>setEventData({...eventData, date: e.target.value})}
                         />
                     </div>
-                    <div className="mb-3 col">
+                    {/* <div className="mb-3 col">
                         <label htmlFor="timeLabel" className="form-label">
                            Time
                         </label>
@@ -85,7 +85,7 @@ const AddEvent = () => {
                             value={eventData.time}
                             onChange={(e) =>setEventData({...eventData, time: e.target.value})}
                         />
-                    </div>
+                    </div> */}
                     <div className="mb-3 col">
                         <label htmlFor="venueLabel" className="form-label">
                            Venue

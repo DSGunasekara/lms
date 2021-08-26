@@ -96,7 +96,7 @@ const EditEvent = ({event}) => {
 
                     </Form.Item>
 
-                    <Form.Item
+                    {/* <Form.Item
                         name="time"
                         label="Time"
                         rules={[
@@ -107,7 +107,7 @@ const EditEvent = ({event}) => {
                         ]}
                     >
                         <Input type="time" />
-                    </Form.Item>
+                    </Form.Item> */}
 
                     <Form.Item
                         name="venue"

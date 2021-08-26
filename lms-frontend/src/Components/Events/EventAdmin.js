@@ -55,12 +55,12 @@ const EventAdmin = () =>{
             key: 'date',
 
         },
-        {
-            title: 'Time',
-            dataIndex: 'time',
-            key: 'time',
+        // {
+        //     title: 'Time',
+        //     dataIndex: 'time',
+        //     key: 'time',
 
-        },
+        // },
         {
             title: 'Venue',
             dataIndex: 'venue',
@@ -99,7 +99,7 @@ const EventAdmin = () =>{
         key: mod._id,
         title: mod.title,
         date: moment(mod.date).format('yyyy-MM-D'),
-        time: mod.time,
+        //time: mod.time,
         venue: mod.venue,
         description: mod.description
     }));
