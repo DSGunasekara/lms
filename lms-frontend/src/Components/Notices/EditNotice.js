@@ -46,7 +46,8 @@ const EditNotice = ({notice}) => {
             id,
             title: value.title,
             createdOn: value.createdOn,
-            description: value.description
+            description: value.description,
+            inquiries: value.inquiries
         }
         const res = await dispatch(updateSingleNotice(updateNotice));
         if(res.status === 200){
@@ -105,6 +106,19 @@ const EditNotice = ({notice}) => {
                         ]}
                     >
                         <TextArea rows={4} />
+                    </Form.Item>
+
+                    <Form.Item
+                        name="inquiries"
+                        label="Inquiries"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input Inquiry details!',
+                            },
+                        ]}
+                    >
+                        <Input />
                     </Form.Item>
 
                     <Form.Item {...tailFormItemLayout}>
