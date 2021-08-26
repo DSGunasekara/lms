@@ -1,11 +1,12 @@
 import React, {useState} from 'react'
-
+import { useHistory } from 'react-router';
 import { login as loginUser } from '../../actions/auth';
 import { useDispatch } from 'react-redux';
 import { Form, Input, Button, message, } from 'antd';
 
 function Login() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async(values) => {
@@ -13,6 +14,7 @@ function Login() {
     const res = await dispatch(loginUser(values));
     if(res.status === 200){
       message.success('Logged in  Successfully');
+      history.push('/users')
     } else {
       message.error('Login Error');
     }

@@ -39,7 +39,8 @@ export default function Register() {
     const res = await dispatch(registerUser(values));
     if(res.status === 200){
       message.success('Registered Successfully');
-      history.push('/login')
+      // history.push('/login')
+      form.resetFields()
     } else if(res.response.status === 409){
       message.error('User already exits. Please Login');
     } else {
