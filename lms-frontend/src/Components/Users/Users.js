@@ -49,10 +49,14 @@ function Users() {
     
     const columns = [
         {
+          title: 'Registration No',
+          dataIndex: 'regNumber',
+          key: 'regNumber',
+        },
+        {
           title: 'Name',
           dataIndex: 'name',
           key: 'name',
-          // render: text => <a>{text}</a>,
         },
         {
           title: 'Email',
@@ -97,6 +101,7 @@ function Users() {
       
       const data = users?.map((user) => ({
         key: user._id,
+        regNumber: user.regNumber,
         name: user.name,
         email: user.email,
         contactNo: user.contactNo,

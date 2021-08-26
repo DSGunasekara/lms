@@ -1,6 +1,7 @@
 import express from "express";
 import User from "../Models/User.js";
 import bcrypt from "bcrypt";
+import idGenerator from "../Services/idGenerator.js";
 
 const router = express.Router();
 
@@ -35,8 +36,9 @@ export const createUser = (async(req, res)=>{
     const { email, password } = req.body;
     const checkUser = await User.findOne({ email });
     if (checkUser) return res.status(409).send("User already exits");
+    const id = await idGenerator(req.body.role);
 
-    const user = new User({ ...req.body });
+    const user = new User({ regNumber: id, ...req.body });
 
     //hash the password
     const salt = await bcrypt.genSalt(10);

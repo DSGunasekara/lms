@@ -137,10 +137,10 @@ export default function Register() {
                   ]}
                 >
                   <Select placeholder="select role">
-                    <Option value="admin">Admin</Option>
-                    <Option value="lecturer">Lecturer</Option>
-                    <Option value="labInstructor">Lab Instructor</Option>
-                    <Option value="student">Student</Option>
+                    <Option value="Admin">Admin</Option>
+                    <Option value="Lecturer">Lecturer</Option>
+                    <Option value="Lab Instructor">Lab Instructor</Option>
+                    <Option value="Student">Student</Option>
                   </Select>
                 </Form.Item>
 

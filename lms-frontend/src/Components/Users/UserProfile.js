@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { Row, Col, Layout, Avatar, Tag, Divider, Skeleton, Tooltip, Button } from 'antd';
 import { UserOutlined, MailOutlined, PhoneOutlined,
-     SettingOutlined, ReadOutlined, UngroupOutlined,
+     SettingOutlined, ReadOutlined, UngroupOutlined, IdcardOutlined
 } from '@ant-design/icons';
 
 import { getUser } from '../../actions/Users';
@@ -72,6 +72,9 @@ function UserProfile() {
                         </div>
                         <div style={{padding: 5}}>
                             <UserOutlined style={{marginRight: 10}} />{ user.name }
+                        </div>
+                        <div style={{padding: 5}}>
+                            <IdcardOutlined style={{marginRight: 10}} />{ user.regNumber }
                         </div>
                         <div style={{padding: 5}}>
                             <MailOutlined style={{marginRight: 10}} />{ user.email }
