@@ -25,6 +25,14 @@ const UserSchema = new mongoose.Schema({
   role: {
     type: String,
   },
+  modules: [
+    {
+      module: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Module"
+      },
+    }
+  ]
 });
 
 const User = mongoose.model("User", UserSchema);

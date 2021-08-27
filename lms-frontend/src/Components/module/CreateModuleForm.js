@@ -29,11 +29,11 @@ const CreateModuleForm = () =>{
     const userData = useSelector((state) => state.UserReducer.users)
 
     //filter labInstructor from the UserData
-    option_lab = userData?.filter((user) => user.role === "labInstructor").map((lab) => ({
+    option_lab = userData?.filter((user) => user.role === "Lab Instructor").map((lab) => ({
         value: lab._id, label: lab.name}))
 
     //filter lecturer from the UserData
-    option_lec = userData?.filter((user)=> user.role === "lecturer").map((lec) =>({
+    option_lec = userData?.filter((user)=> user.role === "Lecturer").map((lec) =>({
         value:lec._id, label: lec.name}))
 
 

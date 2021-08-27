@@ -9,6 +9,7 @@ import lectureRoute from './Routes/lecture.js'
 import noticeRoute from './Routes/notice.js'
 import fileRoute from './Routes/file.js'
 import eventRoute from './Routes/event.js'
+import resultRoute from './Routes/results.js'
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use('/api/lecture', lectureRoute);
 app.use('/api/notice', noticeRoute);
 app.use('/api/file', fileRoute);
 app.use('/api/event', eventRoute);
+app.use('/api/results', resultRoute);
 
 const PORT = process.env.PORT || 5000;
 

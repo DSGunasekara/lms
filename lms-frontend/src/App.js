@@ -35,7 +35,9 @@ import {
   NotificationOutlined,
   CoffeeOutlined,
   FileExcelOutlined,
+  LineChartOutlined,
 } from '@ant-design/icons';
+import Results from './Components/Results/Results';
 
 const { Header, Sider, Content } = Layout;
 
@@ -114,6 +116,10 @@ function App() {
                 Event Module
                 <Link to="/eventAdmin"></Link>
               </Menu.Item>
+              <Menu.Item key="6" icon={<LineChartOutlined /> }>
+                Result Module
+                <Link to="/results"></Link>
+              </Menu.Item>
             </Menu>
           </Sider>
           <Layout className="site-layout" style={{marginLeft: collapsed ? 75 : 200}}>
@@ -160,6 +166,7 @@ function App() {
                 <Route path={'/addEvent'} exact component={AddEvent}></Route>
                 <Route path={'/eventAdmin'} exact component={EventAdmin}></Route>
                 <Route path={'/editEvent/:id'} component={EditEvent}></Route>
+                <Route path={'/results'} exact component={Results}></Route>
 
                 <Route path="" component={NotFound} />
               </Switch>
