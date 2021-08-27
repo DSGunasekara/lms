@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getModules, removeModule} from "../../actions/Modules";
+import { getResults, deleteResult } from "../../actions/result";
 import 'antd/dist/antd.css';
 import {Table, Space, Button, Tooltip, message, Popconfirm, Skeleton} from 'antd';
 import {DeleteFilled, EditFilled, EyeFilled, PlusOutlined} from '@ant-design/icons';
@@ -11,75 +11,69 @@ const Results = () =>{
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const [module, setModule] = useState([]);
+    const [result, setResult] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() =>{
         setLoading(true)
-        dispatch(getModules());
+        dispatch(getResults());
     }, [dispatch])
 
-    const moduleData = useSelector( (state) => state.ModuleReducer.modules);
+    const resultData = useSelector( (state) => state.ResultReducer.results);
 
     useEffect( ()=>{
-        setModule(moduleData)
-        if (moduleData){
+        setResult(resultData)
+        if (resultData){
             setLoading(false)
         }
-    }, [moduleData])
+    }, [resultData])
 
    const deleteConfirm = async (e) =>{
-      const res = await dispatch(removeModule(e.key));
+      const res = await dispatch(deleteResult(e.key));
       if(res?.status === 200){
-          setModule(module.filter((mod) => mod._id !== e.key))
-          message.success('module Removed');
+          setResult(result.filter((mod) => mod._id !== e.key))
+          message.success('Result Removed');
       }else {
           message.error('An Error Occurred');
       }
    }
 
     const editConfirm = (e) =>{
-        history.push(`editModule/${e.key}`)
+        history.push(`results/edit/${e.key}`)
     }
 
-    const SingleModuleLook = (e) =>{
-        history.push(`viewModule/${e.key}`)
+    const viewResult = (e) =>{
+        history.push(`results/view/${e.key}`)
     }
 
     const columns = [
         {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
+            title: 'Module',
+            dataIndex: 'module',
+            key: 'module',
         },
         {
-            title: 'Module Code',
-            dataIndex: 'module_code',
-            key: 'module_code',
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status',
 
         },
         {
-            title: 'Lecture In Charge',
-            dataIndex: 'lecture_in_charge',
-            key: 'lecture_in_charge',
+            title: 'Passed Amount',
+            dataIndex: 'passedAmount',
+            key: 'passedAmount',
 
         },
         {
-            title: 'Lab Assistant',
-            dataIndex: 'lab_assistant',
-            key: 'lab_assistant',
+            title: 'Failed Amount',
+            dataIndex: 'failedAmount',
+            key: 'failedAmount',
 
         },
         {
-            title: 'Year',
-            dataIndex: 'year',
-            key: 'year',
-
-        },
-        {
-            title: 'Semester',
-            dataIndex: 'semester',
-            key: 'semester',
+            title: 'Hold Amount',
+            dataIndex: 'holdAmount',
+            key: 'holdAmount',
 
         },
         {
@@ -88,37 +82,36 @@ const Results = () =>{
             render: (text, record) => (
                 <Space size="middle">
                     <Popconfirm
-                        title="Are you sure to delete this user?"
+                        title="Are you sure to delete this result?"
                         onConfirm={() => deleteConfirm(record)}
                         okText="Yes"
                         cancelText="No"
                     >
-                        <Tooltip placement="bottom" title="Delete Module">
+                        <Tooltip placement="bottom" title="Delete Result">
                             <DeleteFilled/>
                         </Tooltip>
                     </Popconfirm>
-                    <Tooltip placement="bottom" title="Edit Module">
+                    <Tooltip placement="bottom" title="Edit Result">
                         <EditFilled onClick={() => editConfirm(record)} />
                     </Tooltip>
-                    <Tooltip placement="bottom" title="View Module">
-                        <EyeFilled onClick={() => SingleModuleLook(record)} />
+                    <Tooltip placement="bottom" title="View Result">
+                        <EyeFilled onClick={() => viewResult(record)} />
                     </Tooltip>
                 </Space>
             ),
         },
     ];
-    const data = module?.map((mod) =>({
-        key: mod._id,
-        name: mod.name,
-        module_code: mod.module_code,
-        lecture_in_charge: mod.lecture_in_charge?.name,
-        lab_assistant:mod.lab_assistant?.name,
-        year:mod.year.slice(0, 4),
-        semester:mod.semester
+    const data = result?.map((res) =>({
+        key: res._id,
+        module: res.module.module_code,
+        status: res.status? 'Published' : 'Not Published',
+        passedAmount: res.passedAmount,
+        failedAmount: res.failedAmount,
+        holdAmount: res.holdAmount,
     }));
 
-    const newModule = () =>{
-        history.push('createModule')
+    const newResult = () =>{
+        history.push('/results/add')
     }
 
     const header = {
@@ -141,14 +134,14 @@ const Results = () =>{
             <>
                 <h3 style={header}>Results</h3>
                 <Table columns={columns} dataSource={data}/>
-                <Tooltip title="Create New Module">
+                <Tooltip title="Create New Result">
                     <Button
                         type="primary"
                         shape="circle"
                         icon={<PlusOutlined />}
                         size='large'
                         className="fabBtn"
-                        onClick={newModule}
+                        onClick={newResult}
                     />
                 </Tooltip>
             </>

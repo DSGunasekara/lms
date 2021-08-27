@@ -62,7 +62,7 @@ export const createResult = (async(req, res)=>{
 //update a result
 export const updateResult = (async(req, res)=>{
   try {
-    const checkResult = await Results.findOne({ _id: req.params.id });
+    const checkResult = await Results.findById({ _id: req.params.id });
     if (!checkResult) return res.status(404).send("Result does not exits");
 
     await Results.updateOne({ _id: req.params.id }, req.body);
@@ -76,7 +76,7 @@ export const updateResult = (async(req, res)=>{
 //delete result
 export const deleteResult = (async(req, res)=>{
   try {
-    const result = await Results.findOne({ _id: req.params.id });
+    const result = await Results.findById({ _id: req.params.id });
     if (!result) return res.status(404).send("Result does not exits");
 
     await result.remove((error, _) => {

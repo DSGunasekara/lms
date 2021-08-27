@@ -55,3 +55,10 @@ export const fetchSingleEvent = (id) => API.get(`/event/${id}`);
 export const createEvent = (event) => API.post('/event', event);
 export const updateEvent = (updateEvent) => API.patch(`/event/${updateEvent.id}`, updateEvent);
 export const deleteEvent = (id) => API.delete(`event/${id}`);
+
+//results
+export const fetchResults = () => API.get('/results')
+export const fetchResult = (id) => API.get(`/results/${id}`);
+export const createResult = (result) => API.post('/results', result);
+export const updateResult = (result) => API.patch(`/results/${result.id}`, result);
+export const deleteResult = (id) => API.delete(`results/${id}`);
