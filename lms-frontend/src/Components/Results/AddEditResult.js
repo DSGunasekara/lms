@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom'
 
 import { Form, Input, Button, message, Skeleton, Select, Space } from 'antd';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 
 import { getUsers } from '../../actions/Users';
 import { getModules } from '../../actions/Modules'
