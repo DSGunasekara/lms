@@ -67,7 +67,6 @@ function AddEditResult() {
         if(result) {
             values.module_code = result.module._id
         }
-        console.log(values);
         setLoadingBtn(true)
         setSelectedModule(values.module_code)
         const st = []
@@ -100,7 +99,7 @@ function AddEditResult() {
                 }
             }
         })
-        // console.log(students);
+
         const result = {
             module: selectedModule,
             passedAmount,
@@ -108,9 +107,9 @@ function AddEditResult() {
             holdAmount,
             students
         }
-        // console.log(result);
+
         if (id) {
-            const res = await dispatch(updateResult({id, ...result}))
+            const res = await dispatch(updateResult({id, status: false, ...result}))
             if (res.status === 200) {
                 message.success('Result Uploaded Successfully')
             } else {
