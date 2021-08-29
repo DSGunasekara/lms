@@ -5,9 +5,9 @@ import {updateModules} from "../api/index.js";
 //getting all the modules
 export const getModules = () => async (dispatch) =>{
     try{
-        const {data} = await api.fetchModules();
-        dispatch ({type: FETCH_MODULE, payload: data});
-
+        const res = await api.fetchModules();
+        dispatch ({type: FETCH_MODULE, payload: res.data});
+        return res;
     }catch (error){
         console.log("getting workshop error" + error);
     }

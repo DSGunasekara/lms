@@ -10,6 +10,16 @@ export const getResults = () => async (dispatch) =>{
     }
 }
 
+export const createResult = (result) => async() => {
+    try {
+        const res = await api.createResult(result);
+        return res;
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
+
 export const deleteResult = (id) => async() => {
     try {
         const res = await api.deleteResult(id);
@@ -26,7 +36,7 @@ export const getResult = (id) => async() => {
         return data;
     } catch (error) {
         console.log(error);
-        return error;
+        return {...error.response};
     }
 }
 

@@ -39,6 +39,7 @@ import {
   LineChartOutlined,
 } from '@ant-design/icons';
 import Results from './Components/Results/Results';
+import ViewResult from './Components/Results/ViewResult';
 
 const { Header, Sider, Content } = Layout;
 
@@ -169,7 +170,7 @@ function App() {
                 <Route path={'/editEvent/:id'} component={EditEvent}></Route>
                 <Route path={'/results'} exact component={Results}></Route>
                 <Route path={'/results/add'} exact component={AddEditResult}></Route>
-                <Route path={'/results/view/:id'} component={AddEditResult}></Route>
+                <Route path={'/results/view/:id'} component={ViewResult}></Route>
                 <Route path={'/results/edit/:id'} component={AddEditResult}></Route>
 
                 <Route path="" component={NotFound} />

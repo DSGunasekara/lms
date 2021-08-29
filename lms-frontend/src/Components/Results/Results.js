@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import { getResults, deleteResult } from "../../actions/result";
+import { getResults, deleteResult, updateResult } from "../../actions/result";
 import 'antd/dist/antd.css';
 import {Table, Space, Button, Tooltip, message, Popconfirm, Skeleton} from 'antd';
-import {DeleteFilled, EditFilled, EyeFilled, PlusOutlined} from '@ant-design/icons';
+import {DeleteFilled, EditFilled, EyeFilled, PlusOutlined, CheckOutlined, CloseOutlined} from '@ant-design/icons';
 import {useHistory} from "react-router";
 
 const Results = () =>{
@@ -33,6 +33,28 @@ const Results = () =>{
       if(res?.status === 200){
           setResult(result.filter((mod) => mod._id !== e.key))
           message.success('Result Removed');
+      }else {
+          message.error('An Error Occurred');
+      }
+   }
+
+   const publishConfirm = async (e) =>{
+    const updatedResult = result.filter(res => res._id === e.key)[0]
+      const res = await dispatch(updateResult({id: e.key, ...updatedResult, status: true}));
+      if(res?.status === 200){
+          setResult(result.filter((mod) => mod._id !== e.key))
+          message.success('Result Published');
+      }else {
+          message.error('An Error Occurred');
+      }
+   }
+
+   const unPublishConfirm = async (e) =>{
+    const updatedResult = result.filter(res => res._id === e.key)[0]
+      const res = await dispatch(updateResult({id: e.key, ...updatedResult, status: false}));
+      if(res?.status === 200){
+          setResult(result.filter((mod) => mod._id !== e.key))
+          message.success('Result UnPublished');
       }else {
           message.error('An Error Occurred');
       }
@@ -81,6 +103,29 @@ const Results = () =>{
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
+                    { record.status === 'Not Published' ?
+                    <Popconfirm
+                        title="Are you sure to publish this result?"
+                        onConfirm={() => publishConfirm(record)}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <Tooltip placement="bottom" title="Publish Result">
+                            <CheckOutlined />
+                        </Tooltip>
+                    </Popconfirm>
+                    :
+                    <Popconfirm
+                        title="Are you sure to unpublish this result?"
+                        onConfirm={() => unPublishConfirm(record)}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <Tooltip placement="bottom" title="UnPublish Result">
+                            <CloseOutlined />
+                        </Tooltip>
+                    </Popconfirm>
+                    }
                     <Popconfirm
                         title="Are you sure to delete this result?"
                         onConfirm={() => deleteConfirm(record)}

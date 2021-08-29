@@ -3,8 +3,9 @@ import * as api from '../api/index'
 //get all users
 export const getUsers = () => async (dispatch) =>{
     try{
-        const {data} = await api.fetchUsers();
-        dispatch ({type: FETCH_USERS, payload:data})
+        const res = await api.fetchUsers();
+        dispatch ({type: FETCH_USERS, payload: res.data})
+        return res;
     }catch (error){
         console.log("getting user error" + error);
     }
