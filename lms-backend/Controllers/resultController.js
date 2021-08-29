@@ -10,7 +10,7 @@ export const getResults = (async(req, res)=>{
     const results = await Results.find({})
         .populate({
             path: 'students.student',
-            select: 'name'
+            select: 'name regNumber'
         })
         .populate({
             path: "module"
@@ -28,7 +28,7 @@ export const getResult = (async(req, res)=>{
     const result = await Results.findOne({ _id: req.params.id })
     .populate({
         path: 'students.student',
-        select: 'name'
+        select: 'name regNumber'
     })
     .populate({
         path: "module"

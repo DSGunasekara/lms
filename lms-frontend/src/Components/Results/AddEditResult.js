@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom'
 
 import { Form, Input, Button, message, Skeleton, Select, Space } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 import { getUsers } from '../../actions/Users';
 import { getModules } from '../../actions/Modules'
-import { createResult } from '../../actions/result'
+import { createResult, getResult, updateResult } from '../../actions/result'
 
 function AddEditResult() {
     const dispatch = useDispatch();
@@ -17,6 +18,19 @@ function AddEditResult() {
     const [loadingBtn, setLoadingBtn] = useState(false);
     const [loading, setLoading] = useState(false);
     const [disabledBtn, setDisabledBtn] = useState(false);
+    const [result, setResult] = useState('')
+    const [disableSearch, setDisableSearch] = useState(false)
+
+    const { id } = useParams();
+
+    const fetchResult = async(id) => {
+        setLoading(true)
+        const res = await dispatch(getResult(id))
+        setResult(res)
+        setLoading(false)
+        form.setFieldsValue(res.module)
+        setDisableSearch(true)
+    }
 
     const fetchUsers = async() => {
         setLoading(true)
@@ -44,9 +58,16 @@ function AddEditResult() {
     useEffect(()=>{
         fetchUsers()
         fetchModules()
+        if(id) {
+            fetchResult(id)
+        }
     },[])
 
     const onSearch = async(values) => {
+        if(result) {
+            values.module_code = result.module._id
+        }
+        console.log(values);
         setLoadingBtn(true)
         setSelectedModule(values.module_code)
         const st = []
@@ -87,18 +108,34 @@ function AddEditResult() {
             holdAmount,
             students
         }
-        const res = await dispatch(createResult(result))
-        if (res.status === 200) {
-            message.success('Result Uploaded Successfully')
-          } else {
-            message.error(res.data)
-          }
+        // console.log(result);
+        if (id) {
+            const res = await dispatch(updateResult({id, ...result}))
+            if (res.status === 200) {
+                message.success('Result Uploaded Successfully')
+            } else {
+                message.error(res.data)
+            }
+        } else {
+            const res = await dispatch(createResult(result))
+            if (res.status === 200) {
+                message.success('Result Uploaded Successfully')
+            } else {
+                message.error(res.data)
+            }
+        }
     };
 
     const handleAdd = (add)=> {
-        studentList.forEach((student)=> {
-            add({'regNumber': student.regNumber, 'name': student.name})
-        })
+        if (result) {
+            result.students.forEach((student) => {
+                add({'regNumber': student.student.regNumber, 'name': student.student.name, 'grade': student.grade})
+            })
+        } else {
+            studentList.forEach((student)=> {
+                add({'regNumber': student.regNumber, 'name': student.name})
+            })
+        }
         setDisabledBtn(true)
     }
 
@@ -144,7 +181,7 @@ function AddEditResult() {
                     },
                 ]}
                 >
-                <Select style={{ minWidth: '300px' }}>
+                <Select style={{ minWidth: '300px' }} disabled={disableSearch}>
                     {children}
                 </Select>
                 </Form.Item>
@@ -154,7 +191,7 @@ function AddEditResult() {
                     </Button>
                 </Form.Item>
             </Form>
-            <p>Founded<b> {studentList.length}</b> students</p>
+            <p>Found<b> {studentList.length}</b> students</p>
             {studentList.length > 0 ?
             <Form name="dynamic_form_nest_item" onFinish={onFinish} layout="vertical" autoComplete="off" form={userForm}>
                 <Form.List name="users">
