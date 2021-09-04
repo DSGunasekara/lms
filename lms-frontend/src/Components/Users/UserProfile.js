@@ -112,7 +112,7 @@ function UserProfile() {
                     </div>
                 </Sider>
                 <Content>
-                    {isEdit? <EditUser user={user} userUpdate={updateUser} />: isGPA ? <GPA/>: isModule ? 'user modules': ''}
+                    {isEdit? <EditUser user={user} userUpdate={updateUser} />: isGPA ? <GPA user={user}/>: isModule ? 'user modules': ''}
                 </Content>
             </>
             }
