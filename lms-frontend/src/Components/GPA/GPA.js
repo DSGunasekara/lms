@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {useDispatch} from "react-redux";
-import { Table, Skeleton } from 'antd';
+import { Table, Skeleton, Descriptions } from 'antd';
 
 import { getResults } from '../../actions/result'
 
@@ -8,6 +8,7 @@ function GPA({user}) {
     const dispatch = useDispatch()
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [gpa, setGpa] = useState()
 
     const fetchResults = async() => {
         setLoading(true)
@@ -30,6 +31,45 @@ function GPA({user}) {
     useEffect(()=> {
         fetchResults()
     }, [])
+
+    useEffect(() => {
+        calculateGPA()
+    }, [results])
+
+    const calculateGPA = () => {
+        let gradePoints = 0;
+        let noOfCredit = 0;
+
+        results.forEach(result => {
+            noOfCredit += 4
+            switch (result.result) {
+                case 'A':
+                    gradePoints += 4*4
+                    break;
+                case 'B':
+                    gradePoints += 4*3
+                    break;
+                case 'C':
+                    gradePoints += 4*2
+                    break;
+                case 'D':
+                    gradePoints += 4*1
+                    break;
+                case 'E':
+                    gradePoints += 0
+                    break; 
+                case 'H':
+                    gradePoints += 0
+                    break;
+                default:
+                    break;
+            }
+        })
+        setGpa({
+            gradePoints,
+            noOfCredit
+        })
+    }
 
     const columns = [
         {
@@ -72,7 +112,17 @@ function GPA({user}) {
                     <Skeleton active/>
                 </>
                 :
-                <Table columns={columns} dataSource={data}  pagination={false} />
+                <>
+                    <h4>GPA Information</h4>
+                    <Descriptions style={{backgroundColor: '#fff'}} bordered>
+                        <Descriptions.Item label="Cumulative Grade Points"><b>{gpa?.gradePoints}</b></Descriptions.Item>
+                        <Descriptions.Item label="Cumulative Credits"><b>{gpa?.noOfCredit}</b></Descriptions.Item>
+                        <Descriptions.Item label="Cumulative GPA"><b>{gpa?.gradePoints/gpa?.noOfCredit}</b></Descriptions.Item>
+                        {/* <Descriptions.Item label="Order time">2018-04-24 18:00:00</Descriptions.Item> */}
+                    </Descriptions>
+                    <br /><br />
+                    <Table columns={columns} dataSource={data}  pagination={false} />
+                </>
             }
         </div>
     )
