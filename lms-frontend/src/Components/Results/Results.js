@@ -42,7 +42,6 @@ const Results = () =>{
     const updatedResult = result.filter(res => res._id === e.key)[0]
       const res = await dispatch(updateResult({id: e.key, ...updatedResult, status: true}));
       if(res?.status === 200){
-          setResult(result.filter((mod) => mod._id !== e.key))
           message.success('Result Published');
       }else {
           message.error('An Error Occurred');
@@ -53,7 +52,6 @@ const Results = () =>{
     const updatedResult = result.filter(res => res._id === e.key)[0]
       const res = await dispatch(updateResult({id: e.key, ...updatedResult, status: false}));
       if(res?.status === 200){
-          setResult(result.filter((mod) => mod._id !== e.key))
           message.success('Result UnPublished');
       }else {
           message.error('An Error Occurred');
