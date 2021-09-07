@@ -3,6 +3,8 @@ import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import { ToastProvider } from 'react-toast-notifications';
 import { useHistory } from 'react-router';
 
+import { ROLES } from './constants/constant';
+import { ProtectedRoute } from './Components/Auth/ProtectedRoute';
 import Login from './Components/Auth/Login'
 import NotFound from './Components/Common/NotFound';
 import modulePage from "./Pages/modulePage";
@@ -145,7 +147,7 @@ function App() {
             >
               <Switch>
                 <Route path={'/'} exact component={Login}></Route>
-                <Route path={'/users'} exact component={Users}></Route>
+                <ProtectedRoute path={'/users'} exact component={Users} roles={[ROLES.ADMIN, ROLES.LAB_INSTRUCTOR, ROLES.LECTURER]}></ProtectedRoute>
                 <Route path={'/register'} exact component={Register} />
                 <Route path={'/updateUser/:id'} component={EditUser} />
                 <Route path={'/profile/:id'} component={UserProfile} />
