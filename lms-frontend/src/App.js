@@ -21,7 +21,9 @@ import Lectures from './Components/Lectures/Lectures';
 import AddEvent from './Components/Events/AddEvent';
 import EventAdmin from './Components/Events/EventAdmin';
 import EditEvent from './Components/Events/EditEvent';
-import AddEditResult from './Components/Results/AddEditResult'
+import AddEditResult from './Components/Results/AddEditResult';
+
+import {Show_all_users} from "./Components/students_display_users/Show_all_users";
 
 import 'antd/dist/antd.css';
 import './index.css';
@@ -172,6 +174,8 @@ function App() {
                 <Route path={'/results/add'} exact component={AddEditResult}></Route>
                 <Route path={'/results/view/:id'} component={ViewResult}></Route>
                 <Route path={'/results/edit/:id'} component={AddEditResult}></Route>
+
+                <Route path={'/student/academicStaff'} component={Show_all_users}></Route>
 
                 <Route path="" component={NotFound} />
               </Switch>
