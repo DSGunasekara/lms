@@ -1,45 +1,45 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getLectures, deleteLecture, } from "../../actions/lectures";
+import {getTimetables, deleteTimetable, } from "../../actions/timetables";
 import 'antd/dist/antd.css';
 import {Table, Space, Button, Tooltip, message, Popconfirm, Skeleton} from 'antd';
 import {DeleteFilled, EditFilled, PlusOutlined, DownloadOutlined} from '@ant-design/icons';
 import {useHistory} from "react-router";
 
-export default function Lectures(){
+export default function Timetables(){
 
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const [lecture, setLecture] = useState([]);
+    const [timetable, setTimetable] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setLoading(true)
-        dispatch(getLectures());
+        dispatch(getTimetables());
     }, [dispatch])
 
-    const lectureData = useSelector((state) => state.LectureReducer.lectures);
+    const timetableData = useSelector((state) => state.TimetableReducer.timetables);
 
     useEffect(() => {
-        setLecture(lectureData)
-        if(lectureData){
+        setTimetable(timetableData)
+        if(timetableData){
             setLoading(false)
         }
-    }, [lectureData])
+    }, [timetableData])
 
     const deleteConfirm = async (e) =>{
-        const res = await dispatch(deleteLecture(e.key));
+        const res = await dispatch(deleteTimetable(e.key));
         if(res?.status === 200){
-            setLecture(lecture.filter((lec) => lec._id !== e.key))
-            message.success('Lecture deleted successfully');
+            setTimetable(timetable.filter((timetable) => timetable._id !== e.key))
+            message.success('Timetable deleted successfully');
         }else {
             message.error('Delete Error');
         }
      }
 
     const editConfirm = (e) =>{
-        history.push(`lecture/edit/${e.key}`)
+        history.push(`timetable/edit/${e.key}`)
     }
 
     const columns = [
@@ -49,15 +49,15 @@ export default function Lectures(){
             key: 'title',
         },
         {
-            title: 'Module Code',
-            dataIndex: 'module_code',
-            key: 'module_code',
+            title: 'Year',
+            dataIndex: 'year',
+            key: 'year',
 
         },
         {
-            title: 'Week',
-            dataIndex: 'week',
-            key: 'week',
+            title: 'Semester',
+            dataIndex: 'semester',
+            key: 'semester',
 
         },
         {
@@ -73,36 +73,36 @@ export default function Lectures(){
             render: (text, record) => (
                 <Space size="middle">
                     <Popconfirm
-                        title="Are you sure to delete this lecture?"
+                        title="Are you sure to delete this timetable?"
                         onConfirm={() => deleteConfirm(record)}
                         okText="Yes"
                         cancelText="No"
                     >
-                        <Tooltip placement="bottom" title="Delete Lecture">
+                        <Tooltip placement="bottom" title="Delete Timetable">
                             <DeleteFilled/>
                         </Tooltip>
                     </Popconfirm>
-                    <Tooltip placement="bottom" title="Edit Lecture">
+                    <Tooltip placement="bottom" title="Edit Timetable">
                         <EditFilled onClick={() => editConfirm(record)} />
                     </Tooltip>
-                    <Tooltip placement="bottom" title="Download Lecture">
+                    <Tooltip placement="bottom" title="Download Timetable">
                         <DownloadOutlined onClick={() => window.open(`http://localhost:5000/${record.filePath}`)} />
                     </Tooltip>
                 </Space>
             ),
         },
     ];
-    const data = lecture?.map((lec) =>({
-        key: lec._id,
-        title: lec.title,
-        module_code: lec.module_code,
-        week: lec.week,
-        filePath:lec.filePath,
-        description:lec.description
+    const data = timetable?.map((timetable) =>({
+        key: timetable._id,
+        title: timetable.title,
+        year: timetable.year,
+        semester: timetable.semester,
+        filePath:timetable.filePath,
+        description:timetable.description
     }));
 
-    const newLecture= () =>{
-        history.push('/lecture/add')
+    const newTimetable= () =>{
+        history.push('/timetable/add')
     }
 
     const header = {
@@ -123,16 +123,16 @@ export default function Lectures(){
                 </>
             :
             <>
-                <h3 style={header}>Lectures</h3>
+                <h3 style={header}>Timetables</h3>
                 <Table columns={columns} dataSource={data}/>
-                <Tooltip title="Add Lecture">
+                <Tooltip title="Add Timetable">
                     <Button
                         type="primary"
                         shape="circle"
                         icon={<PlusOutlined />}
                         size='large'
                         className="fabBtn"
-                        onClick={newLecture}
+                        onClick={newTimetable}
                     />
                 </Tooltip>
             </>

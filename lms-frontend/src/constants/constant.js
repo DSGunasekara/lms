@@ -41,3 +41,8 @@ export const UPDATE_EVENT = 'UPDATE_EVENT';
 export const DELETE_EVENT = 'DELETE_EVENT';
 
 export const FETCH_RESULTS = 'FETCH_RESULT'
+
+//timetables
+export const FETCH_TIMETABLE = 'FETCH_TIMETABLE';
+export const CREATE_TIMETABLE= 'CREATE_TIMETABLE';
+export const UPDATE_TIMETABLE = 'UPDATE_TIMETABLE';

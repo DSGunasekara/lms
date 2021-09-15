@@ -21,7 +21,10 @@ import Lectures from './Components/Lectures/Lectures';
 import AddEvent from './Components/Events/AddEvent';
 import EventAdmin from './Components/Events/EventAdmin';
 import EditEvent from './Components/Events/EditEvent';
-import AddEditResult from './Components/Results/AddEditResult'
+import AddEditResult from './Components/Results/AddEditResult';
+
+import AddEditTimetable from './Components/Timetables/AddEditTimetable';
+import Timetables from './Components/Timetables/Timetables';
 
 import 'antd/dist/antd.css';
 import './index.css';
@@ -122,6 +125,10 @@ function App() {
                 Result Module
                 <Link to="/results"></Link>
               </Menu.Item>
+              <Menu.Item key="7">
+                Timetable Module
+                <Link to="/results"></Link>
+              </Menu.Item>
             </Menu>
           </Sider>
           <Layout className="site-layout" style={{marginLeft: collapsed ? 75 : 200}}>
@@ -156,6 +163,7 @@ function App() {
                 <Route path={'/addNoticeForm'} exact component={AddNotice}></Route>
                 <Route path={'/noticeAdmin'} exact component={NoticeAdmin}></Route>
                 <Route path={'/editNotice/:id'} component={EditNotice}></Route>
+
                 <Route path={'/lecture/add'} exact component={AddEditLecture} />
                 <Route path={'/lecture/edit/:id'} component={AddEditLecture} />
                 <Route path={'/lectures'} exact component={Lectures} />
@@ -172,6 +180,10 @@ function App() {
                 <Route path={'/results/add'} exact component={AddEditResult}></Route>
                 <Route path={'/results/view/:id'} component={ViewResult}></Route>
                 <Route path={'/results/edit/:id'} component={AddEditResult}></Route>
+
+                <Route path={'/timetable/add'} exact component={AddEditTimetable} />
+                <Route path={'/timetable/edit/:id'} component={AddEditTimetable} />
+                <Route path={'/timetables'} exact component={Timetables} />
 
                 <Route path="" component={NotFound} />
               </Switch>
