@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { ToastProvider } from 'react-toast-notifications';
 
+import { ROLES } from './constants/constant';
+import { ProtectedRoute } from './Components/Auth/ProtectedRoute';
 import Login from './Components/Auth/Login'
 import NotFound from './Components/Common/NotFound';
 import modulePage from "./Pages/modulePage";
@@ -21,8 +23,6 @@ import AddEvent from './Components/Events/AddEvent';
 import EventAdmin from './Components/Events/EventAdmin';
 import EditEvent from './Components/Events/EditEvent';
 import AddEditResult from './Components/Results/AddEditResult';
-import { ProtectedRoute } from './Components/Auth/ProtectedRoute';
-import { ROLES } from './constants/constant';
 
 import AddEditTimetable from './Components/Timetables/AddEditTimetables';
 import Timetables from './Components/Timetables/Timetables';

@@ -6,7 +6,7 @@ export const ROLES = {
   ADMIN: 'Admin',
   LECTURER: 'Lecturer',
   STUDENT: 'Student',
-  LabInstructor: 'Lab Instructor'
+  LAB_INSTRUCTOR: 'Lab Instructor'
 };
 
 
