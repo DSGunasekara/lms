@@ -24,6 +24,7 @@ import EditEvent from './Components/Events/EditEvent';
 import AddEditResult from './Components/Results/AddEditResult';
 
 import {Show_all_users} from "./Components/students_display_users/Show_all_users";
+import AcademicSingleUser from "./Components/students_display_users/AcademicSingleUser";
 
 import 'antd/dist/antd.css';
 import './index.css';
@@ -175,7 +176,8 @@ function App() {
                 <Route path={'/results/view/:id'} component={ViewResult}></Route>
                 <Route path={'/results/edit/:id'} component={AddEditResult}></Route>
 
-                <Route path={'/student/academicStaff'} component={Show_all_users}></Route>
+                <Route path={'/student/academicStaff'} exact component={Show_all_users}></Route>
+                <Route path={'/student/academicStaff/:id'} component={AcademicSingleUser}></Route>
 
                 <Route path="" component={NotFound} />
               </Switch>
