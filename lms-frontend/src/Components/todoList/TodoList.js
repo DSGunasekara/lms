@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
 import _ from "lodash";
 import {v4} from "uuid";
+
+import {getTask, createTask} from '../../actions/todo';
 
 import "./todoList.css";
 
@@ -19,18 +22,22 @@ console.log(item)
 
 const TodoList = () =>{
 
+    const dispatch = useDispatch();
+
+    // useEffect (() =>{
+    //     dispatch(getTask());
+    // }, [dispatch])
+
+
     const [text, setText] = useState("")
     const [state, setState] = useState({
         "todo": {
-            title:"Todo",
             items:[item]
         },
         "in-progress":{
-            title:"In Progress",
             items:[item2]
         },
         "done":{
-            title: "Completed",
             items:[]
         }
     })
@@ -47,9 +54,12 @@ const TodoList = () =>{
         // Creating a copy of item before removing it from state
         const itemCopy = {...state[source.droppableId].items[source.index]}
 
+
         setState(prev => {
             prev = {...prev}
+
             // Remove from previous items array
+        
             prev[source.droppableId].items.splice(source.index, 1)
       
       
@@ -65,7 +75,6 @@ const TodoList = () =>{
           return {
             ...prev,
             todo: {
-              title: "Todo",
               items: [
                 {
                   id: v4(),
@@ -78,6 +87,10 @@ const TodoList = () =>{
         })
     
         setText("")
+      }
+
+      const save = () =>{
+        dispatch(createTask(state));
       }
 
 
@@ -127,6 +140,11 @@ const TodoList = () =>{
                     )
                 })}
             </DragDropContext>
+            <div>
+                <button onClick={save}> 
+                    Save
+                </button>
+            </div>
         </div>
     )
 }

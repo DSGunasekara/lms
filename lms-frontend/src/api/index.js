@@ -62,3 +62,9 @@ export const fetchResult = (id) => API.get(`/results/${id}`);
 export const createResult = (result) => API.post('/results', result);
 export const updateResult = (result) => API.patch(`/results/${result.id}`, result);
 export const deleteResult = (id) => API.delete(`results/${id}`);
+
+
+//todo
+export const fetchTasks = () => API.get('/todo')
+export const fetchTask = (id) => API.get(`/todo/${id}`);
+export const createTask = (task) => API.post('/todo', task);
