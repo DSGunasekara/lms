@@ -26,6 +26,8 @@ import AddEditResult from './Components/Results/AddEditResult';
 import {Show_all_users} from "./Components/students_display_users/Show_all_users";
 import AcademicSingleUser from "./Components/students_display_users/AcademicSingleUser";
 
+import TodoList from "./Components/todoList/TodoList";
+
 import 'antd/dist/antd.css';
 import './index.css';
 import { Layout, Menu } from 'antd';
@@ -178,6 +180,9 @@ function App() {
 
                 <Route path={'/student/academicStaff'} exact component={Show_all_users}></Route>
                 <Route path={'/student/academicStaff/:id'} component={AcademicSingleUser}></Route>
+
+                <Route path={'/todoList'} exact component={TodoList}></Route>
+
 
                 <Route path="" component={NotFound} />
               </Switch>
