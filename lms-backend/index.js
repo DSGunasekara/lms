@@ -10,6 +10,7 @@ import noticeRoute from './Routes/notice.js'
 import fileRoute from './Routes/file.js'
 import eventRoute from './Routes/event.js'
 import resultRoute from './Routes/results.js'
+import todo from './Routes/todo.js'
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use('/api/notice', noticeRoute);
 app.use('/api/file', fileRoute);
 app.use('/api/event', eventRoute);
 app.use('/api/results', resultRoute);
+app.use('/api/todo', todo);
 
 const PORT = process.env.PORT || 5000;
 
