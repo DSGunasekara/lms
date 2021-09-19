@@ -225,8 +225,8 @@ const ModuleTable = () => {
                   <Input placeholder="Lab Assistant" value={searchAssist} onChange={(e) => setSearchAssist(e.target.value)} />
                 </Col>
                 <Col span={6} style={{ margin: '10px' }}>
-                  {/* <Input placeholder="Year" value={searchYear} onChange={(e) => setSearchYear(e.target.value)} /> */}
                   <DatePicker
+                    style={{width: '100%'}}
                     picker="year"
                     value={searchYear}
                     onChange={(e) => setSearchYear(e)}

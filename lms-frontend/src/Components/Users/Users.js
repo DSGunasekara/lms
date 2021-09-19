@@ -175,6 +175,7 @@ function Users() {
   }
 
   const clear = () => {
+    setSearchReg('')
     setSearchContact('')
     setSearchEmail('')
     setSearchName('')
