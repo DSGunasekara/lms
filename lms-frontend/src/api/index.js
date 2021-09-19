@@ -75,6 +75,8 @@ export const deleteResult = (id) => API.delete(`results/${id}`);
 export const fetchTasks = () => API.get("/todo");
 export const fetchTask = (id) => API.get(`/todo/${id}`);
 export const createTask = (task) => API.post("/todo", task);
+export const updateTask = (task) => API.patch(`/todo/${task.id}`, task);
+
 //timetables
 export const uploadTimetable = (timetable) => API.post("/timetable", timetable);
 export const fetchTimetables = () => API.get("/timetable");

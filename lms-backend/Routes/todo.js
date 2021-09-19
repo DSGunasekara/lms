@@ -1,10 +1,16 @@
-import express from 'express';
+import express from "express";
 const router = express.Router();
 
-import { getTask, createTask, getTasks } from '../Controllers/todoListController.js';
+import {
+  getTask,
+  createTask,
+  getTasks,
+  updateTask,
+} from "../Controllers/todoListController.js";
 
-router.post('/', createTask);
-router.get('/:id', getTask);
-router.get('/', getTasks);
+router.post("/", createTask);
+router.get("/:id", getTask);
+router.get("/", getTasks);
+router.patch("/:id", updateTask);
 
 export default router;
