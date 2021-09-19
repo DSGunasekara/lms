@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { ToastProvider } from 'react-toast-notifications';
-import { useHistory } from 'react-router';
 
+import { ROLES } from './constants/constant';
+import { ProtectedRoute } from './Components/Auth/ProtectedRoute';
 import Login from './Components/Auth/Login'
 import NotFound from './Components/Common/NotFound';
 import modulePage from "./Pages/modulePage";
@@ -21,46 +22,25 @@ import Lectures from './Components/Lectures/Lectures';
 import AddEvent from './Components/Events/AddEvent';
 import EventAdmin from './Components/Events/EventAdmin';
 import EditEvent from './Components/Events/EditEvent';
-import AddEditResult from './Components/Results/AddEditResult'
+import AddEditResult from './Components/Results/AddEditResult';
+
+import AddEditTimetable from './Components/Timetables/AddEditTimetables';
+import Timetables from './Components/Timetables/Timetables';
 
 import 'antd/dist/antd.css';
 import './index.css';
-import { Layout, Menu } from 'antd';
-import Logo from './Images/logoooo.png'
-import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-  ReadOutlined,
-  NotificationOutlined,
-  CoffeeOutlined,
-  FileExcelOutlined,
-  LineChartOutlined,
-} from '@ant-design/icons';
+import { Layout} from 'antd';
 import Results from './Components/Results/Results';
 import ViewResult from './Components/Results/ViewResult';
+import NavBar from './Components/Layout/navBar/NavBar';
 
-const { Header, Sider, Content } = Layout;
+const { Header, Content } = Layout;
 
 function App() {
-  const history = useHistory();
-  const [collapsed, setCollapsed] = useState(false);
-
-  const toggle = () => {
-    setCollapsed(!collapsed);
-  };
-
-  const logo = {
-    width: 60,
-    height: 45,
-    marginTop: 10,
-    marginBottom: 10
-  }
-
   const headerBar = {
     backgroundColor: '#278ea5',
-    display: 'flex'
+    display: 'flex',
+    marginLeft: '10px'
   }
 
   const headerText = {
@@ -72,69 +52,17 @@ function App() {
     margin: 0
   }
 
-  const logoDiv = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-
-  }
 
   return (
     <div>
       <BrowserRouter>
         <ToastProvider>
         <Layout>
-          <Sider trigger={null} collapsible collapsed={collapsed}
-          style={{
-            overflow: 'none',
-            height: '100vh',
-            position: 'fixed',
-            left: 0,
-          }}>
-            <div className="logo" style={logoDiv}>
-              <Link to="/">
-                <img src={Logo} style={logo} alt="Logo" />
-              </Link>
-              {/* <p style={headerText}>Institute of Science and Technology</p> */}
-            </div>
-            <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-              <Menu.Item key="1" icon={<UserOutlined />}>
-                <Link to="/users"></Link>
-                  User Module
-              </Menu.Item>
-              <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-                <Link to="/modulePage"></Link>
-                Course Module
-              </Menu.Item>
-              <Menu.Item key="3" icon={<ReadOutlined />}>
-              <Link to="/lectures"></Link>
-                Lecture Module
-              </Menu.Item>
-              <Menu.Item key="4" icon={<NotificationOutlined />}>
-                Notice Module
-                <Link to="/noticeAdmin"></Link>
-              </Menu.Item>
-              <Menu.Item key="5" icon={<CoffeeOutlined /> }>
-                Event Module
-                <Link to="/eventAdmin"></Link>
-              </Menu.Item>
-              <Menu.Item key="6" icon={<LineChartOutlined /> }>
-                Result Module
-                <Link to="/results"></Link>
-              </Menu.Item>
-            </Menu>
-          </Sider>
-          <Layout className="site-layout" style={{marginLeft: collapsed ? 75 : 200}}>
+          <NavBar/>
+          <Layout className="site-layout" style={{marginLeft: 200}}>
             <Header className="site-layout-background" style={{ padding: 0 }}>
               <div className="row">
-                <div className="col-1" style={headerBar}>
-                  {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                    className: 'trigger',
-                    onClick: toggle,
-                  })}
-                </div>
                 <div className="col" style={headerBar}>
-                  {/* <img src={Logo} style={logo} alt="Logo" /> */}
                   <p style={headerText}>Institute of Science and Technology</p>
                 </div>
               </div>
@@ -145,33 +73,38 @@ function App() {
             >
               <Switch>
                 <Route path={'/'} exact component={Login}></Route>
-                <Route path={'/users'} exact component={Users}></Route>
-                <Route path={'/register'} exact component={Register} />
-                <Route path={'/updateUser/:id'} component={EditUser} />
-                <Route path={'/profile/:id'} component={UserProfile} />
-                <Route path={'/login'} exact component={Login} />
-                <Route path={'/modulePage'} exact component={modulePage}></Route>
-                <Route path={'/createModule'} exact component={CreateModuleForm}></Route>
-                <Route path={'/singleModulePage'} exact component={SingleModule}></Route>
-                <Route path={'/addNoticeForm'} exact component={AddNotice}></Route>
-                <Route path={'/noticeAdmin'} exact component={NoticeAdmin}></Route>
-                <Route path={'/editNotice/:id'} component={EditNotice}></Route>
-                <Route path={'/lecture/add'} exact component={AddEditLecture} />
-                <Route path={'/lecture/edit/:id'} component={AddEditLecture} />
-                <Route path={'/lectures'} exact component={Lectures} />
+                <ProtectedRoute path={'/users'} exact roles={[ROLES.ADMIN]} component={Users}></ProtectedRoute>
+                <ProtectedRoute path={'/register'} exact roles={[ROLES.ADMIN]} component={Register} />
+                <ProtectedRoute path={'/updateUser/:id'} roles={[ROLES.ADMIN]} component={EditUser} />
+                <ProtectedRoute path={'/profile/:id'} roles={[ROLES.ADMIN]} component={UserProfile} />
+                {/* <ProtectedRoute path={'/login'} roles={[ROLES.ADMIN]} exact component={Login} /> */}
+                <ProtectedRoute path={'/modulePage'} exact roles={[ROLES.ADMIN]} component={modulePage}></ProtectedRoute>
+                <ProtectedRoute path={'/createModule'} exact roles={[ROLES.ADMIN]} component={CreateModuleForm}></ProtectedRoute>
+                <ProtectedRoute path={'/singleModulePage'} exact roles={[ROLES.ADMIN]} component={SingleModule}></ProtectedRoute>
+                <ProtectedRoute path={'/addNoticeForm'} exact roles={[ROLES.ADMIN]} component={AddNotice}></ProtectedRoute>
+                <ProtectedRoute path={'/noticeAdmin'} exact roles={[ROLES.ADMIN]} component={NoticeAdmin}></ProtectedRoute>
+                <ProtectedRoute path={'/editNotice/:id'} roles={[ROLES.ADMIN]} component={EditNotice}></ProtectedRoute>
 
-                <Route path={'/modulePage'} exact component={modulePage}/>
-                <Route path={'/createModule'} exact component={CreateModuleForm}/>
-                <Route path={'/viewModule/:id'}  component={SingleModule}/>
-                <Route path={'/editModule/:id'}  component={EditSingleModule}/>
+                <ProtectedRoute path={'/lecture/add'} exact roles={[ROLES.ADMIN]} component={AddEditLecture} />
+                <ProtectedRoute path={'/lecture/edit/:id'} roles={[ROLES.ADMIN]} component={AddEditLecture} />
+                <ProtectedRoute path={'/lectures'} exact roles={[ROLES.ADMIN]} component={Lectures} />
 
-                <Route path={'/addEvent'} exact component={AddEvent}></Route>
-                <Route path={'/eventAdmin'} exact component={EventAdmin}></Route>
-                <Route path={'/editEvent/:id'} component={EditEvent}></Route>
-                <Route path={'/results'} exact component={Results}></Route>
-                <Route path={'/results/add'} exact component={AddEditResult}></Route>
-                <Route path={'/results/view/:id'} component={ViewResult}></Route>
-                <Route path={'/results/edit/:id'} component={AddEditResult}></Route>
+                <ProtectedRoute path={'/modulePage'} exact roles={[ROLES.ADMIN]} component={modulePage}/>
+                <ProtectedRoute path={'/createModule'} exact roles={[ROLES.ADMIN]} component={CreateModuleForm}/>
+                <ProtectedRoute path={'/viewModule/:id'} roles={[ROLES.ADMIN]}  component={SingleModule}/>
+                <ProtectedRoute path={'/editModule/:id'} roles={[ROLES.ADMIN]}  component={EditSingleModule}/>
+
+                <ProtectedRoute path={'/addEvent'} exact roles={[ROLES.ADMIN]} component={AddEvent}></ProtectedRoute>
+                <ProtectedRoute path={'/eventAdmin'} exact roles={[ROLES.ADMIN]} component={EventAdmin}></ProtectedRoute>
+                <ProtectedRoute path={'/editEvent/:id'} roles={[ROLES.ADMIN]} component={EditEvent}></ProtectedRoute>
+                <ProtectedRoute path={'/results'} exact roles={[ROLES.ADMIN]} component={Results}></ProtectedRoute>
+                <ProtectedRoute path={'/results/add'} exact roles={[ROLES.ADMIN]} component={AddEditResult}></ProtectedRoute>
+                <ProtectedRoute path={'/results/view/:id'} roles={[ROLES.ADMIN]} component={ViewResult}></ProtectedRoute>
+                <ProtectedRoute path={'/results/edit/:id'} roles={[ROLES.ADMIN]} component={AddEditResult}></ProtectedRoute>
+
+                <ProtectedRoute path={'/timetable/add'} exact roles={[ROLES.ADMIN]} component={AddEditTimetable} />
+                <ProtectedRoute path={'/timetable/edit/:id'} roles={[ROLES.ADMIN]} component={AddEditTimetable} />
+                <ProtectedRoute path={'/timetables'} exact roles={[ROLES.ADMIN]} component={Timetables} />
 
                 <Route path="" component={NotFound} />
               </Switch>

@@ -1,10 +1,12 @@
 import {FETCH_RESULTS} from '../constants/constant';
 import * as api from '../api/index'
-//get all users
+
+//get all results
 export const getResults = () => async (dispatch) =>{
     try{
-        const {data} = await api.fetchResults();
+        const { data } = await api.fetchResults();
         dispatch ({type: FETCH_RESULTS, payload:data})
+        return data
     }catch (error){
         console.log("getting results error" + error);
     }

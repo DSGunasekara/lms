@@ -11,6 +11,8 @@
     "axios": "^0.21.1",
     "bootstrap": "^5.1.0",
     "helmet": "^4.6.0",
+    "jspdf": "^2.3.1",
+    "jspdf-autotable": "^3.5.20",
     "lottie-web": "^5.7.13",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

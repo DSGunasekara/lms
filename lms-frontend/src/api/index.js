@@ -62,3 +62,10 @@ export const fetchResult = (id) => API.get(`/results/${id}`);
 export const createResult = (result) => API.post('/results', result);
 export const updateResult = (result) => API.patch(`/results/${result.id}`, result);
 export const deleteResult = (id) => API.delete(`results/${id}`);
+
+//timetables
+export const uploadTimetable = (timetable) => API.post('/timetable', timetable);
+export const fetchTimetables = () => API.get('/timetable'); 
+export const fetchTimetable = (id) => API.get(`/timetable/${id}`);
+export const deleteTimetable = (id) => API.delete(`timetable/${id}`);
+export const updateTimetable = (timetable) => API.patch(`/timetable/${timetable.id}`, timetable);

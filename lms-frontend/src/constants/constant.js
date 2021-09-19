@@ -3,9 +3,10 @@ export const LOGOUT = 'LOGOUT';
 export const GET_USER = 'GET_USER';
 export const REGISTER = 'REGISTER';
 export const ROLES = {
-  ADMIN: 'admin',
-  LECTURER: 'lecturer',
-  STUDENT: 'student',
+  ADMIN: 'Admin',
+  LECTURER: 'Lecturer',
+  STUDENT: 'Student',
+  LAB_INSTRUCTOR: 'Lab Instructor'
 };
 
 
@@ -41,3 +42,8 @@ export const UPDATE_EVENT = 'UPDATE_EVENT';
 export const DELETE_EVENT = 'DELETE_EVENT';
 
 export const FETCH_RESULTS = 'FETCH_RESULT'
+
+//timetables
+export const FETCH_TIMETABLE = 'FETCH_TIMETABLE';
+export const CREATE_TIMETABLE= 'CREATE_TIMETABLE';
+export const UPDATE_TIMETABLE = 'UPDATE_TIMETABLE';
