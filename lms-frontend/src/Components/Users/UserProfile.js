@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 
-import { Row, Col, Layout, Avatar, Tag, Divider, Skeleton, Tooltip, Button } from 'antd';
+import { Layout, Avatar, Tag, Divider, Skeleton, Tooltip, Button } from 'antd';
 import { UserOutlined, MailOutlined, PhoneOutlined,
      SettingOutlined, ReadOutlined, UngroupOutlined, IdcardOutlined
 } from '@ant-design/icons';
@@ -68,7 +68,10 @@ function UserProfile() {
                 <Sider style={{height: '80vh'}} theme='light' width='300'>
                     <div style={{margin: 15}}>
                         <div style={{textAlign: 'center'}}>
-                            <Avatar size={64} icon={<UserOutlined />} />
+                            { user?.profile_photo ? 
+                                <Avatar size={64} src={`http://localhost:5000/${user.profile_photo}`} />
+                                : <Avatar size={64} icon={<UserOutlined />} />
+                            }
                         </div>
                         <div style={{padding: 5}}>
                             <UserOutlined style={{marginRight: 10}} />{ user.name }
