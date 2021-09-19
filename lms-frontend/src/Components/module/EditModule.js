@@ -76,11 +76,11 @@ const EditSingleModule = ({module}) =>{
     const userData = useSelector((state) => state.UserReducer.users)
 
     //filter lecturer from the UserData
-    option_lec = userData?.filter((user)=> user.role === "lecturer").map((lec) =>({
+    option_lec = userData?.filter((user)=> user.role === "Lecturer").map((lec) =>({
         value:lec._id, label: lec.name}))
 
     //filter labInstructor from the UserData
-    option_lab = userData?.filter((user) => user.role === "labInstructor").map((lab) => ({
+    option_lab = userData?.filter((user) => user.role === "Lab Instructor").map((lab) => ({
         value: lab._id, label: lab.name}))
 
     const [form] = Form.useForm();

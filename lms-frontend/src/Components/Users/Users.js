@@ -158,7 +158,7 @@ function Users() {
       function searchFun(user){
         return Object.keys(this).every((key) => user[key] === this[key]);
       }
-      const result = users.filter(searchFun, query);
+      const result = users?.filter(searchFun, query);
       setOpen([]);
       setUsersFilter(result)
     } else {
