@@ -32,7 +32,6 @@ function NavBar() {
     const [navList, setNavList] = useState([]);
 
     history.listen(location => {
-        console.log(location);
         setUser(JSON.parse(localStorage.getItem('profile'))?.payload.user)
     })
     

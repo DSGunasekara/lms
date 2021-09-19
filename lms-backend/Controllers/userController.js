@@ -114,21 +114,4 @@ export const deleteUser = (async(req, res)=>{
   }
 });
 
-export const updateProfilePicture = (async(req, res) => {
-  try {
-    if (req.file.path) {
-      const user = await User.findOne({ _id: req.params.id });
-      if (!user) return res.status(404).send("User does not exits");
-      user.profile_photo = req.file.path;
-      await User.updateOne({ _id: req.params.id }, user);
-      return res.status(200).send('Profile Updated');
-    } else {
-      return res.status(400).send('Profile Update Error')
-    }
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send(error);
-  }
-})
-
 export default router;
