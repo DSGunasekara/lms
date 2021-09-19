@@ -10,6 +10,7 @@ import { UserOutlined, MailOutlined, PhoneOutlined,
 import { getUser } from '../../actions/Users';
 import EditUser from './EditUser';
 import GPA from '../GPA/GPA';
+import { ROLES } from '../../constants/constant';
 
 function UserProfile() {
     const { Sider, Content } = Layout;
@@ -26,6 +27,9 @@ function UserProfile() {
     const fetchUser = async(userId) => {
         setLoading(true)
         const res = await dispatch(getUser(userId));
+        if(res.role !== ROLES.STUDENT) {
+            handleEdit()
+        }
         setUser(res);
         setLoading(false)
     }
@@ -91,6 +95,7 @@ function UserProfile() {
                     </div>
                     <Divider />
                     <div style={{margin: 15}}>
+                        { user.role === ROLES.STUDENT ?
                         <div style={{padding: 5}}>
                             <Tooltip placement="right" title="View GPA">
                                 <Button type="text" onClick={handleGPA}>
@@ -98,6 +103,7 @@ function UserProfile() {
                                 </Button>
                             </Tooltip>
                         </div>
+                        : '' }
                         <div style={{padding: 5}}>
                             <Tooltip placement="right" title="View User Modules">
                                 <Button type="text" onClick={handleModule}>
