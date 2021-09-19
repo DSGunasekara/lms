@@ -4,41 +4,76 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import _ from "lodash";
 import { v4 } from "uuid";
 
-import { getTask, createTask } from "../../actions/todo";
+import { getTasks, createTask } from "../../actions/todo";
 
 import "./todoList.css";
 
-const item = {
-  id: v4(),
-  name: "Clean the house",
-};
-
-const item2 = {
-  id: v4(),
-  name: "wash the car",
-};
-
-console.log(item);
+let option_filter = [];
 
 const TodoList = () => {
   const dispatch = useDispatch();
 
-  // useEffect (() =>{
-  //     dispatch(getTask());
-  // }, [dispatch])
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    dispatch(getTasks());
+  }, [dispatch]);
+
+  const todoData = useSelector((state) => state.TaskReducer.task);
+  // console.log(todoData);
+
+  //getting the current user of the application from the local storage
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("profile"))?.payload.user);
+    option_filter = todoData?.filter((todo) => {
+      return (
+        todo.CreatedBy?._id ===
+        JSON.parse(localStorage.getItem("profile"))?.payload.user?._id
+      );
+    });
+
+    console.log("before filter", option_filter);
+    if (option_filter?.length > 0) {
+      const todoFilter = {
+        todo: {
+          items: option_filter[0]?.todo?.items,
+        },
+        in_progress: {
+          items: option_filter[0]?.in_progress?.items,
+        },
+        done: {
+          items: option_filter[0]?.done?.items,
+        },
+      };
+      console.log(todoFilter);
+
+      setState(todoFilter);
+    }
+  }, [todoData]);
 
   const [text, setText] = useState("");
   const [state, setState] = useState({
     todo: {
-      items: [item],
+      items: [],
     },
     in_progress: {
-      items: [item2],
+      items: [],
     },
     done: {
       items: [],
     },
   });
+
+  // useEffect(() => {
+  //   if (option_filter) {
+  //     setState(option_filter);
+  //   }
+  //console.log("useEffect", option_filter);
+  //   //setState(option_filter);
+  // }, [option_filter]);
 
   const handleDragEnd = ({ destination, source }) => {
     if (!destination) {
@@ -93,8 +128,10 @@ const TodoList = () => {
   };
 
   const save = () => {
-    console.log("save", state);
-    dispatch(createTask(state));
+    const todo = {
+      ...state,
+      CreatedBy: user._id,
+    };
   };
 
   return (
@@ -120,7 +157,7 @@ const TodoList = () => {
                       {...provided.droppableProps}
                       className={"droppable-col"}
                     >
-                      {data.items.map((el, index) => {
+                      {data.items?.map((el, index) => {
                         return (
                           <Draggable
                             key={el.id}
