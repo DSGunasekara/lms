@@ -88,7 +88,7 @@ const ModuleTable = () =>{
             render: (text, record) => (
                 <Space size="middle">
                     <Popconfirm
-                        title="Are you sure to delete this user?"
+                        title="Are you sure to delete this Module?"
                         onConfirm={() => deleteConfirm(record)}
                         okText="Yes"
                         cancelText="No"
@@ -139,7 +139,7 @@ const ModuleTable = () =>{
                 </>
             :
             <>
-                <h3 style={header}>Courses</h3>
+                <h3 style={header}>Modules</h3>
                 <Table columns={columns} dataSource={data}/>
                 <Tooltip title="Create New Module">
                     <Button
