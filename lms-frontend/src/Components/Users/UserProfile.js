@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 
-import { Row, Col, Layout, Avatar, Tag, Divider, Skeleton, Tooltip, Button } from 'antd';
+import { Layout, Avatar, Tag, Divider, Skeleton, Tooltip, Button } from 'antd';
 import { UserOutlined, MailOutlined, PhoneOutlined,
      SettingOutlined, ReadOutlined, UngroupOutlined, IdcardOutlined
 } from '@ant-design/icons';
@@ -10,6 +10,7 @@ import { UserOutlined, MailOutlined, PhoneOutlined,
 import { getUser } from '../../actions/Users';
 import EditUser from './EditUser';
 import GPA from '../GPA/GPA';
+import { ROLES } from '../../constants/constant';
 
 function UserProfile() {
     const { Sider, Content } = Layout;
@@ -26,6 +27,9 @@ function UserProfile() {
     const fetchUser = async(userId) => {
         setLoading(true)
         const res = await dispatch(getUser(userId));
+        if(res.role !== ROLES.STUDENT) {
+            handleEdit()
+        }
         setUser(res);
         setLoading(false)
     }
@@ -68,7 +72,10 @@ function UserProfile() {
                 <Sider style={{height: '80vh'}} theme='light' width='300'>
                     <div style={{margin: 15}}>
                         <div style={{textAlign: 'center'}}>
-                            <Avatar size={64} icon={<UserOutlined />} />
+                            { user?.profile_photo ? 
+                                <Avatar size={64} src={`http://localhost:5000/${user.profile_photo}`} />
+                                : <Avatar size={64} icon={<UserOutlined />} />
+                            }
                         </div>
                         <div style={{padding: 5}}>
                             <UserOutlined style={{marginRight: 10}} />{ user.name }
@@ -88,6 +95,7 @@ function UserProfile() {
                     </div>
                     <Divider />
                     <div style={{margin: 15}}>
+                        { user.role === ROLES.STUDENT ?
                         <div style={{padding: 5}}>
                             <Tooltip placement="right" title="View GPA">
                                 <Button type="text" onClick={handleGPA}>
@@ -95,6 +103,7 @@ function UserProfile() {
                                 </Button>
                             </Tooltip>
                         </div>
+                        : '' }
                         <div style={{padding: 5}}>
                             <Tooltip placement="right" title="View User Modules">
                                 <Button type="text" onClick={handleModule}>

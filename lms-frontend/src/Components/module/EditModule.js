@@ -239,3 +239,4 @@ const EditSingleModule = ({ module }) => {
 };
 
 export default EditSingleModule;
+

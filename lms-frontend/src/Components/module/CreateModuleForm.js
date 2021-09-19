@@ -31,11 +31,11 @@ const CreateModuleForm = () =>{
     const userData = useSelector((state) => state.UserReducer.users)
 
     //filter labInstructor from the UserData
-    option_lab = userData?.filter((user) => user.role === "labInstructor").map((lab) => ({
+    option_lab = userData?.filter((user) => user.role === "Lab Instructor").map((lab) => ({
         value: lab._id, label: lab.name}))
 
     //filter lecturer from the UserData
-    option_lec = userData?.filter((user)=> user.role === "lecturer").map((lec) =>({
+    option_lec = userData?.filter((user)=> user.role === "Lecturer").map((lec) =>({
         value:lec._id, label: lec.name}))
 
 
@@ -46,13 +46,12 @@ const CreateModuleForm = () =>{
         const passData ={
             name: moduleData.name,
             module_code:moduleData.module_code,
-            lecturer_in_charge:moduleData.lecturer,
-            lab_assistant:moduleData.labInstructor,
+            lecture_in_charge:moduleData.lecturer_in_charge,
+            lab_assistant:moduleData.lab_assistant,
             year:moduleData.year,
             semester:moduleData.semester,
             credit:moduleData.credit
         }
-        console.log(passData);
         const res = await dispatch(createModules({...passData}));
         setModuleData({name:'', module_code: '', lecturer_in_charge: '', lab_assistant: '',year: '', semester: '', credit: ''})
         if(res.status === 200){

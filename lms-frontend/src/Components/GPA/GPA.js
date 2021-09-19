@@ -117,7 +117,9 @@ function GPA({user}) {
                     <Descriptions style={{backgroundColor: '#fff'}} bordered>
                         <Descriptions.Item label="Cumulative Grade Points"><b>{gpa?.gradePoints}</b></Descriptions.Item>
                         <Descriptions.Item label="Cumulative Credits"><b>{gpa?.noOfCredit}</b></Descriptions.Item>
-                        <Descriptions.Item label="Cumulative GPA"><b>{gpa?.gradePoints/gpa?.noOfCredit}</b></Descriptions.Item>
+                        <Descriptions.Item label="Cumulative GPA"><b>{(gpa?.gradePoints/gpa?.noOfCredit) 
+                            ? gpa?.gradePoints/gpa?.noOfCredit : 0
+                        }</b></Descriptions.Item>
                         {/* <Descriptions.Item label="Order time">2018-04-24 18:00:00</Descriptions.Item> */}
                     </Descriptions>
                     <br /><br />

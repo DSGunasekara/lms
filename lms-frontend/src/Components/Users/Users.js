@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
-import { Table, Space, Button, Tooltip, Popconfirm, message, Collapse, Input, Row, Col, Skeleton } from 'antd';
-import { PlusOutlined, DeleteFilled, EditFilled, EyeFilled, SearchOutlined, ClearOutlined } from '@ant-design/icons';
+import { Table, Space, Button, Tooltip, Popconfirm, message, Collapse, Input, Row, Col, Skeleton, Select } from 'antd';
+import { PlusOutlined, DeleteFilled, EditFilled, EyeFilled, SearchOutlined, ClearOutlined, DownloadOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -11,11 +11,18 @@ import { report } from '../Reports/Report';
 function Users() {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { Option } = Select;
 
   const { Panel } = Collapse;
 
   const [users, setUsers] = useState([]);
+  const [usersFilter, setUsersFilter] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [searchName, setSearchName] = useState('')
+  const [searchEmail, setSearchEmail] = useState('')
+  const [searchContact, setSearchContact] = useState('')
+  const [searchRole, setSearchRole] = useState('')
+  const [open, setOpen] = useState(["0"]);
 
   useEffect(() => {
     setLoading(true);
@@ -25,6 +32,7 @@ function Users() {
   let userData = useSelector((state) => state.UserReducer.users);
   useEffect(() => {
     setUsers(userData);
+    setUsersFilter(userData);
     if (userData) {
       setLoading(false);
     }
@@ -34,6 +42,7 @@ function Users() {
     const res = await dispatch(deleteUser(e.key));
     if (res.status === 200) {
       setUsers(users.filter((user) => user._id !== e.key));
+      setUsersFilter(users.filter((user) => user._id !== e.key));
       message.success('User Removed');
     } else {
       message.error('An Error Occurred');
@@ -95,7 +104,7 @@ function Users() {
     },
   ];
 
-  const data = users?.map((user) => ({
+  const data = usersFilter?.map((user) => ({
     key: user._id,
     regNumber: user.regNumber,
     name: user.name,
@@ -118,6 +127,53 @@ function Users() {
   const headData = columns?.map((col) => col?.title);
   const bodyData = data?.map((col) => [col.regNumber, col.name, col.email, col.contactNo, col.role]);
 
+  const search = () => {
+    if (searchContact || searchEmail || searchName || searchRole) {
+      let query = {}
+
+      if (searchName) {
+        query = {
+          ...query,
+          name: searchName
+        }
+      }
+      if (searchEmail) {
+        query = {
+          ...query,
+          email: searchEmail
+        }
+      }
+      if (searchContact) {
+        query = {
+          ...query,
+          contactNo: searchContact
+        }
+      }
+      if (searchRole) {
+        query = {
+          ...query,
+          role: searchRole
+        }
+      }
+      function searchFun(user){
+        return Object.keys(this).every((key) => user[key] === this[key]);
+      }
+      const result = users?.filter(searchFun, query);
+      setOpen([]);
+      setUsersFilter(result)
+    } else {
+      setOpen([]);
+      setUsersFilter(users)
+    }
+  }
+
+  const clear = () => {
+    setSearchContact('')
+    setSearchEmail('')
+    setSearchName('')
+    setSearchRole('')
+  }
+
   return (
     <div>
       {loading ? (
@@ -130,30 +186,45 @@ function Users() {
       ) : (
         <>
           <h3 style={header}>Users</h3>
-          <Collapse style={{ marginBottom: 50 }}>
-            <Panel header="Search Users">
+          <Collapse style={{ marginBottom: 50 }} activeKey={open} onChange={() => setOpen(open === '' ? [] : ['0'])}>
+            <Panel header="Search Users" >
               <Row>
                 <Col span={6} style={{ margin: '10px' }}>
-                  <Input placeholder="Name" />
+                  <Input placeholder="Name" 
+                    value={searchName}
+                    onChange={(e) => setSearchName(e.target.value)}
+                  />
                 </Col>
                 <Col span={6} style={{ margin: '10px' }}>
-                  <Input placeholder="Email" />
+                  <Input placeholder="Email" 
+                    value={searchEmail}
+                    onChange={(e) => setSearchEmail(e.target.value)}
+                  />
                 </Col>
                 <Col span={6} style={{ margin: '10px' }}>
-                  <Input placeholder="Contact Number" />
+                  <Input placeholder="Contact Number"
+                    value={searchContact}
+                    onChange={(e) => setSearchContact(e.target.value)}
+                  />
                 </Col>
                 <Col span={6} style={{ margin: '10px' }}>
-                  <Input placeholder="Role" />
+                  <Select value={searchRole} style={{ width: '100%' }} onChange={(e) => setSearchRole(e)}>
+                    <Option value="">All</Option>
+                    <Option value="Admin">Admin</Option>
+                    <Option value="Lecturer">Lecturer</Option>
+                    <Option value="Lab Instructor">Lab Instructor</Option>
+                    <Option value="Student">Student</Option>
+                  </Select>
                 </Col>
               </Row>
               <Row>
-                <Col span={17} style={{ margin: '10px' }}>
+                <Col span={17} style={{ margin: '10px' }} onClick={() => clear()}>
                   <Button type="secondary" icon={<ClearOutlined />}>
                     Clear All
                   </Button>
                 </Col>
                 <Col span={6} style={{ margin: '10px' }}>
-                  <Button type="primary" icon={<SearchOutlined />}>
+                  <Button type="primary" icon={<SearchOutlined />} onClick={() => search()}>
                     Search
                   </Button>
                 </Col>
@@ -161,7 +232,9 @@ function Users() {
             </Panel>
           </Collapse>
 
-          <Button onClick={() => report(headData, bodyData)}>Report</Button>
+          <Button onClick={() => report(headData, bodyData)} style={{marginBottom: 10, marginRight: 5, display: 'block', marginLeft: 'auto'}}>
+            <DownloadOutlined/>Download user Report
+          </Button>
           <Table columns={columns} dataSource={data} />
           <Tooltip title="Create New User">
             <Button type="primary" shape="circle" icon={<PlusOutlined />} size="large" className="fabBtn" onClick={handleCreateUser} />

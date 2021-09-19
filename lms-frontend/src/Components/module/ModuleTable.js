@@ -173,3 +173,4 @@ const ModuleTable = () => {
 };
 
 export default ModuleTable;
+
