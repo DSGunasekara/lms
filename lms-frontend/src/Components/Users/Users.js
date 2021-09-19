@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
-import { Table, Space, Button, Tooltip, Popconfirm, message, Collapse, Input, Row, Col, Skeleton } from 'antd';
-import { PlusOutlined, DeleteFilled, EditFilled, EyeFilled, SearchOutlined, ClearOutlined } from '@ant-design/icons';
+import { Table, Space, Button, Tooltip, Popconfirm, message, Collapse, Input, Row, Col, Skeleton, Select } from 'antd';
+import { PlusOutlined, DeleteFilled, EditFilled, EyeFilled, SearchOutlined, ClearOutlined, DownloadOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -11,6 +11,7 @@ import { report } from '../Reports/Report';
 function Users() {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { Option } = Select;
 
   const { Panel } = Collapse;
 
@@ -207,10 +208,13 @@ function Users() {
                   />
                 </Col>
                 <Col span={6} style={{ margin: '10px' }}>
-                  <Input placeholder="Role"
-                    value={searchRole}
-                    onChange={(e) => setSearchRole(e.target.value)}
-                  />
+                  <Select value={searchRole} style={{ width: '100%' }} onChange={(e) => setSearchRole(e)}>
+                    <Option value="">All</Option>
+                    <Option value="Admin">Admin</Option>
+                    <Option value="Lecturer">Lecturer</Option>
+                    <Option value="Lab Instructor">Lab Instructor</Option>
+                    <Option value="Student">Student</Option>
+                  </Select>
                 </Col>
               </Row>
               <Row>
@@ -228,7 +232,9 @@ function Users() {
             </Panel>
           </Collapse>
 
-          <Button onClick={() => report(headData, bodyData)}>Report</Button>
+          <Button onClick={() => report(headData, bodyData)} style={{marginBottom: 10, marginRight: 5, display: 'block', marginLeft: 'auto'}}>
+            <DownloadOutlined/>Download user Report
+          </Button>
           <Table columns={columns} dataSource={data} />
           <Tooltip title="Create New User">
             <Button type="primary" shape="circle" icon={<PlusOutlined />} size="large" className="fabBtn" onClick={handleCreateUser} />
