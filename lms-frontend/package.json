@@ -11,7 +11,12 @@
     "axios": "^0.21.1",
     "bootstrap": "^5.1.0",
     "helmet": "^4.6.0",
+<<<<<<< HEAD
     "lodash": "^4.17.21",
+=======
+    "jspdf": "^2.3.1",
+    "jspdf-autotable": "^3.5.20",
+>>>>>>> main
     "lottie-web": "^5.7.13",
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.0",

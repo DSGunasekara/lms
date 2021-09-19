@@ -19,8 +19,8 @@ function UserProfile() {
 
     const [user, setUser] = useState('');
     const [loading, setLoading] = useState(false);
-    const [isEdit, setIsEdit] = useState(true);
-    const [isGPA, setIsGPA] = useState(false);
+    const [isEdit, setIsEdit] = useState(false);
+    const [isGPA, setIsGPA] = useState(true);
     const [isModule, setIsModule] = useState(false);
     
     const fetchUser = async(userId) => {
@@ -89,13 +89,6 @@ function UserProfile() {
                     <Divider />
                     <div style={{margin: 15}}>
                         <div style={{padding: 5}}>
-                            <Tooltip placement="right" title="Update Profile">
-                            <Button type="text" onClick={handleEdit}>
-                                <SettingOutlined style={{marginRight: 10}} /> Settings
-                            </Button>
-                            </Tooltip>
-                        </div>
-                        <div style={{padding: 5}}>
                             <Tooltip placement="right" title="View GPA">
                                 <Button type="text" onClick={handleGPA}>
                                     <ReadOutlined style={{marginRight: 10}} />GPA
@@ -109,10 +102,17 @@ function UserProfile() {
                                 </Button>
                             </Tooltip>
                         </div>
+                        <div style={{padding: 5}}>
+                            <Tooltip placement="right" title="Update Profile">
+                            <Button type="text" onClick={handleEdit}>
+                                <SettingOutlined style={{marginRight: 10}} /> Settings
+                            </Button>
+                            </Tooltip>
+                        </div>
                     </div>
                 </Sider>
                 <Content>
-                    {isEdit? <EditUser user={user} userUpdate={updateUser} />: isGPA ? <GPA/>: isModule ? 'user modules': ''}
+                    {isEdit? <EditUser user={user} userUpdate={updateUser} />: isGPA ? <GPA user={user}/>: isModule ? 'user modules': ''}
                 </Content>
             </>
             }
