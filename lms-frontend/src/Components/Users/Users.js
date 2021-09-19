@@ -18,6 +18,7 @@ function Users() {
   const [users, setUsers] = useState([]);
   const [usersFilter, setUsersFilter] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [searchReg, setSearchReg] = useState('')
   const [searchName, setSearchName] = useState('')
   const [searchEmail, setSearchEmail] = useState('')
   const [searchContact, setSearchContact] = useState('')
@@ -128,13 +129,19 @@ function Users() {
   const bodyData = data?.map((col) => [col.regNumber, col.name, col.email, col.contactNo, col.role]);
 
   const search = () => {
-    if (searchContact || searchEmail || searchName || searchRole) {
+    if (searchContact || searchEmail || searchName || searchRole || searchReg) {
       let query = {}
 
       if (searchName) {
         query = {
           ...query,
           name: searchName
+        }
+      }
+      if (searchReg) {
+        query = {
+          ...query,
+          regNumber: searchReg
         }
       }
       if (searchEmail) {
@@ -156,7 +163,7 @@ function Users() {
         }
       }
       function searchFun(user){
-        return Object.keys(this).every((key) => user[key] === this[key]);
+        return Object.keys(this).every((key) => user[key].toLowerCase().includes(this[key].toLowerCase()));
       }
       const result = users?.filter(searchFun, query);
       setOpen([]);
@@ -189,6 +196,12 @@ function Users() {
           <Collapse style={{ marginBottom: 50 }} activeKey={open} onChange={() => setOpen(open === '' ? [] : ['0'])}>
             <Panel header="Search Users" >
               <Row>
+                <Col span={6} style={{ margin: '10px' }}>
+                  <Input placeholder="Registration Number" 
+                    value={searchReg}
+                    onChange={(e) => setSearchReg(e.target.value)}
+                  />
+                </Col>
                 <Col span={6} style={{ margin: '10px' }}>
                   <Input placeholder="Name" 
                     value={searchName}
