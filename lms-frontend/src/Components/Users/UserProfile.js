@@ -109,6 +109,7 @@ function UserProfile() {
                     <Divider />
                     <div style={{margin: 15}}>
                         { user.role === ROLES.STUDENT ?
+                        <>
                         <div style={{padding: 5}}>
                             <Tooltip placement="right" title="View GPA">
                                 <Button type="text" onClick={handleGPA}>
@@ -116,7 +117,6 @@ function UserProfile() {
                                 </Button>
                             </Tooltip>
                         </div>
-                        : '' }
                         <div style={{padding: 5}}>
                             <Tooltip placement="right" title="View User Modules">
                                 <Button type="text" onClick={handleModule}>
@@ -124,6 +124,8 @@ function UserProfile() {
                                 </Button>
                             </Tooltip>
                         </div>
+                        </>
+                        : '' }
                         <div style={{padding: 5}}>
                             <Tooltip placement="right" title="Update Profile">
                             <Button type="text" onClick={handleEdit}>

@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getModules, removeModule } from "../../actions/Modules";
+import { getUser } from "../../actions/Users";
 import "antd/dist/antd.css";
 import { Table, Space, Button, Tooltip, message, Popconfirm, Skeleton, Collapse, Row, Col, Input, DatePicker } from 'antd';
-import { DeleteFilled, EditFilled, EyeFilled, PlusOutlined, ClearOutlined, SearchOutlined } from '@ant-design/icons';
+import { DeleteFilled, EditFilled, EyeFilled, PlusOutlined, ClearOutlined, SearchOutlined, ExportOutlined } from '@ant-design/icons';
 import { useHistory } from "react-router";
 import moment from 'moment';
+import { ROLES } from "../../constants/constant";
 
 const ModuleTable = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
   const [module, setModule] = useState([]);
+  const [user, setUser] = useState();
   const [loading, setLoading] = useState(false);
   const [searchName, setSearchName] = useState('')
   const [SearchModuleCode, setSearchModuleCode] = useState('')
@@ -29,13 +32,34 @@ const ModuleTable = () => {
 
   const moduleData = useSelector((state) => state.ModuleReducer.modules);
 
+
   useEffect(() => {
-    setModule(moduleData);
-    setModuleFilter(moduleData);
-    if (moduleData) {
-      setLoading(false);
+    getUserData(JSON.parse(localStorage.getItem('profile'))?.payload.user?._id);
+  }, []);
+
+  const getUserData = async (id) => {
+    setLoading(true);
+    const res = await dispatch(getUser(id));
+    setUser(res);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if(user?.role === ROLES.STUDENT) {
+      function search(module) {
+        return Object.keys(this).every((key) => module._id !== this[key].module._id)
+      }
+      const data = module.filter(search, user?.modules)
+      setModule(data)
+      setModuleFilter(data)
+    } else {
+      setModule(moduleData);
+      setModuleFilter(moduleData);
+      if (moduleData) {
+        setLoading(false);
+      }
     }
-  }, [moduleData]);
+  }, [moduleData, user]);
 
   const deleteConfirm = async (e) => {
     const res = await dispatch(removeModule(e.key));
@@ -55,6 +79,10 @@ const ModuleTable = () => {
   const SingleModuleLook = (e) => {
     history.push(`viewModule/${e.key}`);
   };
+
+  const enroll = () => {
+
+  }
 
   const columns = [
     {
@@ -97,22 +125,42 @@ const ModuleTable = () => {
       key: "action",
       render: (text, record) => (
         <Space size="middle">
-          <Popconfirm
-            title="Are you sure to delete this Module?"
-            onConfirm={() => deleteConfirm(record)}
+          {user?.role === ROLES.ADMIN ?
+          <>
+            <Popconfirm
+              title="Are you sure to delete this Module?"
+              onConfirm={() => deleteConfirm(record)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Tooltip placement="bottom" title="Delete Module">
+                <DeleteFilled />
+              </Tooltip>
+            </Popconfirm>
+            <Tooltip placement="bottom" title="Edit Module">
+              <EditFilled onClick={() => editConfirm(record)} />
+            </Tooltip>
+            <Tooltip placement="bottom" title="View Module">
+              <EyeFilled onClick={() => SingleModuleLook(record)} />
+            </Tooltip>
+          </>
+          :
+          <>
+            <Tooltip placement="bottom" title="View Module">
+              <EyeFilled onClick={() => SingleModuleLook(record)} />
+            </Tooltip>
+            <Popconfirm
+            title="Are you sure to enroll to this Module?"
+            onConfirm={() => enroll(record)}
             okText="Yes"
             cancelText="No"
           >
-            <Tooltip placement="bottom" title="Delete Module">
-              <DeleteFilled />
-            </Tooltip>
+          <Tooltip placement="bottom" title="Enroll">
+            <ExportOutlined />
+          </Tooltip>
           </Popconfirm>
-          <Tooltip placement="bottom" title="Edit Module">
-            <EditFilled onClick={() => editConfirm(record)} />
-          </Tooltip>
-          <Tooltip placement="bottom" title="View Module">
-            <EyeFilled onClick={() => SingleModuleLook(record)} />
-          </Tooltip>
+          </>
+        }
         </Space>
       ),
     },
