@@ -2,22 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getModules, removeModule } from "../../actions/Modules";
 import "antd/dist/antd.css";
-import {
-  Table,
-  Space,
-  Button,
-  Tooltip,
-  message,
-  Popconfirm,
-  Skeleton,
-} from "antd";
-import {
-  DeleteFilled,
-  EditFilled,
-  EyeFilled,
-  PlusOutlined,
-} from "@ant-design/icons";
+import { Table, Space, Button, Tooltip, message, Popconfirm, Skeleton, Collapse, Row, Col, Input, DatePicker } from 'antd';
+import { DeleteFilled, EditFilled, EyeFilled, PlusOutlined, ClearOutlined, SearchOutlined } from '@ant-design/icons';
 import { useHistory } from "react-router";
+import moment from 'moment';
 
 const ModuleTable = () => {
   const dispatch = useDispatch();
@@ -25,6 +13,14 @@ const ModuleTable = () => {
 
   const [module, setModule] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [searchName, setSearchName] = useState('')
+  const [SearchModuleCode, setSearchModuleCode] = useState('')
+  const [searchLec, setSearchLec] = useState('')
+  const [searchAssist, setSearchAssist] = useState('')
+  const [searchYear, setSearchYear] = useState('')
+  const [open, setOpen] = useState(["0"]);
+  const [moduleFilter, setModuleFilter] = useState([]);
+
 
   useEffect(() => {
     setLoading(true);
@@ -37,6 +33,7 @@ const ModuleTable = () => {
 
   useEffect(() => {
     setModule(moduleData);
+    setModuleFilter(moduleData);
     if (moduleData) {
       setLoading(false);
     }
@@ -46,6 +43,7 @@ const ModuleTable = () => {
     const res = await dispatch(removeModule(e.key));
     if (res?.status === 200) {
       setModule(module.filter((mod) => mod._id !== e.key));
+      setModuleFilter(moduleData);(module.filter((mod) => mod._id !== e.key));
       message.success("module Removed");
     } else {
       message.error("An Error Occurred");
@@ -121,7 +119,7 @@ const ModuleTable = () => {
       ),
     },
   ];
-  const data = module?.map((mod) => ({
+  const data = moduleFilter?.map((mod) => ({
     key: mod._id,
     name: mod.name,
     module_code: mod.module_code,
@@ -144,6 +142,72 @@ const ModuleTable = () => {
     paddingBottom: 15,
   };
 
+  const { Panel } = Collapse;
+
+  const search = () => {
+    if (searchAssist || searchLec || searchName || searchYear || SearchModuleCode) {
+      let query = {}
+
+      if (searchName) {
+        query = {
+          ...query,
+          name: searchName
+        }
+      }
+      if (SearchModuleCode) {
+        query = {
+          ...query,
+          module_code: SearchModuleCode
+        }
+      }
+      let nameFil = {}
+      if (searchLec) {
+        nameFil = {
+          ...nameFil,
+          lecture_in_charge: {
+            name: searchLec
+          }
+        }
+      }
+      if (searchAssist) {
+        nameFil = {
+          ...nameFil,
+          lab_assistant:{
+              name: searchAssist
+          }
+        }
+    }
+      if (searchYear) {
+        query = {
+          ...query,
+          year: moment(searchYear).year().toString()
+        }
+      }
+      function searchFun(module){
+        return Object.keys(this).every((key) => module[key].toLowerCase().includes(this[key].toLowerCase()));
+      }
+      function nameSearchFun(module){
+        return Object.keys(this).every((key) => module[key].name.toLowerCase().includes(this[key].name.toLowerCase()));
+      }
+
+      let result = module?.filter(searchFun, query);
+      result = result?.filter(nameSearchFun, nameFil);
+      setOpen([]);
+      setModuleFilter(result)
+    } else {
+      setOpen([]);
+      setModuleFilter(module)
+    }
+  }
+
+  const clear = () => {
+    setSearchAssist('')
+    setSearchLec('')
+    setSearchName('')
+    setSearchModuleCode('')
+    setSearchYear('')
+  }
+
   return (
     <div>
       {loading ? (
@@ -155,6 +219,46 @@ const ModuleTable = () => {
       ) : (
         <>
           <h3 style={header}>Modules</h3>
+
+          <Collapse style={{ marginBottom: 50 }} activeKey={open} onChange={() => setOpen(open === '' ? [] : ['0'])}>
+            <Panel header="Search Modules">
+              <Row>
+                <Col span={6} style={{ margin: '10px' }}>
+                  <Input placeholder="Name" value={searchName} onChange={(e) => setSearchName(e.target.value)} />
+                </Col>
+                <Col span={6} style={{ margin: '10px' }}>
+                  <Input placeholder="Module Code" value={SearchModuleCode} onChange={(e) => setSearchModuleCode(e.target.value)} />
+                </Col>
+                <Col span={6} style={{ margin: '10px' }}>
+                  <Input placeholder="Lecture In Charge" value={searchLec} onChange={(e) => setSearchLec(e.target.value)} />
+                </Col>
+                <Col span={6} style={{ margin: '10px' }}>
+                  <Input placeholder="Lab Assistant" value={searchAssist} onChange={(e) => setSearchAssist(e.target.value)} />
+                </Col>
+                <Col span={6} style={{ margin: '10px' }}>
+                  <DatePicker
+                    style={{width: '100%'}}
+                    picker="year"
+                    value={searchYear}
+                    onChange={(e) => setSearchYear(e)}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col span={17} style={{ margin: '10px' }} onClick={() => clear()}>
+                  <Button type="secondary" icon={<ClearOutlined />}>
+                    Clear All
+                  </Button>
+                </Col>
+                <Col span={6} style={{ margin: '10px' }}>
+                  <Button type="primary" icon={<SearchOutlined />} onClick={() => search()}>
+                    Search
+                  </Button>
+                </Col>
+              </Row>
+            </Panel>
+          </Collapse>
+
           <Table columns={columns} dataSource={data} />
           <Tooltip title="Create New Module">
             <Button
