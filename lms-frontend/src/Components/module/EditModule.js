@@ -29,7 +29,6 @@ const EditSingleModule = ({ module }) => {
   //getting single modules data to the fetchUser function
   const fetchUser = async (modId) => {
     const res = await dispatch(getSingleModule(modId));
-    console.log(res);
     const mod = { ...res, year: moment(res.year) };
     form.setFieldsValue(mod);
     setModuleData({

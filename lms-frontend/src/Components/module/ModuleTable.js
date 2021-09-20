@@ -29,8 +29,6 @@ const ModuleTable = () => {
 
   const moduleData = useSelector((state) => state.ModuleReducer.modules);
 
-  console.log(moduleData);
-
   useEffect(() => {
     setModule(moduleData);
     setModuleFilter(moduleData);
