@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import { Form, Input, Button, message, Upload, Select, Skeleton, Popconfirm, Tooltip } from 'antd';
 import { InboxOutlined, DownloadOutlined, DeleteOutlined } from '@ant-design/icons';
 
-import { uploadTimetable, getTimetable, getTimetables } from '../../actions/timetables';
+import { uploadTimetable, getTimetable, getTimetables, updateTimetable } from '../../actions/timetables';
 //import { getModules } from '../../actions/Modules'
 
 function AddEditTimetable() {
@@ -13,19 +13,13 @@ function AddEditTimetable() {
 
   const { id } = useParams();
 
-  const fetchTimetable = async() => {
-    setLoading(true);
-    await dispatch(getTimetable())
-    setLoading(false)
-  }
-
-  const fetchTimetable = async(id) => {
-    setLoading(true)
-    const res = await dispatch(getTimetable(id))
-    form.setFieldsValue(res);
-    setFilePath(res.filePath)
-    setLoading(false)
-  }
+  // const fetchTimetable = async(id) => {
+  //   setLoading(true)
+  //   const res = await dispatch(getTimetable(id))
+  //   form.setFieldsValue(res);
+  //   setFilePath(res.filePath)
+  //   setLoading(false)
+  // }
 
   const [loading, setLoading] = useState(false);
   const [loadingBtn, setLoadingBtn] = useState(false);
@@ -135,25 +129,21 @@ function AddEditTimetable() {
               ]}
             >
               <Select style={{ width: '100%' }}>
-                {children}
               </Select>
             </Form.Item>
-              <Form.Item
-                name="semester"
-                label="Semester"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please enter the semester!',
-                  },
-                ]}
-              >
-                <Input
-                  style={{
-                    width: '100%',
-                  }}
-                />
-              </Form.Item>
+            <Form.Item
+              name="semester"
+              label="Semester"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please enter the semester!',
+                },
+              ]}
+            >
+              <Select style={{ width: '100%' }}>
+              </Select>
+            </Form.Item>
               <Form.Item
                 name="description"
                 label="Description"
@@ -205,4 +195,4 @@ function AddEditTimetable() {
   )
 }
 
-export default AddEditTimetable;
+export default AddEditTimetable

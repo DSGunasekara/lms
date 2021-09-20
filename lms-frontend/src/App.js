@@ -23,7 +23,7 @@ import EventAdmin from './Components/Events/EventAdmin';
 import EditEvent from './Components/Events/EditEvent';
 import AddEditResult from './Components/Results/AddEditResult';
 
-import AddEditTimetable from './Components/Timetables/AddEditTimetable';
+import AddEditTimetable from './Components/Timetables/AddEditTimetables';
 import Timetables from './Components/Timetables/Timetables';
 
 import 'antd/dist/antd.css';
@@ -181,9 +181,10 @@ function App() {
                 <Route path={'/results/view/:id'} component={ViewResult}></Route>
                 <Route path={'/results/edit/:id'} component={AddEditResult}></Route>
 
-                <Route path={'/timetable/add'} exact component={AddEditTimetable} />
-                <Route path={'/timetable/edit/:id'} component={AddEditTimetable} />
                 <Route path={'/timetables'} exact component={Timetables} />
+                <Route path={'/timetables/add'} exact component={AddEditTimetable} />
+                <Route path={'/timetables/edit/:id'} exact component={AddEditTimetable} />
+                
 
                 <Route path="" component={NotFound} />
               </Switch>
