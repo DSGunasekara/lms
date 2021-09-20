@@ -15,7 +15,7 @@ function GPA({user}) {
         const res = await dispatch(getResults())
         const results = []
         user.modules?.forEach((module) => {
-            const data =  res.filter((result) => result.module._id === module.module && result.status)
+            const data =  res.filter((result) => result.module._id === module.module._id && result.status)
             if(data[0]) {
                 const userData = data[0].students.filter(studentResult => studentResult.student._id === user._id)
                 results.push({
