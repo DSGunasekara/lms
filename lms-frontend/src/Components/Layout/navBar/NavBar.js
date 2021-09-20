@@ -127,7 +127,7 @@ function NavBar() {
           <img src={Logo} style={logo} alt="Logo" />
         </Link>
       </div>
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+      <Menu theme="dark" mode="inline" defaultSelectedKeys={['0']}>
           {navList?.map((nav, index) => (
               <Menu.Item key={index} icon={nav.icon}>
               <Link to={nav.to}></Link>

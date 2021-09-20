@@ -176,7 +176,7 @@ function App() {
                   />
                   <ProtectedRoute
                     path={"/viewModule/:id"}
-                    roles={[ROLES.ADMIN]}
+                    roles={[ROLES.ADMIN, ROLES.STUDENT]}
                     component={SingleModule}
                   />
                   <ProtectedRoute
