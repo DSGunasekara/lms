@@ -37,6 +37,7 @@ import { Layout } from "antd";
 import Results from "./Components/Results/Results";
 import ViewResult from "./Components/Results/ViewResult";
 import NavBar from "./Components/Layout/navBar/NavBar";
+import Dashboard from "./Components/Dashboard/Dashboard";
 
 const { Header, Content } = Layout;
 
@@ -85,6 +86,12 @@ function App() {
                     component={Users}
                   ></ProtectedRoute>
                   <ProtectedRoute
+                    path={"/dashboard"}
+                    exact
+                    roles={[ROLES.STUDENT]}
+                    component={Dashboard}
+                  ></ProtectedRoute>
+                  <ProtectedRoute
                     path={"/register"}
                     exact
                     roles={[ROLES.ADMIN]}
@@ -97,7 +104,7 @@ function App() {
                   />
                   <ProtectedRoute
                     path={"/profile/:id"}
-                    roles={[ROLES.ADMIN]}
+                    roles={[ROLES.ADMIN, ROLES.LAB_INSTRUCTOR, ROLES.LECTURER, ROLES.STUDENT]}
                     component={UserProfile}
                   />
                   {/* <ProtectedRoute path={'/login'} roles={[ROLES.ADMIN]} exact component={Login} /> */}
@@ -169,7 +176,7 @@ function App() {
                   />
                   <ProtectedRoute
                     path={"/viewModule/:id"}
-                    roles={[ROLES.ADMIN]}
+                    roles={[ROLES.ADMIN, ROLES.STUDENT]}
                     component={SingleModule}
                   />
                   <ProtectedRoute

@@ -15,7 +15,8 @@ import {
   CoffeeOutlined,
   LineChartOutlined,
   LoginOutlined,
-  LogoutOutlined
+  LogoutOutlined,
+  DashboardOutlined
 } from '@ant-design/icons';
 
 import { useDispatch } from 'react-redux';
@@ -74,6 +75,19 @@ function NavBar() {
                         to: '/results'
                     },
                 ])
+            } else if(user?.role === ROLES.STUDENT) {
+              setNavList([
+                {
+                  name: 'Dashboard',
+                  icon: <DashboardOutlined />,
+                  to: '/dashboard'
+                },
+                {
+                  name: 'Profile',
+                  icon: <UserOutlined />,
+                  to: `/profile/${user?._id}`
+                }
+              ])
             } else {
                 setNavList([])
             }
@@ -113,7 +127,7 @@ function NavBar() {
           <img src={Logo} style={logo} alt="Logo" />
         </Link>
       </div>
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+      <Menu theme="dark" mode="inline" defaultSelectedKeys={['0']}>
           {navList?.map((nav, index) => (
               <Menu.Item key={index} icon={nav.icon}>
               <Link to={nav.to}></Link>
