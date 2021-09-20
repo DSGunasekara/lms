@@ -35,8 +35,10 @@ export const fetchUsers = () => API.get("/user");
 export const fetchUser = (id) => API.get(`/user/${id}`);
 export const deleteUser = (userID) => API.delete(`/user/${userID}`);
 export const updateUser = (user) => API.patch(`/user/${user.id}`, user);
-export const updatePassword = (user) => API.patch(`/user/resetPassword/${user.id}`, user);
-export const updateProfile= (user) => API.patch(`/user/profile/${user.id}`, user);
+export const updatePassword = (user) =>
+  API.patch(`/user/resetPassword/${user.id}`, user);
+export const updateProfile = (user) =>
+  API.patch(`/user/profile/${user.id}`, user);
 
 //notices
 export const fetchNotice = () => API.get("/notice");
@@ -45,7 +47,6 @@ export const createNotice = (notice) => API.post("/notice", notice);
 export const updateNotice = (updateNotice) =>
   API.patch(`/notice/${updateNotice.id}`, updateNotice);
 export const deleteNotice = (id) => API.delete(`notice/${id}`);
-
 
 // LMS Lectures
 export const uploadLecture = (lecture) => API.post("/lecture", lecture);
@@ -75,7 +76,7 @@ export const deleteResult = (id) => API.delete(`results/${id}`);
 export const fetchTasks = () => API.get("/todo");
 export const fetchTask = (id) => API.get(`/todo/${id}`);
 export const createTask = (task) => API.post("/todo", task);
-export const updateTask = (task) => API.patch(`/todo/${task.id}`, task);
+export const updateTask = (task) => API.patch(`/todo/${task._id}`, task);
 
 //timetables
 export const uploadTimetable = (timetable) => API.post("/timetable", timetable);
