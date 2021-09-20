@@ -58,7 +58,7 @@ const SingleModule = () =>{
             <>
                 <Sider style={{height: '80vh'}} theme='light' width='500'>
                     <div className="container">
-                        <label for="name"><b>Name</b></label>
+                        <label htmlFor="name"><b>Name</b></label>
                         <p>{module.name}</p>
                         <label htmlFor="module_code"><b>Module Code</b></label>
                         <p>{module.module_code}</p>
