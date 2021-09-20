@@ -15,7 +15,8 @@ import {
   CoffeeOutlined,
   LineChartOutlined,
   LoginOutlined,
-  LogoutOutlined
+  LogoutOutlined,
+  DashboardOutlined
 } from '@ant-design/icons';
 
 import { useDispatch } from 'react-redux';
@@ -78,7 +79,7 @@ function NavBar() {
               setNavList([
                 {
                   name: 'Dashboard',
-                  icon: <UserOutlined/>,
+                  icon: <DashboardOutlined />,
                   to: '/dashboard'
                 }
               ])
