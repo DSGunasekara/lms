@@ -11,6 +11,7 @@ import { getUser } from '../../actions/Users';
 import EditUser from './EditUser';
 import GPA from '../GPA/GPA';
 import { ROLES } from '../../constants/constant';
+import UserModules from '../module/UserModules';
 
 function UserProfile() {
     const { Sider, Content } = Layout;
@@ -58,6 +59,11 @@ function UserProfile() {
     const updateUser = (user) => {
         setUser(user)
     }
+
+    const unenroll = (module) => {
+        console.log(module);
+    }
+    
     return (
         <Layout>
             {loading ? 
@@ -121,7 +127,7 @@ function UserProfile() {
                     </div>
                 </Sider>
                 <Content>
-                    {isEdit? <EditUser user={user} userUpdate={updateUser} />: isGPA ? <GPA user={user}/>: isModule ? 'user modules': ''}
+                    {isEdit? <EditUser user={user} userUpdate={updateUser} />: isGPA ? <GPA user={user}/>: isModule ? <UserModules moduleFilter={user?.modules} unenroll={unenroll}/>: ''}
                 </Content>
             </>
             }

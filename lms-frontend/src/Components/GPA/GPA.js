@@ -41,7 +41,7 @@ function GPA({user}) {
         let noOfCredit = 0;
 
         results.forEach(result => {
-            noOfCredit += 4
+            noOfCredit += result.module.credit
             switch (result.result) {
                 case 'A':
                     gradePoints += 4*4
@@ -98,7 +98,7 @@ function GPA({user}) {
         key: result._id,
         module_code: result.module.module_code,
         module: result.module.name,
-        credit: 4,
+        credit: result.module.credit,
         result: result.result,
       }))
       ;

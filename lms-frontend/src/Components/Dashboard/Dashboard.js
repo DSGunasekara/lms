@@ -44,6 +44,10 @@ function Dashboard() {
       setUser(res);
       setLoading(false)
   }
+
+  const unenroll = (module) => {
+      console.log(module);
+  }
   return (
     <div>
       <h3 style={header}>DashBoard</h3>
@@ -66,7 +70,7 @@ function Dashboard() {
           ))}
         </Carousel>
         <div>
-            <UserModules moduleFilter={user?.modules}/>
+            <UserModules moduleFilter={user?.modules} unenroll={unenroll}/>
         </div>
         </>
       )}

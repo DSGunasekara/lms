@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import 'antd/dist/antd.css';
 import { Table, Space, Tooltip } from 'antd';
-import { EyeFilled } from '@ant-design/icons';
+import { EyeFilled, UndoOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';
-function UserModules({moduleFilter}) {
+function UserModules({moduleFilter ,unenroll}) {
 
   const history = useHistory();
-//   const [moduleFilter, setModuleFilter] = useState([]);
-
-
 
   const SingleModuleLook = (e) => {
-    history.push(`viewModule/${e.key}`);
+    history.push(`/viewModule/${e.key}`);
   };
 
   const columns = [
@@ -48,12 +45,14 @@ function UserModules({moduleFilter}) {
           <Tooltip placement="bottom" title="View Module">
             <EyeFilled onClick={() => SingleModuleLook(record)} />
           </Tooltip>
+          <Tooltip placement="bottom" title="Unenroll From Module">
+            <UndoOutlined onClick={() => unenroll(record)} />
+          </Tooltip>
         </Space>
       ),
     },
   ];
 
-  console.log(moduleFilter);
   const data = moduleFilter?.map((mod) => ({
     key: mod.module._id,
     name: mod.module.name,
@@ -69,11 +68,12 @@ function UserModules({moduleFilter}) {
     fontWeight: 'bold',
     paddingTop: 25,
     paddingBottom: 15,
+    fontSize: '20px'
   };
 
   return (
-    <div>
-      <h3 style={header}>Modules</h3>
+    <div  style={{marginLeft: '10px'}}>
+      <h3 style={header}>Your Modules</h3>
 
       <Table columns={columns} dataSource={data} />
     </div>
