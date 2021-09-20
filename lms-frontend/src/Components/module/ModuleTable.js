@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getModules, removeModule } from '../../actions/Modules';
-import 'antd/dist/antd.css';
-import { Table, Space, Button, Tooltip, message, Popconfirm, Skeleton, Collapse, Select, Row, Col, Input, DatePicker } from 'antd';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getModules, removeModule } from "../../actions/Modules";
+import "antd/dist/antd.css";
+import { Table, Space, Button, Tooltip, message, Popconfirm, Skeleton, Collapse, Row, Col, Input, DatePicker } from 'antd';
 import { DeleteFilled, EditFilled, EyeFilled, PlusOutlined, ClearOutlined, SearchOutlined } from '@ant-design/icons';
-import { useHistory } from 'react-router';
+import { useHistory } from "react-router";
 import moment from 'moment';
 
 const ModuleTable = () => {
@@ -12,15 +12,15 @@ const ModuleTable = () => {
   const history = useHistory();
 
   const [module, setModule] = useState([]);
-  const [moduleFilter, setModuleFilter] = useState([]);
   const [loading, setLoading] = useState(false);
-
   const [searchName, setSearchName] = useState('')
   const [SearchModuleCode, setSearchModuleCode] = useState('')
   const [searchLec, setSearchLec] = useState('')
   const [searchAssist, setSearchAssist] = useState('')
   const [searchYear, setSearchYear] = useState('')
   const [open, setOpen] = useState(["0"]);
+  const [moduleFilter, setModuleFilter] = useState([]);
+
 
   useEffect(() => {
     setLoading(true);
@@ -28,6 +28,8 @@ const ModuleTable = () => {
   }, [dispatch]);
 
   const moduleData = useSelector((state) => state.ModuleReducer.modules);
+
+  console.log(moduleData);
 
   useEffect(() => {
     setModule(moduleData);
@@ -41,10 +43,10 @@ const ModuleTable = () => {
     const res = await dispatch(removeModule(e.key));
     if (res?.status === 200) {
       setModule(module.filter((mod) => mod._id !== e.key));
-      setModuleFilter(module.filter((mod) => mod._id !== e.key));
-      message.success('module Removed');
+      setModuleFilter(moduleData);(module.filter((mod) => mod._id !== e.key));
+      message.success("module Removed");
     } else {
-      message.error('An Error Occurred');
+      message.error("An Error Occurred");
     }
   };
 
@@ -58,41 +60,51 @@ const ModuleTable = () => {
 
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: 'Module Code',
-      dataIndex: 'module_code',
-      key: 'module_code',
+      title: "Module Code",
+      dataIndex: "module_code",
+      key: "module_code",
     },
     {
-      title: 'Lecture In Charge',
-      dataIndex: 'lecture_in_charge',
-      key: 'lecture_in_charge',
+      title: "Lecture In Charge",
+      dataIndex: "lecture_in_charge",
+      key: "lecture_in_charge",
     },
     {
-      title: 'Lab Assistant',
-      dataIndex: 'lab_assistant',
-      key: 'lab_assistant',
+      title: "Lab Assistant",
+      dataIndex: "lab_assistant",
+      key: "lab_assistant",
     },
     {
-      title: 'Year',
-      dataIndex: 'year',
-      key: 'year',
+      title: "Year",
+      dataIndex: "year",
+      key: "year",
     },
     {
-      title: 'Semester',
-      dataIndex: 'semester',
-      key: 'semester',
+      title: "Semester",
+      dataIndex: "semester",
+      key: "semester",
     },
     {
-      title: 'Action',
-      key: 'action',
+      title: "Credits",
+      dataIndex: "credit",
+      key: "credit",
+    },
+    {
+      title: "Action",
+      key: "action",
       render: (text, record) => (
         <Space size="middle">
-          <Popconfirm title="Are you sure to delete this Module?" onConfirm={() => deleteConfirm(record)} okText="Yes" cancelText="No">
+          <Popconfirm
+            title="Are you sure to delete this Module?"
+            onConfirm={() => deleteConfirm(record)}
+            okText="Yes"
+            cancelText="No"
+          >
             <Tooltip placement="bottom" title="Delete Module">
               <DeleteFilled />
             </Tooltip>
@@ -115,21 +127,20 @@ const ModuleTable = () => {
     lab_assistant: mod.lab_assistant?.name,
     year: mod.year.slice(0, 4),
     semester: mod.semester,
+    credit: mod.credit,
   }));
 
   const newModule = () => {
-    history.push('createModule');
+    history.push("createModule");
   };
 
   const header = {
     paddingLeft: 10,
-    fontFamily: 'Besley',
-    fontWeight: 'bold',
+    fontFamily: "Besley",
+    fontWeight: "bold",
     paddingTop: 25,
     paddingBottom: 15,
   };
-
-  const { Option } = Select;
 
   const { Panel } = Collapse;
 
@@ -250,7 +261,14 @@ const ModuleTable = () => {
 
           <Table columns={columns} dataSource={data} />
           <Tooltip title="Create New Module">
-            <Button type="primary" shape="circle" icon={<PlusOutlined />} size="large" className="fabBtn" onClick={newModule} />
+            <Button
+              type="primary"
+              shape="circle"
+              icon={<PlusOutlined />}
+              size="large"
+              className="fabBtn"
+              onClick={newModule}
+            />
           </Tooltip>
         </>
       )}
@@ -259,3 +277,4 @@ const ModuleTable = () => {
 };
 
 export default ModuleTable;
+
