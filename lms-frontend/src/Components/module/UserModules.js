@@ -1,6 +1,6 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import { Table, Space, Tooltip } from 'antd';
+import { Table, Space, Tooltip, Popconfirm } from 'antd';
 import { EyeFilled, UndoOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';
 function UserModules({moduleFilter ,unenroll}) {
@@ -45,9 +45,16 @@ function UserModules({moduleFilter ,unenroll}) {
           <Tooltip placement="bottom" title="View Module">
             <EyeFilled onClick={() => SingleModuleLook(record)} />
           </Tooltip>
+          <Popconfirm
+            title="Are you sure to unenroll from this Module?"
+            onConfirm={() => unenroll(record)}
+            okText="Yes"
+            cancelText="No"
+          >
           <Tooltip placement="bottom" title="Unenroll From Module">
-            <UndoOutlined onClick={() => unenroll(record)} />
+            <UndoOutlined/>
           </Tooltip>
+          </Popconfirm>
         </Space>
       ),
     },

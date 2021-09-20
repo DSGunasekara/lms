@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 
-import { Layout, Avatar, Tag, Divider, Skeleton, Tooltip, Button } from 'antd';
+import { Layout, Avatar, Tag, Divider, Skeleton, Tooltip, Button, message } from 'antd';
 import { UserOutlined, MailOutlined, PhoneOutlined,
      SettingOutlined, ReadOutlined, UngroupOutlined, IdcardOutlined
 } from '@ant-design/icons';
@@ -60,10 +60,17 @@ function UserProfile() {
         setUser(user)
     }
 
-    const unenroll = (module) => {
-        console.log(module);
-    }
-    
+    const unenroll = async(module) => {
+        const newModules= user.modules.filter(mod=> mod.module._id !== module.key)
+        setUser({...user, modules: newModules})
+        const res = await dispatch(updateUser({id: user._id, ...user, modules: newModules}));
+        if (res.status === 200) {
+            message.success('Unenrolled from the module');
+        }else {
+            message.error('An Error Occurred');
+        }
+      }
+
     return (
         <Layout>
             {loading ? 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Carousel, Skeleton } from 'antd';
+import { Carousel, Skeleton, message } from 'antd';
 
 import { getNotices } from '../../actions/Notices';
-import { getUser } from '../../actions/Users';
+import { getUser, updateUser } from '../../actions/Users';
 import UserModules from '../module/UserModules';
 
 function Dashboard() {
@@ -45,8 +45,15 @@ function Dashboard() {
       setLoading(false)
   }
 
-  const unenroll = (module) => {
-      console.log(module);
+  const unenroll = async(module) => {
+    const newModules= user.modules.filter(mod=> mod.module._id !== module.key)
+    setUser({...user, modules: newModules})
+    const res = await dispatch(updateUser({id: user._id, ...user, modules: newModules}));
+    if (res.status === 200) {
+        message.success('Unenrolled from the module');
+    }else {
+        message.error('An Error Occurred');
+    }
   }
   return (
     <div>
