@@ -37,6 +37,7 @@ import { Layout } from "antd";
 import Results from "./Components/Results/Results";
 import ViewResult from "./Components/Results/ViewResult";
 import NavBar from "./Components/Layout/navBar/NavBar";
+import Dashboard from "./Components/Dashboard/Dashboard";
 
 const { Header, Content } = Layout;
 
@@ -83,6 +84,12 @@ function App() {
                     exact
                     roles={[ROLES.ADMIN]}
                     component={Users}
+                  ></ProtectedRoute>
+                  <ProtectedRoute
+                    path={"/dashboard"}
+                    exact
+                    roles={[ROLES.STUDENT]}
+                    component={Dashboard}
                   ></ProtectedRoute>
                   <ProtectedRoute
                     path={"/register"}

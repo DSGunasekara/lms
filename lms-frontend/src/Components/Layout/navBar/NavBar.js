@@ -74,6 +74,14 @@ function NavBar() {
                         to: '/results'
                     },
                 ])
+            } else if(user?.role === ROLES.STUDENT) {
+              setNavList([
+                {
+                  name: 'Dashboard',
+                  icon: <UserOutlined/>,
+                  to: '/dashboard'
+                }
+              ])
             } else {
                 setNavList([])
             }
