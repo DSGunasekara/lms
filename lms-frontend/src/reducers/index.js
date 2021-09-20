@@ -7,5 +7,6 @@ import NoticeReducer from './Notices';
 import LectureReducer from './Reducer.Lectures';
 import EventReducer from './Events';
 import ResultReducer from './resultReducer'
+import TaskReducer from './todoReducer';
 
-export default combineReducers({ auth, ModuleReducer, UserReducer, LectureReducer, NoticeReducer, EventReducer, ResultReducer });
+export default combineReducers({ auth, ModuleReducer, UserReducer, LectureReducer, NoticeReducer, EventReducer, ResultReducer, TaskReducer });

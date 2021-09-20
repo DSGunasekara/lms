@@ -13,6 +13,20 @@ function AddEditTimetable() {
 
   const { id } = useParams();
 
+//   // const fetchTimetable = async() => {
+//   //   setLoading(true);
+//   //   await dispatch(getTimetable())
+//   //   setLoading(false)
+//   // }
+
+  const fetchTimetable = async(id) => {
+    setLoading(true)
+    const res = await dispatch(getTimetable(id))
+    form.setFieldsValue(res);
+    setFilePath(res.filePath)
+    setLoading(false)
+  }
+
   // const fetchTimetable = async(id) => {
   //   setLoading(true)
   //   const res = await dispatch(getTimetable(id))

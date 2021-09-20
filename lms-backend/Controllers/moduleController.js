@@ -50,7 +50,7 @@ export const createModule = (async(req, res)=>{
     if (checkModule) return res.status(409).send("Module already exits");
 
     const courseModules = new Module({ ...req.body });
-  console.log(courseModules);
+
     courseModules.save((error, savedModule) => {
       console.log(error)
       if (error) return res.status(400).send(error);

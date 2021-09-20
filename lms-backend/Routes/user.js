@@ -1,7 +1,6 @@
 import express from 'express';
 const router = express.Router();
 
-// import verify from '../Middleware/verify.js'
 import  {getUsers, getUser, createUser, updateUser, updatePassword, deleteUser } from '../Controllers/userController.js';
 
 router.get('/', getUsers);
