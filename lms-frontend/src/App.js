@@ -104,7 +104,7 @@ function App() {
                   />
                   <ProtectedRoute
                     path={"/profile/:id"}
-                    roles={[ROLES.ADMIN]}
+                    roles={[ROLES.ADMIN, ROLES.LAB_INSTRUCTOR, ROLES.LECTURER, ROLES.STUDENT]}
                     component={UserProfile}
                   />
                   {/* <ProtectedRoute path={'/login'} roles={[ROLES.ADMIN]} exact component={Login} /> */}

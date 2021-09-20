@@ -81,6 +81,11 @@ function NavBar() {
                   name: 'Dashboard',
                   icon: <DashboardOutlined />,
                   to: '/dashboard'
+                },
+                {
+                  name: 'Profile',
+                  icon: <UserOutlined />,
+                  to: `/profile/${user?._id}`
                 }
               ])
             } else {
