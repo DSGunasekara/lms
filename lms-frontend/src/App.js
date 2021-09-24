@@ -23,8 +23,12 @@ import EventAdmin from './Components/Events/EventAdmin';
 import EditEvent from './Components/Events/EditEvent';
 import AddEditResult from './Components/Results/AddEditResult';
 
-import AddEditTimetable from './Components/Timetables/AddEditTimetable';
+//import AddEditTimetable from './Components/Timetables/AddEditTimetable';
 import Timetables from './Components/Timetables/Timetables';
+
+import CreateDiscussion from './Components/Forum/CreateDiscussion';
+import ViewDiscussion from './Components/Forum/ViewDiscussion';
+import ViewForum from './Components/Forum/ViewForum';
 
 import 'antd/dist/antd.css';
 import './index.css';
@@ -40,6 +44,7 @@ import {
   CoffeeOutlined,
   FileExcelOutlined,
   LineChartOutlined,
+  CommentOutlined,
 } from '@ant-design/icons';
 import Results from './Components/Results/Results';
 import ViewResult from './Components/Results/ViewResult';
@@ -129,6 +134,10 @@ function App() {
                 Timetable Module
                 <Link to="/results"></Link>
               </Menu.Item>
+              <Menu.Item key="8" icon={<CommentOutlined />}>
+                Forum Module
+                <Link to="/viewForum"></Link>
+              </Menu.Item>
             </Menu>
           </Sider>
           <Layout className="site-layout" style={{marginLeft: collapsed ? 75 : 200}}>
@@ -181,9 +190,14 @@ function App() {
                 <Route path={'/results/view/:id'} component={ViewResult}></Route>
                 <Route path={'/results/edit/:id'} component={AddEditResult}></Route>
 
-                <Route path={'/timetable/add'} exact component={AddEditTimetable} />
-                <Route path={'/timetable/edit/:id'} component={AddEditTimetable} />
+                {/* <Route path={'/timetable/add'} exact component={AddEditTimetable} /> */}
+                {/* <Route path={'/timetable/edit/:id'} component={AddEditTimetable} /> */}
                 <Route path={'/timetables'} exact component={Timetables} />
+
+                <Route path={'/createDiscussion'} exact component={CreateDiscussion}></Route>
+                <Route path={'/viewDiscussion/:id'} component={ViewDiscussion}></Route> 
+                <Route path={'/viewForum'} exact component={ViewForum}></Route>
+
 
                 <Route path="" component={NotFound} />
               </Switch>

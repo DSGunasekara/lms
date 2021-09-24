@@ -69,3 +69,10 @@ export const fetchTimetables = () => API.get('/timetable');
 export const fetchTimetable = (id) => API.get(`/timetable/${id}`);
 export const deleteTimetable = (id) => API.delete(`timetable/${id}`);
 export const updateTimetable = (timetable) => API.patch(`/timetable/${timetable.id}`, timetable);
+
+//discussions
+export const fetchDiscussion = () => API.get('/discussion');
+export const fetchSingleDiscussion = (id) => API.get(`/discussion/${id}`);
+export const createDiscussion = (discussion) => API.post('/discussion', discussion);
+export const updateDiscussion = (updateDiscussion) => API.patch(`/discussion/${updateDiscussion.id}`, updateDiscussion);
+export const deleteDiscussion = (id) => API.delete(`discussion/${id}`);

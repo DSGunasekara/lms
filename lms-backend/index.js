@@ -11,6 +11,7 @@ import fileRoute from './Routes/file.js'
 import eventRoute from './Routes/event.js'
 import resultRoute from './Routes/results.js'
 import timetableRoute from './Routes/timetable.js'
+import discussionRoute from './Routes/discussion.js'
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use('/api/file', fileRoute);
 app.use('/api/event', eventRoute);
 app.use('/api/results', resultRoute);
 app.use('/api/timetable', timetableRoute);
+app.use('/api/discussion', discussionRoute);
 
 const PORT = process.env.PORT || 5000;
 
