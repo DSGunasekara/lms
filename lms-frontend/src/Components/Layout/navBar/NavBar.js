@@ -86,7 +86,12 @@ function NavBar() {
                   name: 'Profile',
                   icon: <UserOutlined />,
                   to: `/profile/${user?._id}`
-                }
+                },
+                {
+                  name: ' Course Module',
+                  icon: <VideoCameraOutlined/>,
+                  to: '/modulePage'
+              },
               ])
             } else {
                 setNavList([])
