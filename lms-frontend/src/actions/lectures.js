@@ -5,7 +5,6 @@ export const uploadLecture = (lecture) => async (dispatch) => {
     try{
         const res = await api.uploadLecture(lecture);
         //dispatch ({type: CREATE_LECTURE, payload:res.data})
-        console.log(lecture);
         return{...res}
     }catch(error){
         console.log(error);

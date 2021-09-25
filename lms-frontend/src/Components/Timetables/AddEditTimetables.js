@@ -5,26 +5,27 @@ import { useParams } from 'react-router-dom'
 import { Form, Input, Button, message, Upload, Select, Skeleton, Popconfirm, Tooltip } from 'antd';
 import { InboxOutlined, DownloadOutlined, DeleteOutlined } from '@ant-design/icons';
 
-import { uploadTimetable, getTimetable, getTimetables } from '../../actions/timetables';
+import { uploadTimetable, getTimetable, getTimetables, updateTimetable } from '../../actions/timetables';
 //import { getModules } from '../../actions/Modules'
 
 function AddEditTimetable() {
   const dispatch = useDispatch()
 
+  const { Option } = Select;
+
   const { id } = useParams();
 
-//   useEffect(() => {
-//     if(id) {
-//       fetchTimetable(id)
-//     }
-//     fetchModules();
-//   }, [])
+//   // const fetchTimetable = async() => {
+//   //   setLoading(true);
+//   //   await dispatch(getTimetable())
+//   //   setLoading(false)
+//   // }
 
-  const fetchTimetable = async() => {
-    setLoading(true);
-    await dispatch(getTimetable())
-    setLoading(false)
-  }
+  useEffect(() => {
+    if(id) {
+      fetchTimetable(id);
+    }
+  }, []);
 
   const fetchTimetable = async(id) => {
     setLoading(true)
@@ -34,17 +35,17 @@ function AddEditTimetable() {
     setLoading(false)
   }
 
+  // const fetchTimetable = async(id) => {
+  //   setLoading(true)
+  //   const res = await dispatch(getTimetable(id))
+  //   form.setFieldsValue(res);
+  //   setFilePath(res.filePath)
+  //   setLoading(false)
+  // }
+
   const [loading, setLoading] = useState(false);
   const [loadingBtn, setLoadingBtn] = useState(false);
   const [filePath, setFilePath] = useState('')
-
-  //const data = useSelector((state) => state.ModuleReducer.modules);
-
-//   const { Option } = Select;
-//   const children = []
-//   for (const module in data) {
-//     children.push(<Option key={data[module].module_code}>{data[module].module_code}</Option>);
-//   }
 
   const tailFormItemLayout = {
       wrapperCol: {
@@ -67,16 +68,16 @@ function AddEditTimetable() {
     if (!filePath) {
         message.warning('Please Upload a file')
     } else if (id) {
-      const res = await dispatch(updateLecture({id, ...values, filePath}))
+      const res = await dispatch(updateTimetable({id, ...values, filePath}))
       if (res.status === 200) {
-        message.success('Lecture Updated Successfully')
+        message.success('Timetable Updated Successfully')
       } else {
         message.error(res.data)
       }
     } else {
-        const res = await dispatch(uploadLecture({...values, filePath}))
+        const res = await dispatch(uploadTimetable({...values, filePath}))
         if (res.status === 201) {
-          message.success('Lecture Created Successfully')
+          message.success('Timetable Created Successfully')
         } else {
           message.error(res.data)
         }
@@ -119,7 +120,7 @@ function AddEditTimetable() {
     </>
     :
       <div style={{width:'400px', margin: 'auto'}}>
-          <h2 style={{textAlign: 'center'}}>{id ? 'Update' : 'Upload'} Lecture</h2>
+          <h2 style={{textAlign: 'center'}}>{id ? 'Update' : 'Upload'} Timetable </h2>
           <Form
             layout="vertical"
             form={form}
@@ -133,42 +134,44 @@ function AddEditTimetable() {
               rules={[
                 {
                   required: true,
-                  message: 'Please input a Title!',
+                  message: 'Please enthe the Title!',
                 },
               ]}
             >
               <Input />
             </Form.Item>
             <Form.Item
-              name="module_code"
-              label="Module Code"
+              name="year"
+              label="Year"
               rules={[
                 {
                   required: true,
-                  message: 'Please select a Module',
+                  message: 'Please enter the year!',
                 },
               ]}
             >
               <Select style={{ width: '100%' }}>
-                {children}
+                <Option value="2018">2018</Option>
+                <Option value="2019">2019</Option>
+                <Option value="2020">2020</Option>
+                <Option value="2021">2021</Option>
               </Select>
             </Form.Item>
-              <Form.Item
-                name="week"
-                label="Week"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input a week!',
-                  },
-                ]}
-              >
-                <Input
-                  style={{
-                    width: '100%',
-                  }}
-                />
-              </Form.Item>
+            <Form.Item
+              name="semester"
+              label="Semester"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please enter the semester!',
+                },
+              ]}
+            >
+              <Select style={{ width: '100%' }}>
+                <Option value='1'>1 </Option>
+                <Option value='2'>2 </Option>
+              </Select>
+            </Form.Item>
               <Form.Item
                 name="description"
                 label="Description"
@@ -193,16 +196,16 @@ function AddEditTimetable() {
               <>
                 <h6>{filePath.slice(8)}</h6>
                 <Popconfirm
-                title="Are you sure to delete this user?"
+                title="Are you sure to delete this uploaded timetable?"
                 onConfirm={() => setFilePath('')}
                 okText="Yes"
                 cancelText="No"
                 >
-                      <Tooltip placement="left" title="Delete Lecture File">
+                      <Tooltip placement="left" title="Delete Timetable File">
                         <Button icon={<DeleteOutlined />} style={{marginRight: '5px'}}/>
                       </Tooltip>
                   </Popconfirm>
-                  <Tooltip placement="right" title="Download Lecture File">
+                  <Tooltip placement="right" title="Download Timetable File">
                     <Button icon={<DownloadOutlined />} onClick={() => window.open(`http://localhost:5000/${filePath}`)}/>
                   </Tooltip>
                 </>
@@ -220,4 +223,4 @@ function AddEditTimetable() {
   )
 }
 
-export default AddEditLecture
+export default AddEditTimetable

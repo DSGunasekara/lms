@@ -3,6 +3,7 @@ import { useHistory } from 'react-router';
 import { login as loginUser } from '../../actions/auth';
 import { useDispatch } from 'react-redux';
 import { Form, Input, Button, message, } from 'antd';
+import { ROLES } from '../../constants/constant';
 
 function Login() {
   const dispatch = useDispatch();
@@ -14,7 +15,11 @@ function Login() {
     const res = await dispatch(loginUser(values));
     if(res.status === 200){
       message.success('Logged in  Successfully');
-      history.push('/users')
+      if(res.data.payload.user.role === ROLES.STUDENT) {
+        history.push('/dashboard')
+      } else {
+        history.push('/users')
+      }
     } else {
       message.error('Login Error');
     }

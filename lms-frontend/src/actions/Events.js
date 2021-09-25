@@ -49,7 +49,6 @@ export const removeEvent = (id) => async (dispatch) =>{
 //update single event
 export const updateSingleEvent = (event) => async (dispatch) =>{
     try {
-        console.log(event);
         const res = await api.updateEvent(event);
         dispatch(getEvents())
         return res;

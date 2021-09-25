@@ -25,6 +25,12 @@ const UserSchema = new mongoose.Schema({
   role: {
     type: String,
   },
+  profile_photo: {
+    type: String,
+  },
+  bio: {
+    type: String
+  },
   modules: [
     {
       module: {

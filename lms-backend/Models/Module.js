@@ -23,19 +23,10 @@ const ModuleSchema = new mongoose.Schema({
   },
   semester: {
     type: String
+  },
+  credit: {
+    type:Number
   }
-  // lectures: {
-  //     type: [{
-  //       type: mongoose.Schema.Types.ObjectId,
-  //       ref: 'Lecture'
-  //     }]
-  // },
-  // labs: {
-  //     type: [{
-  //       type: mongoose.Schema.Types.ObjectId,
-  //       ref: 'Lecture'
-  //     }]
-  // }
 });
 
 const Module = mongoose.model("Module", ModuleSchema);

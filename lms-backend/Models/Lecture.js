@@ -5,6 +5,10 @@ const LectureSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    type: {
+        type: String,
+        requred: true,
+    },
     module_code: {
         type: String,
         required: true,

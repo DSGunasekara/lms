@@ -50,3 +50,12 @@ export const updatePassword = (user) => async() => {
         return {...error.response};
     }
 }
+
+export const updateProfile = (user) => async() => {
+    try {
+        const res = await api.updateProfile(user);
+        return res;
+    } catch (error) {
+        return {...error.response};
+    }
+}
