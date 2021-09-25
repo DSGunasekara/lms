@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router';
+import { useParams, useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { getSingleDiscussion } from '../../actions/discussion';
+import { getSingleDiscussion, updateSingleDiscussion } from '../../actions/discussion';
 import { Button, Tooltip, Card } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import moment from 'moment';
+import AddReply from './AddReply';
 
 
 const ViewDiscussion = () => {
 
     const dispatch = useDispatch();
+    const history = useHistory();
+
     let { id } = useParams();
 
     const [discussion, setDiscussion] = useState('');
     const [loading, setLoading] = useState(false);
+    const [isReply, setIsReply] = useState(false);
 
     const fetchDiscussion = async (ModId) => {
         setLoading(true);
@@ -29,6 +33,19 @@ const ViewDiscussion = () => {
         }
     }, [id])
 
+    const newReply = () =>{
+        history.push('/addReply')
+    }
+
+    const handleReply = () => {
+        setIsReply(true);
+    }
+
+    const addReply = async(data) => {
+        const res = await dispatch(updateSingleDiscussion({id: id, ...discussion, replies:[...discussion.replies, {text:data}]}))
+        console.log(res);
+    }
+
     return (
         <div>
             <Card>
@@ -42,11 +59,15 @@ const ViewDiscussion = () => {
                             shape="circle"
                             icon={<EditOutlined />}
                             size='large'
-                            // style={buttonStyle}
-                            // onClick={() => singleDiscussionView(blah)}
+                            onClick={handleReply}
                         />
                 </Tooltip>
+                <div>
+                    {isReply? <AddReply addReply={addReply} />: ''}
+                </div>
+
             </Card>
+            
             
         </div>
     )

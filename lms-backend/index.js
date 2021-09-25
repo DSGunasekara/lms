@@ -12,6 +12,7 @@ import eventRoute from './Routes/event.js'
 import resultRoute from './Routes/results.js'
 import timetableRoute from './Routes/timetable.js'
 import discussionRoute from './Routes/discussion.js'
+import replyRoute from './Routes/reply.js'
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.use('/api/event', eventRoute);
 app.use('/api/results', resultRoute);
 app.use('/api/timetable', timetableRoute);
 app.use('/api/discussion', discussionRoute);
+app.use('/api/reply', replyRoute);
 
 const PORT = process.env.PORT || 5000;
 

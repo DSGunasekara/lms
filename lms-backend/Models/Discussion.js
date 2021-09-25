@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 
-
 const DiscussionSchema = new mongoose.Schema({
     topic: {
         type: String,
@@ -14,6 +13,14 @@ const DiscussionSchema = new mongoose.Schema({
         type: Date,
         default: new Date()
     }, 
+    postedBy: {
+        type: mongoose.Schema.Types.ObjectId, ref: "User",
+        ref: "User"
+    },
+    replies: [{
+        text: String,
+        postedBy: {type: mongoose.Schema.Types.ObjectId, ref:"User"}
+    }]
 });
 
 const Discussion = mongoose.model('Discussion', DiscussionSchema);

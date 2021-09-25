@@ -8,5 +8,6 @@ import LectureReducer from './Reducer.Lectures';
 import EventReducer from './Events';
 import ResultReducer from './resultReducer';
 import DiscussionReducer from './discussionReducer';
+import ReplyReducer from './replyReducer';
 
-export default combineReducers({ auth, ModuleReducer, UserReducer, LectureReducer, NoticeReducer, EventReducer, ResultReducer, DiscussionReducer });
+export default combineReducers({ auth, ModuleReducer, UserReducer, LectureReducer, NoticeReducer, EventReducer, ResultReducer, DiscussionReducer, ReplyReducer });

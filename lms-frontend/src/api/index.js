@@ -76,3 +76,10 @@ export const fetchSingleDiscussion = (id) => API.get(`/discussion/${id}`);
 export const createDiscussion = (discussion) => API.post('/discussion', discussion);
 export const updateDiscussion = (updateDiscussion) => API.patch(`/discussion/${updateDiscussion.id}`, updateDiscussion);
 export const deleteDiscussion = (id) => API.delete(`discussion/${id}`);
+
+//reply
+// export const fetchReply = () => API.get('/reply');
+// export const fetchSingleReply = (id) => API.get(`/reply/${id}`);
+// export const createReply = (reply) => API.post('/reply', reply);
+// export const updateReply = (updateReply) => API.patch(`/reply/${updateReply.id}`, updateReply);
+// export const deleteReply = (id) => API.delete(`reply/${id}`);

@@ -22,6 +22,7 @@ import AddEvent from './Components/Events/AddEvent';
 import EventAdmin from './Components/Events/EventAdmin';
 import EditEvent from './Components/Events/EditEvent';
 import AddEditResult from './Components/Results/AddEditResult';
+import AddReply from './Components/Forum/AddReply';
 
 //import AddEditTimetable from './Components/Timetables/AddEditTimetable';
 import Timetables from './Components/Timetables/Timetables';
@@ -197,7 +198,7 @@ function App() {
                 <Route path={'/createDiscussion'} exact component={CreateDiscussion}></Route>
                 <Route path={'/viewDiscussion/:id'} component={ViewDiscussion}></Route> 
                 <Route path={'/viewForum'} exact component={ViewForum}></Route>
-
+                <Route path={'/addReply'} exact component={AddReply}></Route>
 
                 <Route path="" component={NotFound} />
               </Switch>

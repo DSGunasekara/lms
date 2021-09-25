@@ -46,9 +46,9 @@ export const removeDiscussion = (id) => async (dispatch) => {
 //update single discussion
 export const updateSingleDiscussion = (discussion) => async (dispatch) => {
     try {
-        console.log(discussion);
+        // console.log(discussion);
         const res = await api.updateDiscussion(discussion);
-        dispatch(getDiscussions());
+        // dispatch(getDiscussions());
         return res;
     } catch (error) {
         console.log("Error in Update Discussion" +  error);
