@@ -4,7 +4,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import _ from "lodash";
 import { v4 } from "uuid";
 
-import { getTasks, createTask } from "../../actions/todo";
+import { getTasks, createTask, updateTodo } from "../../actions/todo";
 
 import "./todoList.css";
 
@@ -14,6 +14,7 @@ const TodoList = () => {
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
+  const [todoId, setTodoId] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -49,7 +50,7 @@ const TodoList = () => {
         },
       };
       console.log(todoFilter);
-
+      setTodoId(option_filter[0]?._id);
       setState(todoFilter);
     }
   }, [todoData]);
@@ -127,11 +128,29 @@ const TodoList = () => {
     setText("");
   };
 
-  const save = () => {
-    const todo = {
+  const save = async () => {
+    let todo = {
       ...state,
       CreatedBy: user._id,
     };
+    if (todoId) {
+      todo = {
+        ...todo,
+        _id: todoId,
+      };
+      console.log(todo);
+      // Patch
+      const res = await dispatch(updateTodo(todo));
+      if (res.status === 200) {
+        console.log("OK");
+      }
+    } else {
+      // create
+      const res = await dispatch(createTask(todo));
+      if (res.state === 200) {
+        console.log("Crete");
+      }
+    }
   };
 
   return (
