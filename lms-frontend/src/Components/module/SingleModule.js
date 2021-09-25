@@ -53,7 +53,7 @@ const SingleModule = () =>{
                 <Skeleton active />
                 <Skeleton active />
                 <Skeleton active />
-            </>
+            </> 
             :
             <>
                 <Sider style={{height: '80vh'}} theme='light' width='500'>

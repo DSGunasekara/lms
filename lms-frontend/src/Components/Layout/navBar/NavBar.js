@@ -16,7 +16,8 @@ import {
   LineChartOutlined,
   LoginOutlined,
   LogoutOutlined,
-  DashboardOutlined
+  DashboardOutlined,
+  CalendarOutlined
 } from '@ant-design/icons';
 
 import { useDispatch } from 'react-redux';
@@ -71,7 +72,7 @@ function NavBar() {
                     },
                     {
                         name: 'Timetable Module',
-                        icon: <UserOutlined/>,
+                        icon: <CalendarOutlined />,
                         to: '/timetables'
                     },
                 ])
