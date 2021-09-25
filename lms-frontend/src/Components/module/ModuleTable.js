@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getModules, removeModule } from "../../actions/Modules";
-import { getUser } from "../../actions/Users";
+import { getUser, updateUser } from "../../actions/Users";
 import "antd/dist/antd.css";
 import { Table, Space, Button, Tooltip, message, Popconfirm, Skeleton, Collapse, Row, Col, Input, DatePicker } from 'antd';
 import { DeleteFilled, EditFilled, EyeFilled, PlusOutlined, ClearOutlined, SearchOutlined, ExportOutlined } from '@ant-design/icons';
@@ -49,7 +49,7 @@ const ModuleTable = () => {
       function search(module) {
         return Object.keys(this).every((key) => module._id !== this[key].module._id)
       }
-      const data = module.filter(search, user?.modules)
+      const data = module?.filter(search, user?.modules)
       setModule(data)
       setModuleFilter(data)
     } else {
@@ -65,7 +65,7 @@ const ModuleTable = () => {
     const res = await dispatch(removeModule(e.key));
     if (res?.status === 200) {
       setModule(module.filter((mod) => mod._id !== e.key));
-      setModuleFilter(moduleData);(module.filter((mod) => mod._id !== e.key));
+      setModuleFilter(module.filter((mod) => mod._id !== e.key));
       message.success("module Removed");
     } else {
       message.error("An Error Occurred");
@@ -80,8 +80,15 @@ const ModuleTable = () => {
     history.push(`viewModule/${e.key}`);
   };
 
-  const enroll = () => {
-
+  const enroll = async(e) => {
+    const res = await dispatch(updateUser({id: user?._id, ...user, modules: [...user?.modules, {module: e.key}]}))
+    if(res.status === 200) {
+      message.success('Enrolled Successfully')
+      setModule(module.filter((mod) => mod._id !== e.key));
+      setModuleFilter(module.filter((mod) => mod._id !== e.key));
+    } else {
+      message.error('An Error Occurred')
+    }
   }
 
   const columns = [
