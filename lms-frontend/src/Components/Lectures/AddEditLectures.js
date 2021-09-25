@@ -10,7 +10,7 @@ import { getModules } from '../../actions/Modules'
 
 
 function AddEditLecture() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const { id } = useParams();
 
@@ -139,6 +139,22 @@ function AddEditLecture() {
               ]}
             >
               <Input />
+            </Form.Item>
+            <Form.Item
+              name="type"
+              label="Type"
+              rules={[
+                 {
+                  required: true,
+                  message: 'Please select the Type',
+                },
+              ]}
+            > 
+               <Select style={{ width: '100%' }}>
+                  <Option value='Lecture'>Lecture</Option>
+                  <Option value='Labs'>Labs</Option>
+                  <Option value='Tutorial'>Tutorial</Option>
+               </Select>
             </Form.Item>
             <Form.Item
               name="module_code"

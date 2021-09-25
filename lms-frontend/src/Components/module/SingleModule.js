@@ -46,7 +46,7 @@ const SingleModule = () =>{
     return(
 <div>
 
-    <Layout>
+    <Layout >
         {loading ?
             <>
                 <Skeleton active />
@@ -58,6 +58,56 @@ const SingleModule = () =>{
             <>
                 <Sider style={{height: '80vh'}} theme='light' width='500'>
                     <div className="container">
+<<<<<<< HEAD
+                        <label for="name">
+                            <b>Name</b>
+                        </label>
+                        <p>
+                            {
+                                module.name
+                            }
+                        </p>
+                        <label htmlFor="module_code">
+                            <b>Module Code</b>
+                        </label>
+                        <p>
+                            {
+                                module.module_code
+                            }
+                        </p>
+                        <label htmlFor="name">
+                            <b>Lecturer in Charge</b>
+                        </label>
+                        <p>
+                            {
+                                module.lecture_in_charge?.name
+                            }
+                        </p>
+                        <label htmlFor="lab_assistant">
+                            <b>lab_assistant</b>
+                        </label>
+                        <p>
+                            {
+                                module.lab_assistant?.name
+                            }
+                        </p>
+                        <label htmlFor="year">
+                            <b>year</b>
+                        </label>
+                        <p>
+                            {
+                                module.year?.slice(0, 4)
+                            }
+                        </p>
+                        <label htmlFor="semester">
+                            <b>semester</b>
+                        </label>
+                        <p>
+                            {
+                                module.semester
+                            }
+                        </p>
+=======
                         <label htmlFor="name"><b>Name</b></label>
                         <p>{module.name}</p>
                         <label htmlFor="module_code"><b>Module Code</b></label>
@@ -70,6 +120,7 @@ const SingleModule = () =>{
                         <p>{module.year?.slice(0, 4)}</p>
                         <label htmlFor="semester"><b>semester</b></label>
                         <p>{module.semester}</p>
+>>>>>>> a246ad2a10164f27e6e8ee80d1c6b84ca49f7d5a
                     </div>
                     <Divider />
                     <div style={{margin: 15}}>

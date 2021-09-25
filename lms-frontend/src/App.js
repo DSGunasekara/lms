@@ -226,13 +226,13 @@ function App() {
                   ></ProtectedRoute>
 
                   <ProtectedRoute
-                    path={"/timetable/add"}
+                    path={"/timetables/add"}
                     exact
                     roles={[ROLES.ADMIN]}
                     component={AddEditTimetable}
                   />
                   <ProtectedRoute
-                    path={"/timetable/edit/:id"}
+                    path={"/timetables/edit/:id"}
                     roles={[ROLES.ADMIN]}
                     component={AddEditTimetable}
                   />
