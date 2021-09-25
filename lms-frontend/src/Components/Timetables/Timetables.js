@@ -39,7 +39,7 @@ export default function Timetables(){
      }
 
     const editConfirm = (e) =>{
-        history.push(`timetable/edit/${e.key}`)
+        history.push(`timetables/edit/${e.key}`)
     }
 
     const columns = [
@@ -102,7 +102,7 @@ export default function Timetables(){
     }));
 
     const newTimetable= () =>{
-        history.push('/timetable/add')
+        history.push('/timetables/add')
     }
 
     const header = {

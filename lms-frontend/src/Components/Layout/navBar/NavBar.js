@@ -71,7 +71,7 @@ function NavBar() {
                     {
                         name: 'Timetable Module',
                         icon: <UserOutlined/>,
-                        to: '/results'
+                        to: '/timetables'
                     },
                 ])
             } else {
