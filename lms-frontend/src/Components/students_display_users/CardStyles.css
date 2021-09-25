@@ -1,0 +1,11 @@
+.card {
+  margin: 10px;
+}
+
+.card-img {
+  position: relative;
+  height: 250px;
+  width: 250px;
+  border: none;
+  border-radius: 50%;
+}

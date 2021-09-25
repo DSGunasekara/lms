@@ -40,4 +40,14 @@ export const deleteTimetable = async(req, res) => {
     }
 }
 
+export const updateTimetable = async(req, res) => {
+    try {
+        const timetable = await Timetable .findOne({ _id: req.params.id });
+        if (!timetable) return res.status(404).send("Timetable does not exits");
+        return res.status(200).send('Timetable updated')
+    } catch (error) {
+        return res.status(500).send(error)
+    }
+}
+
 export default router;

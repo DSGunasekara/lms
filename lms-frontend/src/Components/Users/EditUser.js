@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 
-import { Form, Input, Button, message, Skeleton, Switch } from 'antd';
+import { Form, Input, Button, message, Skeleton, Switch, Upload } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 
 import { updateUser, getUser, updatePassword } from '../../actions/Users';
 
@@ -14,9 +15,11 @@ function EditUser({user, userUpdate}) {
     const [loadingBtn, setLoadingBtn] = useState(false);
     const [loadingPass, setLoadingPass] = useState(false);
     const [ hidePass, setHidePass] = useState(false);
+    const [filePath, setFilePath] = useState('');
 
     const fetchUser = async(userId) => {
       const res = await dispatch(getUser(userId));
+      user = res;
       form.setFieldsValue(res)
       setLoading(false);
   }
@@ -51,12 +54,17 @@ function EditUser({user, userUpdate}) {
 
   const onFinish = async(values) => {
     setLoadingBtn(true)
-    const updatedUser = {id, ...values};
+    let updatedUser;
+    if (filePath) {
+      updatedUser = {id, ...values , profile_photo: filePath};
+    } else {
+      updatedUser = {id, ...values , profile_photo: user?.profile_photo};
+    }
     const res = await dispatch(updateUser(updatedUser))
 
     if (res.status === 200) {
       if (user) {
-        userUpdate(updatedUser, user.role)
+        userUpdate({...updatedUser, regNumber: user.regNumber, role: user.role})
       }
       message.success("Profile Updated Successfully")
     } else if (res.status === 401) {
@@ -78,6 +86,28 @@ function EditUser({user, userUpdate}) {
     }
     setLoadingPass(false)
   }
+
+  const props = {
+    name: 'file',
+    multiple: false,
+    action: 'http://localhost:5000/api/file',
+    maxCount: 1,
+    onChange(info) {
+      const { status } = info.file;
+      if (status !== 'uploading') {
+          if (info.fileList.length > 0) {
+            setFilePath(info.file.response)
+        } else {
+            setFilePath('')
+        }
+      }
+      if (status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully.`);
+      } else if (status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+  };
 
     return (
       <>
@@ -142,6 +172,11 @@ function EditUser({user, userUpdate}) {
                       width: '100%',
                     }}
                   />
+                </Form.Item>
+                <Form.Item>
+                <Upload {...props}>
+                  <Button icon={<UploadOutlined />}>Click to Upload Profile Picture</Button>
+                </Upload>
                 </Form.Item>
 
                 <Form.Item {...tailFormItemLayout}>

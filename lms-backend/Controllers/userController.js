@@ -22,6 +22,9 @@ export const getUser = (async(req, res)=>{
   try {
     const user = await User.findOne({ _id: req.params.id })
       .select("-password")
+      .populate({
+        path: "modules.module"
+      })
     if (!user) return res.status(404).send("User does not exits");
     return res.status(200).send(user);
   } catch (error) {

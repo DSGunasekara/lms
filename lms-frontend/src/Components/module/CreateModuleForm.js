@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {createModules} from "../../actions/Modules";
 import {getUsers} from "../../actions/Users";
 import 'antd/dist/antd.css';
-import { DatePicker } from 'antd';
+import {DatePicker, message} from 'antd';
 
 let option_lec = [], option_lab = [];
 
@@ -12,14 +12,16 @@ const CreateModuleForm = () =>{
 
     const dispatch = useDispatch();
 
+    const [loadingBtn, setLoadingBtn] = useState(false);
     //initial data in the Form
     const [moduleData, setModuleData] = useState({
         name: '',
         module_code: '',
-        lecture_in_charge: undefined,
+        lecturer_in_charge: undefined,
         lab_assistant: undefined,
         year: '',
-        semester:''
+        semester:'',
+        credit:''
     })
 
     //calling Users to the Component
@@ -40,16 +42,25 @@ const CreateModuleForm = () =>{
     //Passing Module Data to the Database
     const handleSubmit = async (e) =>{
         e.preventDefault();
+        setLoadingBtn(true)
         const passData ={
             name: moduleData.name,
             module_code:moduleData.module_code,
-            lecture_in_charge:moduleData.lecture_in_charge,
+            lecture_in_charge:moduleData.lecturer_in_charge,
             lab_assistant:moduleData.lab_assistant,
             year:moduleData.year,
-            semester:moduleData.semester
+            semester:moduleData.semester,
+            credit:moduleData.credit
         }
         const res = await dispatch(createModules({...passData}));
-        setModuleData({name:'', module_code: '', lecture_in_charge: '', lab_assistant: '',year: '', semester: ''})
+        setModuleData({name:'', module_code: '', lecturer_in_charge: '', lab_assistant: '',year: '', semester: '', credit: ''})
+        if(res.status === 200){
+            message.success("Module Created Successfully")
+        } else {
+            message.error("An Error in Creating a Module")
+        }
+        setLoadingBtn(false);
+
     }
 
 
@@ -93,7 +104,7 @@ const CreateModuleForm = () =>{
                                 options={option_lec}
                                 className="basic-multi-select"
                                 classNamePrefix="select"
-                                onChange={(e) => setModuleData({...moduleData, lecture_in_charge: e.value})}
+                                onChange={(e) => setModuleData({...moduleData, lecturer_in_charge: e.value})}
                             />
                         </div>
                     </div>
@@ -134,6 +145,18 @@ const CreateModuleForm = () =>{
                             onChange={(e) =>setModuleData({...moduleData, semester: e.target.value})}
                         />
                     </div>
+                </div>
+                <div className="mb-3 col">
+                    <label htmlFor="creditLabel" className="form-label">
+                        Credit
+                    </label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        id="creditLabel"
+                        value={moduleData.credit}
+                        onChange={(e) =>setModuleData({...moduleData, credit: e.target.value})}
+                    />
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
                     Submit

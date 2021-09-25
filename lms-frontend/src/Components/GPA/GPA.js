@@ -15,7 +15,7 @@ function GPA({user}) {
         const res = await dispatch(getResults())
         const results = []
         user.modules?.forEach((module) => {
-            const data =  res.filter((result) => result.module._id === module.module && result.status)
+            const data =  res.filter((result) => result.module._id === module.module._id && result.status)
             if(data[0]) {
                 const userData = data[0].students.filter(studentResult => studentResult.student._id === user._id)
                 results.push({
@@ -41,7 +41,7 @@ function GPA({user}) {
         let noOfCredit = 0;
 
         results.forEach(result => {
-            noOfCredit += 4
+            noOfCredit += result.module.credit
             switch (result.result) {
                 case 'A':
                     gradePoints += 4*4
@@ -98,7 +98,7 @@ function GPA({user}) {
         key: result._id,
         module_code: result.module.module_code,
         module: result.module.name,
-        credit: 4,
+        credit: result.module.credit,
         result: result.result,
       }))
       ;
@@ -117,7 +117,9 @@ function GPA({user}) {
                     <Descriptions style={{backgroundColor: '#fff'}} bordered>
                         <Descriptions.Item label="Cumulative Grade Points"><b>{gpa?.gradePoints}</b></Descriptions.Item>
                         <Descriptions.Item label="Cumulative Credits"><b>{gpa?.noOfCredit}</b></Descriptions.Item>
-                        <Descriptions.Item label="Cumulative GPA"><b>{gpa?.gradePoints/gpa?.noOfCredit}</b></Descriptions.Item>
+                        <Descriptions.Item label="Cumulative GPA"><b>{(gpa?.gradePoints/gpa?.noOfCredit) 
+                            ? gpa?.gradePoints/gpa?.noOfCredit : 0
+                        }</b></Descriptions.Item>
                         {/* <Descriptions.Item label="Order time">2018-04-24 18:00:00</Descriptions.Item> */}
                     </Descriptions>
                     <br /><br />
