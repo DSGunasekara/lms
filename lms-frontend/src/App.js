@@ -111,7 +111,7 @@ function App() {
                   <ProtectedRoute
                     path={"/modulePage"}
                     exact
-                    roles={[ROLES.ADMIN]}
+                    roles={[ROLES.ADMIN, ROLES.STUDENT]}
                     component={modulePage}
                   ></ProtectedRoute>
                   <ProtectedRoute
