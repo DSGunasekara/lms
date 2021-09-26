@@ -171,13 +171,6 @@ export default SingleModule;
 const Card = ({ data, index }) => {
   console.log("card", data);
   return (
-    // <div className={"col-sm-3"}>
-    //   <div className="card">
-    //     <div className="card-body">
-    //       <h5 className="card-title">'data?.title'</h5>
-    //     </div>
-    //   </div>
-    // </div>
     <div>
       Week: {index + 1}
       {data?.map((lec) => (
@@ -187,3 +180,4 @@ const Card = ({ data, index }) => {
     </div>
   );
 };
+

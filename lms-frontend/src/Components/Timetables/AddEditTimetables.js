@@ -11,6 +11,8 @@ import { uploadTimetable, getTimetable, getTimetables, updateTimetable } from '.
 function AddEditTimetable() {
   const dispatch = useDispatch()
 
+  const { Option } = Select;
+
   const { id } = useParams();
 
 //   // const fetchTimetable = async() => {
@@ -18,6 +20,12 @@ function AddEditTimetable() {
 //   //   await dispatch(getTimetable())
 //   //   setLoading(false)
 //   // }
+
+  useEffect(() => {
+    if(id) {
+      fetchTimetable(id);
+    }
+  }, []);
 
   const fetchTimetable = async(id) => {
     setLoading(true)
@@ -143,6 +151,10 @@ function AddEditTimetable() {
               ]}
             >
               <Select style={{ width: '100%' }}>
+                <Option value="2018">2018</Option>
+                <Option value="2019">2019</Option>
+                <Option value="2020">2020</Option>
+                <Option value="2021">2021</Option>
               </Select>
             </Form.Item>
             <Form.Item
@@ -156,6 +168,8 @@ function AddEditTimetable() {
               ]}
             >
               <Select style={{ width: '100%' }}>
+                <Option value='1'>1 </Option>
+                <Option value='2'>2 </Option>
               </Select>
             </Form.Item>
               <Form.Item

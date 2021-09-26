@@ -72,7 +72,7 @@ function NavBar() {
                     {
                         name: 'Timetable Module',
                         icon: <UserOutlined/>,
-                        to: '/results'
+                        to: '/timetables'
                     },
                 ])
             } else if(user?.role === ROLES.STUDENT) {
@@ -86,7 +86,12 @@ function NavBar() {
                   name: 'Profile',
                   icon: <UserOutlined />,
                   to: `/profile/${user?._id}`
-                }
+                },
+                {
+                  name: ' Course Module',
+                  icon: <VideoCameraOutlined/>,
+                  to: '/modulePage'
+              },
               ])
             } else {
                 setNavList([])

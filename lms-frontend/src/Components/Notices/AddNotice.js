@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { createNotice } from "../../actions/Notices";
 import "./Notices.css";
-import Lottie from 'react-lottie';
-import noticeAnimation from './notice.json';
 import { DatePicker } from "antd";
 
 const AddNotice = () => {
@@ -19,7 +17,7 @@ const AddNotice = () => {
 
     const handleSubmit = async (e) => {
 
-        //deletes data in input fields 
+        //deletes data in input fields after the submission
         e.preventDefault();
 
         const passData = {
@@ -32,14 +30,14 @@ const AddNotice = () => {
         setNoticeData({title: '', createdOn: '', description: '', inquiries: ''});
     }
 
-    const defaultOptions = {
-        loop: true,
-        autoplay: true,
-        animationData: noticeAnimation,
-        rendererSettings: {
-          preserveAspectRatio: "xMidYMid slice"
-        }
-      };
+    // const defaultOptions = {
+    //     loop: true,
+    //     autoplay: true,
+    //     animationData: noticeAnimation,
+    //     rendererSettings: {
+    //       preserveAspectRatio: "xMidYMid slice"
+    //     }
+    //   };
 
     return (
         <div className={"container"}>

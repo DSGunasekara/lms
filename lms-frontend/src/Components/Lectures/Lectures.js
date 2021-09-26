@@ -49,6 +49,12 @@ export default function Lectures(){
             key: 'title',
         },
         {
+            title: 'Type',
+            dataIndex: 'type',
+            key: 'type',
+
+        },
+        {
             title: 'Module Code',
             dataIndex: 'module_code',
             key: 'module_code',
@@ -95,6 +101,7 @@ export default function Lectures(){
     const data = lecture?.map((lec) =>({
         key: lec._id,
         title: lec.title,
+        type: lec.type,
         module_code: lec.module_code,
         week: lec.week,
         filePath:lec.filePath,

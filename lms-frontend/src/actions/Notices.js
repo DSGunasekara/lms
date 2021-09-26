@@ -8,7 +8,7 @@ export const getNotices = () => async (dispatch) =>{
         dispatch ({type: FETCH_NOTICE, payload: data});
 
     }catch (error){
-        console.log("getting workshop error" + error);
+        console.log("getting an error" + error);
     }
 }
 
