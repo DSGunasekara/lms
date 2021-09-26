@@ -22,10 +22,9 @@ const NoticeAdmin = () => {
     },[dispatch]);
 
     const noticeData = useSelector((state) => state.NoticeReducer.notices);
-    //setNotice(noticeData)
-    //const {id, title, date, messages, inquiries} = noticeData[0];
 
-     useEffect( ()=>{
+
+     useEffect(() => {
          setNotice(noticeData)
          if(noticeData) {
              setLoading(false)

@@ -31,6 +31,12 @@ import TodoList from "./Components/todoList/TodoList";
 import AddEditTimetable from "./Components/Timetables/AddEditTimetables";
 import Timetables from "./Components/Timetables/Timetables";
 
+import AddReply from "./Components/Forum/AddReply";
+import CreateDiscussion from "./Components/Forum/CreateDiscussion";
+import DiscussionCards from "./Components/Forum/DiscussionCards";
+import ViewDiscussion from "./Components/Forum/ViewDiscussion";
+import ViewForum from "./Components/Forum/ViewForum";
+
 import "antd/dist/antd.css";
 import "./index.css";
 import { Layout } from "antd";
@@ -241,6 +247,25 @@ function App() {
                     exact
                     roles={[ROLES.ADMIN]}
                     component={Timetables}
+                  />
+
+                  <ProtectedRoute
+                    path={"/viewForum"}
+                    exact
+                    roles={[ROLES.ADMIN]}
+                    component={ViewForum}
+                  />
+                  <ProtectedRoute
+                    path={"/createDiscussion"}
+                    exact
+                    roles={[ROLES.ADMIN]}
+                    component={CreateDiscussion}
+                  />
+                  <ProtectedRoute
+                    path={"/viewDiscussion/:id"}
+                    exact
+                    roles={[ROLES.ADMIN]}
+                    component={ViewDiscussion}
                   />
 
                   <Route

@@ -74,6 +74,11 @@ function NavBar() {
                         icon: <UserOutlined/>,
                         to: '/timetables'
                     },
+                    {
+                       name: 'Forum Module',
+                       icon: <UserOutlined/>,
+                       to: '/viewForum'
+                    },
                 ])
             } else if(user?.role === ROLES.STUDENT) {
               setNavList([

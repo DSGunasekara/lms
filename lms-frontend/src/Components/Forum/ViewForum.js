@@ -29,20 +29,14 @@ const ViewForum = () => {
         }
     }, [discussionData]);
 
-    const data = discussion?.map((mod) => ({
-        key: mod._id,
-        topic: mod.topic,
-        question: mod.question
-    }));
-
     const newDiscussion = () => {
         history.push('createDiscussion')
     }
 
-    const deleteConfirm = async (e) =>{
-        const res = await dispatch(removeDiscussion(e.key));
+    const deleteConfirm = async (id) =>{
+        const res = await dispatch(removeDiscussion(id));
         if(res?.status === 200){
-            setDiscussion(discussion.filter((mod) => mod._id !== e.key))
+            setDiscussion(discussion.filter((mod) => mod._id !== id))
             message.success('Discussion Removed');
         }else {
             message.error('An Error Occurred');
@@ -58,9 +52,9 @@ const ViewForum = () => {
         <div>
             <div className="ViewForum">
                 <button onClick={newDiscussion}>Add new</button>
-                {discussionData?.map((discuss) => (
+                {discussion?.map((discuss) => (
                     <div key={discuss._id}>
-                        <Card discuss={discuss} />
+                        <Card discuss={discuss} deleteDis={deleteConfirm} />
                     </div>
                 ))}
             </div>

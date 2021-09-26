@@ -1,13 +1,16 @@
 import React from 'react';
-import { Button, Tooltip, Card } from 'antd';
-import { FolderOpenOutlined } from '@ant-design/icons';
+import { Button, Tooltip, Card, Popconfirm } from 'antd';
+import { FolderOpenOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { removeDiscussion } from '../../actions/discussion';
 import moment from 'moment';
 
 
-const CardItem = ({ discuss }) => {
+const CardItem = ({ discuss , deleteDis }) => {
 
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const topicStyle = {
         fontSize: 15,
@@ -29,10 +32,6 @@ const CardItem = ({ discuss }) => {
         paddingBottom: 15
     }
 
-    const buttonStyle = {
-        background: '#278ea5'
-    }
-
     const dateStyle = {
         fontSize: 10
     }
@@ -44,7 +43,6 @@ const CardItem = ({ discuss }) => {
 
     const dateDiv = {
         display: 'flex',
-
     }
 
     const singleDiscussionView = (e) => {
@@ -52,7 +50,13 @@ const CardItem = ({ discuss }) => {
         history.push(`viewDiscussion/${e._id}`)
     }
 
+    const handleDelete = async (e) => {
+        // console.log(e)
+        // const res = await dispatch(removeDiscussion(e._id));
+        deleteDis(e._id)
+    }
 
+    
     return (
         <div style={divStyle}>
             <Card style={cardStyle}>
@@ -64,15 +68,29 @@ const CardItem = ({ discuss }) => {
                 <p>{discuss.question}</p>
                 
                 <Tooltip title="View Discussion">
-                        <Button
-                            type="primary"
-                            shape="circle"
-                            icon={<FolderOpenOutlined />}
-                            size='large'
-                            style={buttonStyle}
-                            onClick={() => singleDiscussionView(discuss)}
-                        />
+                    <Button
+                        type="link"
+                        icon={<FolderOpenOutlined />}
+                        size='large'
+                        onClick={() => singleDiscussionView(discuss)}
+                    />
                 </Tooltip>
+
+                <Popconfirm
+                        title="Do you want to delete this discussion?"
+                        onConfirm={() => handleDelete(discuss)}
+                        okText="Yes"
+                        cancelText="No"
+                >
+                    <Tooltip title="Delete">
+                        <Button
+                            type="link"
+                            icon={<DeleteOutlined />}
+                            size='large'
+                            //onClick={() => handleDelete(discuss)}
+                        />
+                    </Tooltip>
+                </Popconfirm>
             </Card>
         </div>
     )

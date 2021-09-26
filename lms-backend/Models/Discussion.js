@@ -19,7 +19,8 @@ const DiscussionSchema = new mongoose.Schema({
     },
     replies: [{
         text: String,
-        postedBy: {type: mongoose.Schema.Types.ObjectId, ref:"User"}
+        postedBy: {type: mongoose.Schema.Types.ObjectId, ref:"User"},
+        createdAt: { type: Date, default: new Date() }
     }]
 });
 
