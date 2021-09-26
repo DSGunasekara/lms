@@ -1,16 +1,19 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import { getUser } from "../../actions/Users";
 import {getTimetables, deleteTimetable, } from "../../actions/timetables";
 import 'antd/dist/antd.css';
 import {Table, Space, Button, Tooltip, message, Popconfirm, Skeleton} from 'antd';
-import {DeleteFilled, EditFilled, PlusOutlined, DownloadOutlined} from '@ant-design/icons';
+import {DeleteFilled, EditFilled, PlusOutlined, DownloadOutlined, BulbFilled} from '@ant-design/icons';
 import {useHistory} from "react-router";
+import { ROLES } from "../../constants/constant";
 
 export default function Timetables(){
 
     const dispatch = useDispatch();
     const history = useHistory();
 
+    const [user, setUser] = useState();
     const [timetable, setTimetable] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -20,6 +23,10 @@ export default function Timetables(){
     }, [dispatch])
 
     const timetableData = useSelector((state) => state.TimetableReducer.timetables);
+
+    useEffect(() => {
+        setUser(JSON.parse(localStorage.getItem('profile'))?.payload.user?._id);
+    }, []);
 
     useEffect(() => {
         setTimetable(timetableData)
@@ -72,6 +79,8 @@ export default function Timetables(){
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
+                    {user?.role === ROLES.ADMIN ?
+                    <>
                     <Popconfirm
                         title="Are you sure to delete this timetable?"
                         onConfirm={() => deleteConfirm(record)}
@@ -85,13 +94,19 @@ export default function Timetables(){
                     <Tooltip placement="bottom" title="Edit Timetable">
                         <EditFilled onClick={() => editConfirm(record)} />
                     </Tooltip>
+                    </>
+                    : ""
+                    }
                     <Tooltip placement="bottom" title="Download Timetable">
                         <DownloadOutlined onClick={() => window.open(`http://localhost:5000/${record.filePath}`)} />
                     </Tooltip>
+                    
+                    
                 </Space>
             ),
         },
     ];
+
     const data = timetable?.map((timetable) =>({
         key: timetable._id,
         title: timetable.title,
@@ -113,8 +128,12 @@ export default function Timetables(){
         paddingBottom: 15
     }
 
+    // const cols = {
+    //     fontColor: BulbFilled;
+    // }
+
     return(
-        <div>
+        <div className='container-timetable'>
             {loading ? 
                 <>
                     <Skeleton active/>

@@ -239,7 +239,7 @@ function App() {
                   <ProtectedRoute
                     path={"/timetables"}
                     exact
-                    roles={[ROLES.ADMIN]}
+                    roles={[ROLES.ADMIN, ROLES.LAB_INSTRUCTOR, ROLES.LECTURER, ROLES.STUDENT]}
                     component={Timetables}
                   />
 

@@ -6,6 +6,11 @@
 .pnp.js
 package-lock.json
 
+#Uploads
+*.jpeg
+*.pdf
+*.png
+
 # testing
 /coverage
 

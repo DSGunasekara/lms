@@ -92,7 +92,12 @@ function NavBar() {
                   name: ' Course Module',
                   icon: <VideoCameraOutlined/>,
                   to: '/modulePage'
-              },
+                },
+                {
+                  name: 'Timetables',
+                  icon: <VideoCameraOutlined/>,
+                  to: '/timetables'
+                },
               ])
             } else {
                 setNavList([])

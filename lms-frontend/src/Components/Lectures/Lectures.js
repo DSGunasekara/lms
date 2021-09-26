@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
+import { getUser } from "../../actions/Users";
 import {useDispatch, useSelector} from "react-redux";
 import {getLectures, deleteLecture, } from "../../actions/lectures";
 import 'antd/dist/antd.css';
 import {Table, Space, Button, Tooltip, message, Popconfirm, Skeleton, Collapse, Input, Row, Col, Select} from 'antd';
 import {DeleteFilled, EditFilled, PlusOutlined, DownloadOutlined, ClearOutlined, SearchOutlined, CloseOutlined} from '@ant-design/icons';
 import {useHistory} from "react-router";
+import { ROLES } from "../../constants/constant";
 
 export default function Lectures(){
 
@@ -14,6 +16,7 @@ export default function Lectures(){
     const { Panel } = Collapse;
 
     const [lecture, setLecture] = useState([]);
+    const [user, setUser] = useState();
     const [loading, setLoading] = useState(false);
     const [searchModule, setSearchModule] = useState('');
     const [searchType, setSearchType] = useState('')
@@ -26,6 +29,17 @@ export default function Lectures(){
     }, [dispatch])
 
     const lectureData = useSelector((state) => state.LectureReducer.lectures);
+    useEffect(() => {
+        setUser(JSON.parse(localStorage.getItem('profile'))?.payload.user?._id);
+      }, []);
+
+    //   const getUserData = async (id) => {
+    //     setLoading(true);
+    //     const res = await dispatch(getUser(id));
+    //     setUser(res);
+    //     setLoading(false);
+    //   }; 
+
 
     useEffect(() => {
         setLecture(lectureData)
@@ -85,6 +99,8 @@ export default function Lectures(){
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
+                    {user?.role === ROLES.ADMIN ?
+                    <>
                     <Popconfirm
                         title="Are you sure to delete this lecture?"
                         onConfirm={() => deleteConfirm(record)}
@@ -101,6 +117,9 @@ export default function Lectures(){
                     <Tooltip placement="bottom" title="Download Lecture">
                         <DownloadOutlined onClick={() => window.open(`http://localhost:5000/${record.filePath}`)} />
                     </Tooltip>
+                    </>
+                    : ""
+                }
                 </Space>
             ),
         },
@@ -118,7 +137,7 @@ export default function Lectures(){
 
     const newLecture= () =>{
         history.push('/lecture/add')
-    }
+    };
 
     const header = {
         paddingLeft: 10,
@@ -126,7 +145,7 @@ export default function Lectures(){
         fontWeight: 'bold',
         paddingTop: 25,
         paddingBottom: 15
-    }
+    };
 
     const search = () => {
         if (searchModule || searchType) {
