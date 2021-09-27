@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import _ from "lodash";
 import { v4 } from "uuid";
-import { message, Tooltip, Button, Popconfirm } from "antd";
+import { message, Tooltip, Button, Popconfirm, Input } from "antd";
 import { DeleteFilled, PlusOutlined } from "@ant-design/icons";
 import {
   getTasks,
@@ -257,12 +257,15 @@ const TodoList = () => {
       </Tooltip>
       <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
         <div>
-          <input
+          <Input
+            className="add-todo"
             type="text"
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
-          <button onClick={addItem}>Add</button>
+          <Button type="primary" onClick={addItem}>
+            Add
+          </Button>
         </div>
       </Popup>
     </div>
