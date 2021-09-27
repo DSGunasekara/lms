@@ -172,12 +172,11 @@ const Card = ({ data, index }) => {
   console.log("card", data);
   return (
     <div>
-      Week: {index + 1}
+      <h4>Week: {index + 1}</h4>
       {data?.map((lec) => (
-        <h3>{lec?.title}</h3>
+        <h6>{lec?.title}</h6>
       ))}
       <hr></hr>
     </div>
   );
 };
-

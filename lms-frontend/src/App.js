@@ -104,7 +104,12 @@ function App() {
                   />
                   <ProtectedRoute
                     path={"/profile/:id"}
-                    roles={[ROLES.ADMIN, ROLES.LAB_INSTRUCTOR, ROLES.LECTURER, ROLES.STUDENT]}
+                    roles={[
+                      ROLES.ADMIN,
+                      ROLES.LAB_INSTRUCTOR,
+                      ROLES.LECTURER,
+                      ROLES.STUDENT,
+                    ]}
                     component={UserProfile}
                   />
                   {/* <ProtectedRoute path={'/login'} roles={[ROLES.ADMIN]} exact component={Login} /> */}
@@ -239,21 +244,33 @@ function App() {
                   <ProtectedRoute
                     path={"/timetables"}
                     exact
-                    roles={[ROLES.ADMIN, ROLES.LAB_INSTRUCTOR, ROLES.LECTURER, ROLES.STUDENT]}
+                    roles={[
+                      ROLES.ADMIN,
+                      ROLES.LAB_INSTRUCTOR,
+                      ROLES.LECTURER,
+                      ROLES.STUDENT,
+                    ]}
                     component={Timetables}
                   />
 
-                  <Route
+                  <ProtectedRoute
                     path={"/student/academicStaff"}
                     exact
+                    roles={[ROLES.STUDENT]}
                     component={Show_all_users}
-                  ></Route>
+                  ></ProtectedRoute>
+
                   <Route
                     path={"/student/academicStaff/:id"}
                     component={AcademicSingleUser}
                   ></Route>
 
-                  <Route path={"/todoList"} exact component={TodoList}></Route>
+                  <Route
+                    path={"/todoList"}
+                    exact
+                    component={TodoList}
+                    roles={[ROLES.STUDENT]}
+                  ></Route>
 
                   <Route path="" component={NotFound} />
                 </Switch>

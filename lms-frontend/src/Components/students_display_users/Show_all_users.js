@@ -64,13 +64,6 @@ export const Show_all_users = () => {
 const Card = ({ user }) => {
   console.log(user);
 
-  const history = useHistory();
-
-  const singlePage = (e) => {
-    console.log(e);
-    history.push(`academicStaff/${user._id}`);
-  };
-
   return (
     <div className={"col-sm-3"}>
       <div className="card">
@@ -83,9 +76,6 @@ const Card = ({ user }) => {
           <h5 className="card-title">{user.name}</h5>
           <h6 className="card-subtitle mb-2 text-muted">{user.email}</h6>
           <p className="card-text">{user.role}</p>
-          <button onClick={singlePage} className="btn btn-outline-primary">
-            View More
-          </button>
         </div>
       </div>
     </div>
