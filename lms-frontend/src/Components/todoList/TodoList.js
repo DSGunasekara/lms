@@ -3,10 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import _ from "lodash";
 import { v4 } from "uuid";
-
-import { getTasks, createTask, updateTodo } from "../../actions/todo";
+import { message, Tooltip, Button, Popconfirm } from "antd";
+import { DeleteFilled, PlusOutlined } from "@ant-design/icons";
+import {
+  getTasks,
+  createTask,
+  updateTodo,
+  removeTask,
+} from "../../actions/todo";
 
 import "./todoList.css";
+import Popup from "../Common/Popup";
 
 let option_filter = [];
 
@@ -15,18 +22,23 @@ const TodoList = () => {
 
   const [loading, setLoading] = useState(false);
   const [todoId, setTodoId] = useState("");
+  const [buttonPopup, setButtonPopup] = useState(false);
 
+  const [filterTodo, setFilterTodo] = useState([]);
+
+  //dispatching the getTask action
   useEffect(() => {
     setLoading(true);
     dispatch(getTasks());
   }, [dispatch]);
 
+  //calling the reducer
   const todoData = useSelector((state) => state.TaskReducer.task);
-  // console.log(todoData);
 
   //getting the current user of the application from the local storage
   const [user, setUser] = useState();
 
+  //filtering the todo list for the current user
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("profile"))?.payload.user);
     option_filter = todoData?.filter((todo) => {
@@ -40,12 +52,15 @@ const TodoList = () => {
     if (option_filter?.length > 0) {
       const todoFilter = {
         todo: {
+          title: "Todo",
           items: option_filter[0]?.todo?.items,
         },
         in_progress: {
+          title: "In Progress",
           items: option_filter[0]?.in_progress?.items,
         },
         done: {
+          title: "Completed",
           items: option_filter[0]?.done?.items,
         },
       };
@@ -67,14 +82,6 @@ const TodoList = () => {
       items: [],
     },
   });
-
-  // useEffect(() => {
-  //   if (option_filter) {
-  //     setState(option_filter);
-  //   }
-  //console.log("useEffect", option_filter);
-  //   //setState(option_filter);
-  // }, [option_filter]);
 
   const handleDragEnd = ({ destination, source }) => {
     if (!destination) {
@@ -142,27 +149,36 @@ const TodoList = () => {
       // Patch
       const res = await dispatch(updateTodo(todo));
       if (res.status === 200) {
-        console.log("OK");
+        message.success("Saving All tasks");
       }
     } else {
       // create
       const res = await dispatch(createTask(todo));
       if (res.state === 200) {
-        console.log("Crete");
+        message.success("Saving All tasks");
       }
     }
   };
 
+  //preventing or asking the user before refreshing/going back to a page
+  useEffect(() => {
+    window.addEventListener("beforeunload", alertUser);
+    return () => {
+      window.removeEventListener("beforeunload", alertUser);
+    };
+  }, []);
+  const alertUser = (e) => {
+    e.preventDefault();
+    e.returnValue = "";
+  };
+
+  const deleteConfirm = async (e) => {
+    setTodoId(todoId?.filter((mod) => mod._id !== e.key));
+    setFilterTodo(todoId?.filter((todo) => todo._id !== e));
+  };
+
   return (
     <div className={"todo"}>
-      <div>
-        <input
-          type="text"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        />
-        <button onClick={addItem}>Add</button>
-      </div>
       <DragDropContext onDragEnd={handleDragEnd}>
         {_.map(state, (data, key) => {
           return (
@@ -193,7 +209,22 @@ const TodoList = () => {
                                   {...provided.draggableProps}
                                   {...provided.dragHandleProps}
                                 >
-                                  {el.name}
+                                  <div className="delete">
+                                    {el.name}
+                                    <div className="deleteIcon">
+                                      <Popconfirm
+                                        className="deleteIcon"
+                                        title="Are you sure to delete this Module?"
+                                        onConfirm={() => deleteConfirm(el._id)}
+                                        okText="Yes"
+                                        cancelText="No"
+                                      >
+                                        <Tooltip title="Delete Module">
+                                          <DeleteFilled />
+                                        </Tooltip>
+                                      </Popconfirm>
+                                    </div>
+                                  </div>
                                 </div>
                               );
                             }}
@@ -209,9 +240,31 @@ const TodoList = () => {
           );
         })}
       </DragDropContext>
-      <div>
-        <button onClick={save}>Save</button>
+      <div className="save-btn-div">
+        <button className="save-btn" onClick={save}>
+          Save
+        </button>
       </div>
+      <Tooltip title="Create New Module">
+        <Button
+          type="primary"
+          shape="circle"
+          icon={<PlusOutlined />}
+          size="large"
+          className="fabBtn"
+          onClick={() => setButtonPopup(true)}
+        />
+      </Tooltip>
+      <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+        <div>
+          <input
+            type="text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />
+          <button onClick={addItem}>Add</button>
+        </div>
+      </Popup>
     </div>
   );
 };

@@ -39,3 +39,13 @@ export const updateTodo = (task) => async (dispatch) => {
     return error;
   }
 };
+
+//remove single task
+export const removeTask = (id) => async (dispatch) => {
+  try {
+    const res = await api.deleteTask(id);
+    return res;
+  } catch (error) {
+    console.log("delete Task" + error);
+  }
+};

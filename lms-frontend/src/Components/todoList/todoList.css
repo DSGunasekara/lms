@@ -1,32 +1,61 @@
-.todo{
-    display: flex;
-    width: 100%;
-    justify-content: space-around;
-
+.todo {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
 }
 
-.todo .column{
-    width: 30%;
+.todo .column {
+  width: 30%;
 }
 
 .droppable-col {
-    width: 100%;
-    background-color: gray;
-    padding: 10px 10px 0 10px;
-    border-radius: 7px;
-    display: flex;
-    flex-direction: column;
+  width: 110%;
+  background-color: rgb(68, 96, 128);
+  padding: 10px 10px 0 10px;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
 }
 
 .item {
-    margin-bottom: 10px;
-    background-color: gray;
-    color: white;
-    border: 1px solid white;
-    padding: 5px;
-    border-radius: 7px;
+  margin-bottom: 10px;
+  background-color: gray;
+  color: white;
+  border: 1px solid white;
+  padding: 5px;
+  border-radius: 7px;
+  height: 100%;
+  width: 100%;
 }
 
 .item.dragging {
-    background-color: coral;
+  background-color: coral;
+}
+
+.save-btn-div {
+  position: absolute;
+  margin-left: -50px;
+  left: 58%;
+  width: 100px;
+  bottom: 40px;
+}
+
+.save-btn {
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.delete {
+  display: flex;
+  justify-content: space-between;
+}
+
+.deleteIcon {
+  display: flex;
 }
