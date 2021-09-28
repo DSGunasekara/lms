@@ -48,6 +48,7 @@ const ViewDiscussion = () => {
 
     const handleReply = () => {
         setIsReply(true);
+        console.log(discussion)
     }
 
     const addReply = async(data) => {
@@ -55,6 +56,15 @@ const ViewDiscussion = () => {
         fetchDiscussion(id);
         setIsReply(false)
         console.log(res);
+    }
+
+    const handleDelete = async (e) => {
+        console.log(e)
+        // const res = await dispatch(removeDiscussion(e._id));
+        const reply = discussion?.replies.filter(reply => reply._id !== e._id)
+        // console.log(temp);
+        const res = await dispatch(updateSingleDiscussion({id: id, ...discussion, replies:[...reply]}))
+        fetchDiscussion(id);
     }
 
     return (
@@ -71,14 +81,7 @@ const ViewDiscussion = () => {
                         icon={<EditOutlined />}
                         size='large'
                         onClick={handleReply}
-                    />
-                    <Button
-                        type="link"
-                        icon={<DeleteOutlined />}
-                        size='large'
-                        // onClick={() => deleteConfirm(discussion)}
-                    />
-                               
+                    />         
                 </div>
             </Card>
 
@@ -91,6 +94,12 @@ const ViewDiscussion = () => {
                         <p>{reply.text}</p>
                         <p>{reply?.postedBy?.name}</p>
                         <p>{moment(reply?.createdAt).format('YYYY-MM-DD')}</p>
+                        <Button
+                            type="link"
+                            icon={<DeleteOutlined />}
+                            size='large'
+                            onClick={() => handleDelete(reply)}
+                        />
                     </Card>
                 ))}
             </div>
