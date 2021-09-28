@@ -61,8 +61,11 @@ const EditEvent = ({event}) => {
 
     return (
         <div>
+            <br />
+            <div style={{margin: 'auto', width:'700px', border: '2px solid #9fd1ff', borderRadius: '10px', padding: '30px flex', alignContent: 'space-around'}}>
+            <br />
             <div style={{width:'400px', margin: 'auto'}}>
-                <h2 style={{textAlign: 'center'}}>Update Event</h2>
+                <h2 style={{textAlign: 'center', color: '#1890ff',}}>Update Event</h2>
                 <Form
                     layout="vertical"
                     form={form}
@@ -136,11 +139,15 @@ const EditEvent = ({event}) => {
                     </Form.Item>
 
                     <Form.Item {...tailFormItemLayout}>
-                        <Button type="primary" htmlType="submit">
-                            Update
-                        </Button>
+                        <div className="center">
+                            <Button type="primary" htmlType="submit" style={{padding: '0 175px'}}>
+                                Update
+                            </Button>
+                        </div>
                     </Form.Item>
                 </Form>
+            </div>
+            <br />
             </div>
         </div>
     )

@@ -114,9 +114,13 @@ const EditSingleModule = ({ module }) => {
 
   return (
     <div>
+      <div>
+      <br />
+      <div style={{margin: 'auto', width:'700px', border: '2px solid #9fd1ff', borderRadius: '10px', padding: '30px flex', alignContent: 'space-around'}}>
+      <br />
       {!loading ? (
         <div style={{ width: "400px", margin: "auto" }}>
-          <h2 style={{ textAlign: "center" }}>Update Module</h2>
+          <h2 style={{ textAlign: "center", color: '#1890ff' }}>Update Module</h2>
           <Form
             // {...formItemLayout}
             layout="vertical"
@@ -220,9 +224,11 @@ const EditSingleModule = ({ module }) => {
             </Form.Item>
 
             <Form.Item {...tailFormItemLayout}>
-              <Button type="primary" htmlType="submit" loading={loadingBtn}>
-                Update
-              </Button>
+              <div className="center">
+                <Button type="primary" htmlType="submit" loading={loadingBtn} style={{padding:'0 180px'}}>
+                  Update
+                </Button>
+              </div>
             </Form.Item>
           </Form>
         </div>
@@ -233,6 +239,9 @@ const EditSingleModule = ({ module }) => {
           <Skeleton active />
         </>
       )}
+      </div>
+      <br />
+    </div>
     </div>
   );
 };

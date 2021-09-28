@@ -141,10 +141,11 @@ export default function Lectures(){
 
     const header = {
         paddingLeft: 10,
-        fontFamily: 'Besley',
+        // fontFamily: 'Besley',
         fontWeight: 'bold',
         paddingTop: 25,
-        paddingBottom: 15
+        paddingBottom: 15,
+        color: '#1890ff',
     };
 
     const search = () => {

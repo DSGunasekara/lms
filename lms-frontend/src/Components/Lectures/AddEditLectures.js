@@ -119,8 +119,13 @@ function AddEditLecture() {
       <Skeleton active /> 
     </>
     :
-      <div style={{width:'400px', margin: 'auto'}}>
-          <h2 style={{textAlign: 'center'}}>{id ? 'Update' : 'Upload'} Lecture</h2>
+    <div>
+      <br />
+      <div style={{margin: 'auto', width:'700px', border: '2px solid #9fd1ff', borderRadius: '10px', padding: '30px flex', alignContent: 'space-around'}}>
+      <br />
+      <div className="center">
+      <div style={{width:'400px', margin: 'auto' }}>
+          <h2 style={{textAlign: 'center', color: '#1890ff'}}>{id ? 'Update' : 'Upload'} Lecture</h2>
           <Form
             layout="vertical"
             form={form}
@@ -226,11 +231,17 @@ function AddEditLecture() {
               }
 
               <Form.Item {...tailFormItemLayout}>
-                <Button type="primary" htmlType="submit" loading={loadingBtn}>
-                    Upload
-                </Button>
+                <div className="center">
+                  <Button type="primary" htmlType="submit" loading={loadingBtn} style={{padding: '0 175px'}}>
+                      Upload
+                  </Button>
+                </div>
               </Form.Item>
-            </Form>    
+            </Form>   
+            </div> 
+      </div>
+      </div> 
+      <br /> 
       </div>
     }
     </>

@@ -120,8 +120,12 @@ function EditUser({user, userUpdate}) {
         </>
         :
         <>
+        <div>
+        <br />
+        <div style={{margin: 'auto', width:'700px', border: '2px solid #9fd1ff', borderRadius: '10px', padding: '30px flex', alignContent: 'space-around'}}> 
+        <br />  
           <div style={{width:'400px', margin: 'auto'}}>
-            <h2 style={{textAlign: 'center'}}>Update Profile</h2>
+            <h2 style={{textAlign: 'center',color: '#1890ff' }}>Update Profile</h2>
             <Form
               layout="vertical"
               form={form}
@@ -180,9 +184,11 @@ function EditUser({user, userUpdate}) {
                 </Form.Item>
 
                 <Form.Item {...tailFormItemLayout}>
-                  <Button type="primary" htmlType="submit" loading={loadingBtn}>
-                      Update Profile
-                  </Button>
+                  <div className="center">
+                    <Button type="primary" htmlType="submit" loading={loadingBtn} style={{padding: '0 150px'}}>
+                        Update Profile
+                    </Button>
+                  </div>
                 </Form.Item>
               </Form>
 
@@ -224,14 +230,19 @@ function EditUser({user, userUpdate}) {
                 <Input.Password />
               </Form.Item>
               <Form.Item {...tailFormItemLayout}>
-                  <Button type="primary" htmlType="submit" loading={loadingPass}>
+                <div className="center">
+                  <Button type="primary" htmlType="submit" loading={loadingPass} style={{padding: '0 150px'}}>
                       Update Password
                   </Button>
-                </Form.Item>
+                </div>
+              </Form.Item>
                 
               </Form> : ''
               }
             </div>
+            <br />
+            </div> 
+            </div> 
           </>
       }
     </>

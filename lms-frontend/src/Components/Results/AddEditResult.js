@@ -161,8 +161,12 @@ function AddEditResult() {
                 <Skeleton active /> 
                 </>
                 :
+            <div>   
+                <br />
+            <div style={{margin: 'auto', width:'700px', border: '2px solid #9fd1ff', borderRadius: '10px', padding: '30px flex', alignContent: 'space-around'}}> 
+                <br />   
             <div style={{width:'600px', margin: 'auto'}}>
-            <h2 style={{textAlign: 'center'}}>Results</h2>
+            <h2 style={{textAlign: 'center', color: '#1890ff'}}>Results</h2>
             <Form
             form={form}
             name="module"
@@ -250,14 +254,19 @@ function AddEditResult() {
                     }}
                 </Form.List>
                 <Form.Item {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit" loading={loadingBtn}>
-                    Submit
-                    </Button>
+                    <div className="center">
+                        <Button type="primary" htmlType="submit" loading={loadingBtn} style={{padding: '0 250px'}}>
+                        Submit
+                        </Button>
+                    </div>
                 </Form.Item>
             </Form>
             : ''}
             </div>
-    }
+            </div>
+            <br /> 
+            </div>
+    } 
         </div>
     )
 }

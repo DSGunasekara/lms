@@ -47,7 +47,7 @@ const AddEvent = () => {
 
     return (
         <div className={"container"}>
-            <h1 className="display-5 text-center my-5" fw-bold text-white >Create Event</h1>
+            <h1 className="display-5 text-center my-5" fw-bold text-white style={{color: '#1890ff'}}>Create Event</h1>
             <form className="rounded border p-5 bg-light w-75 d-flex flex-column mx-auto mb-4">
                 <div>
                     <div className="mb-3 col">
@@ -110,10 +110,11 @@ const AddEvent = () => {
                             onChange={(e) =>setEventData({...eventData, description: e.target.value})}
                         />
                     </div>
-                    
-                    <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
-                        Submit
-                    </button>
+                    <div>
+                        <button type="submit" className="btn btn-primary" onClick={handleSubmit} style={{padding: '10px 400px'}}>
+                            Submit
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

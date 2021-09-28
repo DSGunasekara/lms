@@ -119,8 +119,12 @@ function AddEditTimetable() {
       <Skeleton active /> 
     </>
     :
+    <div>
+      <br />
+      <div style={{margin: 'auto', width:'700px', border: '2px solid #9fd1ff', borderRadius: '10px', padding: '30px flex', alignContent: 'space-around'}}>
+      <br />
       <div style={{width:'400px', margin: 'auto'}}>
-          <h2 style={{textAlign: 'center'}}>{id ? 'Update' : 'Upload'} Timetable </h2>
+          <h2 style={{textAlign: 'center', color: '#1890ff'}}>{id ? 'Update' : 'Upload'} Timetable </h2>
           <Form
             layout="vertical"
             form={form}
@@ -212,11 +216,16 @@ function AddEditTimetable() {
               }
 
               <Form.Item {...tailFormItemLayout}>
-                <Button type="primary" htmlType="submit" loading={loadingBtn}>
+                <div className="center">
+                  <Button type="primary" htmlType="submit" loading={loadingBtn} style={{padding: '0 175px'}}>
                     Upload
-                </Button>
+                  </Button>
+                </div>  
               </Form.Item>
             </Form>    
+      </div>
+      </div>
+      <br /> 
       </div>
     }
     </>

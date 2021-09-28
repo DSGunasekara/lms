@@ -6,11 +6,12 @@ import { getNotices } from '../../actions/Notices';
 import {getEvents} from '../../actions/Events'
 import { getUser, updateUser } from '../../actions/Users';
 import UserModules from '../module/UserModules';
+import Background from '../../Images/dashboard.jpg';
 
 function Dashboard() {
   const header = {
     paddingLeft: 10,
-    fontFamily: 'Besley',
+    //fontFamily: 'Besley',
     fontWeight: 'bold',
     paddingTop: 25,
     paddingBottom: 15,
@@ -21,7 +22,21 @@ function Dashboard() {
     color: '#fff',
     lineHeight: '100px',
     textAlign: 'center',
-    background: '#278ea5',
+    background: '#1890ff',
+    padding: '60px',
+    //borderRadius: '15px',
+    //border: '2px solid #1890ff',
+  };
+
+  const contentStyle1 = {
+    height: '200px',
+    color: '#fff',
+    lineHeight: '100px',
+    textAlign: 'center',
+    background: '#ff0000',
+    padding: '60px',
+    //borderRadius: '20px',
+    boxShadow: '1px 3px 5px #525252',
   };
 
   const dispatch = useDispatch();
@@ -69,34 +84,36 @@ function Dashboard() {
         </>
       ) : (
         <>
-          <div className="row">
-            <div className="col-6">
-              <h6>Notices</h6>
-              <Carousel autoplay>
-                {noticeData?.map((notice) => (
-                  <div key={notice._id}>
-                    <div style={contentStyle}>
-                      <h3 style={{ color: 'white' }}>{notice.title}</h3>
-                      <h6 style={{ color: 'white' }}>{notice.description}</h6>
+          <div className="row" style={{padding: '0 30px' }}>
+          {/* , backgroundImage: `url(${Background})` */}
+              <div className="col-6">
+                <h5>Notices</h5>
+                <Carousel autoplay>
+                  {noticeData?.map((notice) => (
+                    <div key={notice._id}>
+                      <div style={contentStyle1 }>
+                        <h3 style={{ color: 'white'}}>{notice.title}</h3>
+                        <h6 style={{ color: 'white' }}>{notice.description}</h6>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </Carousel>
+                  ))}
+                </Carousel>
+              </div>
+              <div className="col-6">
+                <h5>Events</h5>
+                  <Carousel autoplay>
+                    {eventData?.map((event) => (
+                      <div key={event._id}>
+                        <div style={contentStyle}>
+                          <h3 style={{ color: 'white' }}>{event.title}</h3>
+                          <h6 style={{ color: 'white' }}>{event.description}</h6>
+                        </div>
+                      </div>
+                      ))}
+                </Carousel>
+              </div>
             </div>
-            <div className="col-6">
-            <h6>Events</h6>
-              <Carousel autoplay>
-                {eventData?.map((event) => (
-                  <div key={event._id}>
-                    <div style={contentStyle}>
-                      <h3 style={{ color: 'white' }}>{event.title}</h3>
-                      <h6 style={{ color: 'white' }}>{event.description}</h6>
-                    </div>
-                  </div>
-                ))}
-              </Carousel>
-            </div>
-          </div>
+          
           <div>
             <UserModules moduleFilter={user?.modules} unenroll={unenroll} />
           </div>
