@@ -1,18 +1,27 @@
 import React, {useEffect, useState} from "react";
+import { getUser } from "../../actions/Users";
 import {useDispatch, useSelector} from "react-redux";
 import {getLectures, deleteLecture, } from "../../actions/lectures";
 import 'antd/dist/antd.css';
-import {Table, Space, Button, Tooltip, message, Popconfirm, Skeleton} from 'antd';
-import {DeleteFilled, EditFilled, PlusOutlined, DownloadOutlined} from '@ant-design/icons';
+import {Table, Space, Button, Tooltip, message, Popconfirm, Skeleton, Collapse, Input, Row, Col, Select} from 'antd';
+import {DeleteFilled, EditFilled, PlusOutlined, DownloadOutlined, ClearOutlined, SearchOutlined, CloseOutlined} from '@ant-design/icons';
 import {useHistory} from "react-router";
+import { ROLES } from "../../constants/constant";
 
 export default function Lectures(){
 
     const dispatch = useDispatch();
     const history = useHistory();
+    const { Option } = Select;
+    const { Panel } = Collapse;
 
     const [lecture, setLecture] = useState([]);
+    const [user, setUser] = useState();
     const [loading, setLoading] = useState(false);
+    const [searchModule, setSearchModule] = useState('');
+    const [searchType, setSearchType] = useState('')
+    const [lectureTypeFilter, setLectureTypeFilter] = useState([]);
+    const [open, setOpen] = useState(["0"]);
 
     useEffect(() => {
         setLoading(true)
@@ -20,9 +29,21 @@ export default function Lectures(){
     }, [dispatch])
 
     const lectureData = useSelector((state) => state.LectureReducer.lectures);
+    useEffect(() => {
+        setUser(JSON.parse(localStorage.getItem('profile'))?.payload.user?._id);
+      }, []);
+
+    //   const getUserData = async (id) => {
+    //     setLoading(true);
+    //     const res = await dispatch(getUser(id));
+    //     setUser(res);
+    //     setLoading(false);
+    //   }; 
+
 
     useEffect(() => {
         setLecture(lectureData)
+        setLectureTypeFilter(lectureData)
         if(lectureData){
             setLoading(false)
         }
@@ -78,6 +99,8 @@ export default function Lectures(){
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
+                    {user?.role === ROLES.ADMIN ?
+                    <>
                     <Popconfirm
                         title="Are you sure to delete this lecture?"
                         onConfirm={() => deleteConfirm(record)}
@@ -94,11 +117,15 @@ export default function Lectures(){
                     <Tooltip placement="bottom" title="Download Lecture">
                         <DownloadOutlined onClick={() => window.open(`http://localhost:5000/${record.filePath}`)} />
                     </Tooltip>
+                    </>
+                    : ""
+                }
                 </Space>
             ),
         },
     ];
-    const data = lecture?.map((lec) =>({
+
+    const data = lectureTypeFilter?.map((lec) =>({
         key: lec._id,
         title: lec.title,
         type: lec.type,
@@ -110,7 +137,7 @@ export default function Lectures(){
 
     const newLecture= () =>{
         history.push('/lecture/add')
-    }
+    };
 
     const header = {
         paddingLeft: 10,
@@ -118,7 +145,48 @@ export default function Lectures(){
         fontWeight: 'bold',
         paddingTop: 25,
         paddingBottom: 15
+    };
+
+    const search = () => {
+        if (searchModule || searchType) {
+          let query = {}
+    
+          if (searchModule) {
+            query = {
+              ...query,
+                module_code: searchModule
+            }
+          }
+          let typeQuery = {}
+          if (searchType) {
+            typeQuery = {
+              ...typeQuery,
+              type: searchType
+            }
+          }
+
+          function searchFun(module){
+            return Object.keys(this).every((key) => module[key].toLowerCase().includes(this[key].toLowerCase()));
+          }
+          
+          function searchTypeFun(type){
+            return Object.keys(this).every((key) => type[key].toLowerCase() === this[key].toLowerCase());
+          }
+
+          let data = lecture?.filter(searchFun, query);
+          data = data?.filter(searchTypeFun, typeQuery);
+
+          setOpen([]);
+          setLectureTypeFilter(data)
+        } else {
+          setOpen([]);
+          setLectureTypeFilter(lecture)
+        }  
     }
+    const clear = () => {
+        setSearchModule('')
+        setSearchType('')
+      }
 
     return(
         <div>
@@ -131,6 +199,38 @@ export default function Lectures(){
             :
             <>
                 <h3 style={header}>Lectures</h3>
+                <Collapse style={{ marginBottom: 50 }} activeKey={open} onChange={() => setOpen(open === '' ? [] : ['0'])}>
+                    <Panel header="Search Lecture Materials" >
+                    <Row>
+                        <Col span={6} style={{ margin: '10px' }}>
+                        <Input placeholder="Module Code"
+                            value={searchModule}
+                            onChange={(e) => setSearchModule(e.target.value)}
+                        />
+                        </Col>
+                        <Col span={6} style={{ margin: '10px' }}>
+                        <Select value={searchType} style={{ width: '100%' }} onChange={(e) => setSearchType(e)}>
+                            <Option value="">All</Option>
+                            <Option value="Lecture">Lectures</Option>
+                            <Option value="Labs">Labs</Option>
+                            <Option value="Tutorial">Tutorial</Option>
+                        </Select>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={17} style={{ margin: '10px' }} onClick={() => clear()}>
+                        <Button type="secondary" icon={<ClearOutlined />}>
+                            Clear All
+                        </Button>
+                        </Col>
+                        <Col span={6} style={{ margin: '10px' }}>
+                        <Button type="primary" icon={<SearchOutlined />} onClick={() => search()}>
+                            Search
+                        </Button>
+                        </Col>
+                    </Row>
+                    </Panel>
+                </Collapse>
                 <Table columns={columns} dataSource={data}/>
                 <Tooltip title="Add Lecture">
                     <Button

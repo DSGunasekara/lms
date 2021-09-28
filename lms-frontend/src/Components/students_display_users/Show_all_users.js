@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers } from "../../actions/Users";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 
 import "./CardStyles.css";
+
+import { Skeleton } from "antd";
 
 let option_academic = [];
 
@@ -11,6 +14,7 @@ export const Show_all_users = () => {
   const dispatch = useDispatch();
 
   const [academic, setAcademic] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -35,31 +39,34 @@ export const Show_all_users = () => {
   }, [academicData]);
 
   return (
-    <>
-      {academic?.map((user) => (
-        <div class="row">
-          <div class="col-lg-5">
-            <Card user={user} key={user._id} />
+    <div>
+      {loading ? (
+        <>
+          <Skeleton active />
+          <Skeleton active />
+          <Skeleton active />
+          <Skeleton active />
+        </>
+      ) : (
+        <>
+          <div class="row container-lg mx-auto mt-5 px-0">
+            <h1 className="display-5 text-center mb-5">Academic Staff</h1>
+            {academic?.map((user) => {
+              return <Card user={user} key={user._id} />;
+            })}
           </div>
-        </div>
-      ))}
-    </>
+        </>
+      )}
+    </div>
   );
 };
 
 const Card = ({ user }) => {
   console.log(user);
 
-  const history = useHistory();
-
-  const singlePage = (e) => {
-    console.log(e);
-    history.push(`academicStaff/${user._id}`);
-  };
-
   return (
-    <div className="card">
-      <button onClick={singlePage}>
+    <div className={"col-sm-3"}>
+      <div className="card">
         <div className="card-body">
           <img
             className="card-img"
@@ -70,7 +77,7 @@ const Card = ({ user }) => {
           <h6 className="card-subtitle mb-2 text-muted">{user.email}</h6>
           <p className="card-text">{user.role}</p>
         </div>
-      </button>
+      </div>
     </div>
   );
 };

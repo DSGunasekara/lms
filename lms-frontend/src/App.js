@@ -110,14 +110,19 @@ function App() {
                   />
                   <ProtectedRoute
                     path={"/profile/:id"}
-                    roles={[ROLES.ADMIN, ROLES.LAB_INSTRUCTOR, ROLES.LECTURER, ROLES.STUDENT]}
+                    roles={[
+                      ROLES.ADMIN,
+                      ROLES.LAB_INSTRUCTOR,
+                      ROLES.LECTURER,
+                      ROLES.STUDENT,
+                    ]}
                     component={UserProfile}
                   />
                   {/* <ProtectedRoute path={'/login'} roles={[ROLES.ADMIN]} exact component={Login} /> */}
                   <ProtectedRoute
                     path={"/modulePage"}
                     exact
-                    roles={[ROLES.ADMIN]}
+                    roles={[ROLES.ADMIN, ROLES.STUDENT]}
                     component={modulePage}
                   ></ProtectedRoute>
                   <ProtectedRoute
@@ -245,7 +250,12 @@ function App() {
                   <ProtectedRoute
                     path={"/timetables"}
                     exact
-                    roles={[ROLES.ADMIN]}
+                    roles={[
+                      ROLES.ADMIN,
+                      ROLES.LAB_INSTRUCTOR,
+                      ROLES.LECTURER,
+                      ROLES.STUDENT,
+                    ]}
                     component={Timetables}
                   />
 
@@ -268,17 +278,24 @@ function App() {
                     component={ViewDiscussion}
                   />
 
-                  <Route
+                  <ProtectedRoute
                     path={"/student/academicStaff"}
                     exact
+                    roles={[ROLES.STUDENT]}
                     component={Show_all_users}
-                  ></Route>
+                  ></ProtectedRoute>
+
                   <Route
                     path={"/student/academicStaff/:id"}
                     component={AcademicSingleUser}
                   ></Route>
 
-                  <Route path={"/todoList"} exact component={TodoList}></Route>
+                  <Route
+                    path={"/todoList"}
+                    exact
+                    component={TodoList}
+                    roles={[ROLES.STUDENT]}
+                  ></Route>
 
                   <Route path="" component={NotFound} />
                 </Switch>

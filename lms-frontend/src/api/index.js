@@ -77,6 +77,7 @@ export const fetchTasks = () => API.get("/todo");
 export const fetchTask = (id) => API.get(`/todo/${id}`);
 export const createTask = (task) => API.post("/todo", task);
 export const updateTask = (task) => API.patch(`/todo/${task._id}`, task);
+export const deleteTask = (id) => API.delete(`/todo/${id}`);
 
 //timetables
 export const uploadTimetable = (timetable) => API.post("/timetable", timetable);
@@ -85,10 +86,12 @@ export const fetchTimetable = (id) => API.get(`/timetable/${id}`);
 export const deleteTimetable = (id) => API.delete(`timetable/${id}`);
 export const updateTimetable = (timetable) =>
   API.patch(`/timetable/${timetable.id}`, timetable);
-  
+
 //discussions
-export const fetchDiscussion = () => API.get('/discussion');
+export const fetchDiscussion = () => API.get("/discussion");
 export const fetchSingleDiscussion = (id) => API.get(`/discussion/${id}`);
-export const createDiscussion = (discussion) => API.post('/discussion', discussion);
-export const updateDiscussion = (updateDiscussion) => API.patch(`/discussion/${updateDiscussion.id}`, updateDiscussion);
+export const createDiscussion = (discussion) =>
+  API.post("/discussion", discussion);
+export const updateDiscussion = (updateDiscussion) =>
+  API.patch(`/discussion/${updateDiscussion.id}`, updateDiscussion);
 export const deleteDiscussion = (id) => API.delete(`discussion/${id}`);

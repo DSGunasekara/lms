@@ -1,26 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getModules, removeModule } from "../../actions/Modules";
+import { getUser, updateUser } from "../../actions/Users";
 import "antd/dist/antd.css";
-import { Table, Space, Button, Tooltip, message, Popconfirm, Skeleton, Collapse, Row, Col, Input, DatePicker } from 'antd';
-import { DeleteFilled, EditFilled, EyeFilled, PlusOutlined, ClearOutlined, SearchOutlined } from '@ant-design/icons';
+import {
+  Table,
+  Space,
+  Button,
+  Tooltip,
+  message,
+  Popconfirm,
+  Skeleton,
+  Collapse,
+  Row,
+  Col,
+  Input,
+  DatePicker,
+} from "antd";
+import {
+  DeleteFilled,
+  EditFilled,
+  EyeFilled,
+  PlusOutlined,
+  ClearOutlined,
+  SearchOutlined,
+  ExportOutlined,
+} from "@ant-design/icons";
 import { useHistory } from "react-router";
-import moment from 'moment';
+import moment from "moment";
+import { ROLES } from "../../constants/constant";
 
 const ModuleTable = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
   const [module, setModule] = useState([]);
+  const [user, setUser] = useState();
   const [loading, setLoading] = useState(false);
-  const [searchName, setSearchName] = useState('')
-  const [SearchModuleCode, setSearchModuleCode] = useState('')
-  const [searchLec, setSearchLec] = useState('')
-  const [searchAssist, setSearchAssist] = useState('')
-  const [searchYear, setSearchYear] = useState('')
+  const [searchName, setSearchName] = useState("");
+  const [SearchModuleCode, setSearchModuleCode] = useState("");
+  const [searchLec, setSearchLec] = useState("");
+  const [searchAssist, setSearchAssist] = useState("");
+  const [searchYear, setSearchYear] = useState("");
   const [open, setOpen] = useState(["0"]);
   const [moduleFilter, setModuleFilter] = useState([]);
-
 
   useEffect(() => {
     setLoading(true);
@@ -30,18 +53,40 @@ const ModuleTable = () => {
   const moduleData = useSelector((state) => state.ModuleReducer.modules);
 
   useEffect(() => {
-    setModule(moduleData);
-    setModuleFilter(moduleData);
-    if (moduleData) {
-      setLoading(false);
+    getUserData(JSON.parse(localStorage.getItem("profile"))?.payload.user?._id);
+  }, []);
+
+  const getUserData = async (id) => {
+    setLoading(true);
+    const res = await dispatch(getUser(id));
+    setUser(res);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (user?.role === ROLES.STUDENT) {
+      function search(module) {
+        return Object.keys(this).every(
+          (key) => module._id !== this[key].module._id
+        );
+      }
+      const data = module?.filter(search, user?.modules);
+      setModule(data);
+      setModuleFilter(data);
+    } else {
+      setModule(moduleData);
+      setModuleFilter(moduleData);
+      if (moduleData) {
+        setLoading(false);
+      }
     }
-  }, [moduleData]);
+  }, [moduleData, user]);
 
   const deleteConfirm = async (e) => {
     const res = await dispatch(removeModule(e.key));
     if (res?.status === 200) {
       setModule(module.filter((mod) => mod._id !== e.key));
-      setModuleFilter(moduleData);(module.filter((mod) => mod._id !== e.key));
+      setModuleFilter(module.filter((mod) => mod._id !== e.key));
       message.success("module Removed");
     } else {
       message.error("An Error Occurred");
@@ -54,6 +99,23 @@ const ModuleTable = () => {
 
   const SingleModuleLook = (e) => {
     history.push(`viewModule/${e.key}`);
+  };
+
+  const enroll = async (e) => {
+    const res = await dispatch(
+      updateUser({
+        id: user?._id,
+        ...user,
+        modules: [...user?.modules, { module: e.key }],
+      })
+    );
+    if (res.status === 200) {
+      message.success("Enrolled Successfully");
+      setModule(module.filter((mod) => mod._id !== e.key));
+      setModuleFilter(module.filter((mod) => mod._id !== e.key));
+    } else {
+      message.error("An Error Occurred");
+    }
   };
 
   const columns = [
@@ -97,22 +159,42 @@ const ModuleTable = () => {
       key: "action",
       render: (text, record) => (
         <Space size="middle">
-          <Popconfirm
-            title="Are you sure to delete this Module?"
-            onConfirm={() => deleteConfirm(record)}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Tooltip placement="bottom" title="Delete Module">
-              <DeleteFilled />
-            </Tooltip>
-          </Popconfirm>
-          <Tooltip placement="bottom" title="Edit Module">
-            <EditFilled onClick={() => editConfirm(record)} />
-          </Tooltip>
-          <Tooltip placement="bottom" title="View Module">
-            <EyeFilled onClick={() => SingleModuleLook(record)} />
-          </Tooltip>
+          {user?.role === ROLES.ADMIN ? (
+            <>
+              <Popconfirm
+                title="Are you sure to delete this Module?"
+                onConfirm={() => deleteConfirm(record)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Tooltip placement="bottom" title="Delete Module">
+                  <DeleteFilled />
+                </Tooltip>
+              </Popconfirm>
+              <Tooltip placement="bottom" title="Edit Module">
+                <EditFilled onClick={() => editConfirm(record)} />
+              </Tooltip>
+              <Tooltip placement="bottom" title="View Module">
+                <EyeFilled onClick={() => SingleModuleLook(record)} />
+              </Tooltip>
+            </>
+          ) : (
+            <>
+              <Tooltip placement="bottom" title="View Module">
+                <EyeFilled onClick={() => SingleModuleLook(record)} />
+              </Tooltip>
+              <Popconfirm
+                title="Are you sure to enroll to this Module?"
+                onConfirm={() => enroll(record)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Tooltip placement="bottom" title="Enroll">
+                  <ExportOutlined />
+                </Tooltip>
+              </Popconfirm>
+            </>
+          )}
         </Space>
       ),
     },
@@ -143,68 +225,78 @@ const ModuleTable = () => {
   const { Panel } = Collapse;
 
   const search = () => {
-    if (searchAssist || searchLec || searchName || searchYear || SearchModuleCode) {
-      let query = {}
+    if (
+      searchAssist ||
+      searchLec ||
+      searchName ||
+      searchYear ||
+      SearchModuleCode
+    ) {
+      let query = {};
 
       if (searchName) {
         query = {
           ...query,
-          name: searchName
-        }
+          name: searchName,
+        };
       }
       if (SearchModuleCode) {
         query = {
           ...query,
-          module_code: SearchModuleCode
-        }
+          module_code: SearchModuleCode,
+        };
       }
-      let nameFil = {}
+      let nameFil = {};
       if (searchLec) {
         nameFil = {
           ...nameFil,
           lecture_in_charge: {
-            name: searchLec
-          }
-        }
+            name: searchLec,
+          },
+        };
       }
       if (searchAssist) {
         nameFil = {
           ...nameFil,
-          lab_assistant:{
-              name: searchAssist
-          }
-        }
-    }
+          lab_assistant: {
+            name: searchAssist,
+          },
+        };
+      }
       if (searchYear) {
         query = {
           ...query,
-          year: moment(searchYear).year().toString()
-        }
+          year: moment(searchYear).year().toString(),
+        };
       }
-      function searchFun(module){
-        return Object.keys(this).every((key) => module[key].toLowerCase().includes(this[key].toLowerCase()));
+      function searchFun(module) {
+        return Object.keys(this).every((key) =>
+          module[key].toLowerCase().includes(this[key].toLowerCase())
+        );
       }
-      function nameSearchFun(module){
-        return Object.keys(this).every((key) => module[key].name.toLowerCase().includes(this[key].name.toLowerCase()));
+      function nameSearchFun(module) {
+        return Object.keys(this).every((key) =>
+          module[key].name.toLowerCase().includes(this[key].name.toLowerCase())
+        );
       }
 
       let result = module?.filter(searchFun, query);
       result = result?.filter(nameSearchFun, nameFil);
       setOpen([]);
-      setModuleFilter(result)
+      setModuleFilter(result);
     } else {
       setOpen([]);
-      setModuleFilter(module)
+      setModuleFilter(module);
     }
-  }
+  };
 
   const clear = () => {
-    setSearchAssist('')
-    setSearchLec('')
-    setSearchName('')
-    setSearchModuleCode('')
-    setSearchYear('')
-  }
+    setSearchAssist("");
+    setSearchLec("");
+    setSearchName("");
+    setSearchModuleCode("");
+    setSearchYear("");
+  };
 
   return (
     <div>
@@ -218,24 +310,44 @@ const ModuleTable = () => {
         <>
           <h3 style={header}>Modules</h3>
 
-          <Collapse style={{ marginBottom: 50 }} activeKey={open} onChange={() => setOpen(open === '' ? [] : ['0'])}>
+          <Collapse
+            style={{ marginBottom: 50 }}
+            activeKey={open}
+            onChange={() => setOpen(open === "" ? [] : ["0"])}
+          >
             <Panel header="Search Modules">
               <Row>
-                <Col span={6} style={{ margin: '10px' }}>
-                  <Input placeholder="Name" value={searchName} onChange={(e) => setSearchName(e.target.value)} />
+                <Col span={6} style={{ margin: "10px" }}>
+                  <Input
+                    placeholder="Name"
+                    value={searchName}
+                    onChange={(e) => setSearchName(e.target.value)}
+                  />
                 </Col>
-                <Col span={6} style={{ margin: '10px' }}>
-                  <Input placeholder="Module Code" value={SearchModuleCode} onChange={(e) => setSearchModuleCode(e.target.value)} />
+                <Col span={6} style={{ margin: "10px" }}>
+                  <Input
+                    placeholder="Module Code"
+                    value={SearchModuleCode}
+                    onChange={(e) => setSearchModuleCode(e.target.value)}
+                  />
                 </Col>
-                <Col span={6} style={{ margin: '10px' }}>
-                  <Input placeholder="Lecture In Charge" value={searchLec} onChange={(e) => setSearchLec(e.target.value)} />
+                <Col span={6} style={{ margin: "10px" }}>
+                  <Input
+                    placeholder="Lecture In Charge"
+                    value={searchLec}
+                    onChange={(e) => setSearchLec(e.target.value)}
+                  />
                 </Col>
-                <Col span={6} style={{ margin: '10px' }}>
-                  <Input placeholder="Lab Assistant" value={searchAssist} onChange={(e) => setSearchAssist(e.target.value)} />
+                <Col span={6} style={{ margin: "10px" }}>
+                  <Input
+                    placeholder="Lab Assistant"
+                    value={searchAssist}
+                    onChange={(e) => setSearchAssist(e.target.value)}
+                  />
                 </Col>
-                <Col span={6} style={{ margin: '10px' }}>
+                <Col span={6} style={{ margin: "10px" }}>
                   <DatePicker
-                    style={{width: '100%'}}
+                    style={{ width: "100%" }}
                     picker="year"
                     value={searchYear}
                     onChange={(e) => setSearchYear(e)}
@@ -243,13 +355,21 @@ const ModuleTable = () => {
                 </Col>
               </Row>
               <Row>
-                <Col span={17} style={{ margin: '10px' }} onClick={() => clear()}>
+                <Col
+                  span={17}
+                  style={{ margin: "10px" }}
+                  onClick={() => clear()}
+                >
                   <Button type="secondary" icon={<ClearOutlined />}>
                     Clear All
                   </Button>
                 </Col>
-                <Col span={6} style={{ margin: '10px' }}>
-                  <Button type="primary" icon={<SearchOutlined />} onClick={() => search()}>
+                <Col span={6} style={{ margin: "10px" }}>
+                  <Button
+                    type="primary"
+                    icon={<SearchOutlined />}
+                    onClick={() => search()}
+                  >
                     Search
                   </Button>
                 </Col>
@@ -275,4 +395,3 @@ const ModuleTable = () => {
 };
 
 export default ModuleTable;
-

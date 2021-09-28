@@ -74,7 +74,7 @@ const EditSingleModule = ({ module }) => {
 
   //filter lecturer from the UserData
   option_lec = userData
-    ?.filter((user) => user.role === "lecturer")
+    ?.filter((user) => user.role === "Lecturer")
     .map((lec) => ({
       value: lec._id,
       label: lec.name,
@@ -82,7 +82,7 @@ const EditSingleModule = ({ module }) => {
 
   //filter labInstructor from the UserData
   option_lab = userData
-    ?.filter((user) => user.role === "labInstructor")
+    ?.filter((user) => user.role === "Lab Instructor")
     .map((lab) => ({
       value: lab._id,
       label: lab.name,
@@ -238,4 +238,3 @@ const EditSingleModule = ({ module }) => {
 };
 
 export default EditSingleModule;
-
