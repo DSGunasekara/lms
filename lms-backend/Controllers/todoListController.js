@@ -60,3 +60,19 @@ export const updateTask = async (req, res) => {
     return res.status(500).send(error);
   }
 };
+
+//delete a todo
+export const deleteTask = async (req, res) => {
+  try {
+    const checkTodo = await TodoList.findOne({ _id: req.params.id });
+    if (!checkTodo) return res.status(404).send("Todo does not exits");
+
+    await checkTodo.remove((error, _) => {
+      if (error) return res.status(400).send(error);
+      return res.status(200).send("Todo deleted");
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send(error);
+  }
+};
