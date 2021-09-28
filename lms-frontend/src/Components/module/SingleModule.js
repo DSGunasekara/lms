@@ -47,6 +47,7 @@ const SingleModule = () => {
     const res = await dispatch(getSingleModule(ModId));
     setModule(res);
     setLoading(false);
+    console.log("module", res);
   };
 
   useEffect(() => {
