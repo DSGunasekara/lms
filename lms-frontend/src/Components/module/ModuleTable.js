@@ -216,11 +216,10 @@ const ModuleTable = () => {
 
   const header = {
     paddingLeft: 10,
-    // fontFamily: "Besley",
     fontWeight: "bold",
     paddingTop: 25,
     paddingBottom: 15,
-    color: '#1890ff'
+    color: "#1890ff",
   };
 
   const { Panel } = Collapse;
