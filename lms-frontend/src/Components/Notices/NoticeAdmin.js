@@ -133,6 +133,7 @@ const NoticeAdmin = () => {
               icon={<PlusOutlined />}
               size="large"
               className="fabBtn"
+              style={{position: 'fixed'}}
               onClick={newNotice}
             />
           </Tooltip>

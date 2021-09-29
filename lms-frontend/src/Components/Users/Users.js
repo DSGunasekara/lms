@@ -321,6 +321,7 @@ function Users() {
               size="large"
               className="fabBtn"
               onClick={handleCreateUser}
+              style={{position: 'fixed'}}
             />
           </Tooltip>
         </>

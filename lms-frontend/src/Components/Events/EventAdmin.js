@@ -137,6 +137,7 @@ const EventAdmin = () => {
               icon={<PlusOutlined />}
               size="large"
               className="fabBtn"
+              style={{position: 'fixed'}}
               onClick={newEvent}
             />
           </Tooltip>

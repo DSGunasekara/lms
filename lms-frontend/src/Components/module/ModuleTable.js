@@ -385,6 +385,7 @@ const ModuleTable = () => {
               icon={<PlusOutlined />}
               size="large"
               className="fabBtn"
+              style={{position: 'fixed'}}
               onClick={newModule}
             />
           </Tooltip>

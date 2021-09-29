@@ -273,6 +273,7 @@ export default function Lectures() {
               icon={<PlusOutlined />}
               size="large"
               className="fabBtn"
+              style={{position: 'fixed'}}
               onClick={newLecture}
             />
           </Tooltip>

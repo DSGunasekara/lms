@@ -252,6 +252,7 @@ const TodoList = () => {
           icon={<PlusOutlined />}
           size="large"
           className="fabBtn"
+          style={{position: 'fixed'}}
           onClick={() => setButtonPopup(true)}
         />
       </Tooltip>

@@ -162,6 +162,7 @@ export default function Timetables() {
               icon={<PlusOutlined />}
               size="large"
               className="fabBtn"
+              style={{position: 'fixed'}}
               onClick={newTimetable}
             />
           </Tooltip>

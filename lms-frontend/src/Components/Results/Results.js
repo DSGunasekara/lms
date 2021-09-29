@@ -309,6 +309,7 @@ const Results = () => {
               icon={<PlusOutlined />}
               size="large"
               className="fabBtn"
+              style={{position: 'fixed'}}
               onClick={newResult}
             />
           </Tooltip>
