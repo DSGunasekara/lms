@@ -7,6 +7,7 @@ import {Table, Space, Button, Tooltip, message, Popconfirm, Skeleton, Collapse, 
 import {DeleteFilled, EditFilled, PlusOutlined, DownloadOutlined, ClearOutlined, SearchOutlined, CloseOutlined} from '@ant-design/icons';
 import {useHistory} from "react-router";
 import { ROLES } from "../../constants/constant";
+import LectureImage from "../../Images/lectures.png"
 
 export default function Lectures(){
 
@@ -198,7 +199,14 @@ export default function Lectures(){
                 </>
             :
             <>
-                <h3 style={header}>Lectures</h3>
+                <div className={"headerDiv"}>
+                    <div className={"headerDescription"}>
+                        <h3 className={"headerTitle"}>Lectures</h3>
+                    </div>
+                    <div className={"imageDiv"}>
+                        <img className={"imageStyle"} src={LectureImage} alt="LectureImage" />
+                    </div>
+                </div>
                 <Collapse style={{ marginBottom: 50 }} activeKey={open} onChange={() => setOpen(open === '' ? [] : ['0'])}>
                     <Panel header="Search Lecture Materials" >
                     <Row>

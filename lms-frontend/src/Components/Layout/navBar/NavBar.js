@@ -20,6 +20,7 @@ import {
   CalendarOutlined,
   AuditOutlined,
   ProfileOutlined,
+  MessageOutlined,
 } from "@ant-design/icons";
 
 import { useDispatch } from "react-redux";
@@ -81,7 +82,7 @@ function NavBar() {
         },
         {
           name: "Forum Module",
-          icon: <CalendarOutlined />,
+          icon: <MessageOutlined />,
           to: "/viewForum",
         },
       ]);
@@ -119,7 +120,7 @@ function NavBar() {
         },
         {
           name: "Forum",
-          icon: <ProfileOutlined />,
+          icon: <MessageOutlined />,
           to: "/viewForum",
         },
       ]);

@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 import {Table, Space, Button, Tooltip, message, Popconfirm, Skeleton, Collapse, Input, Row, Col, Select} from 'antd';
 import {DeleteFilled, EditFilled, EyeFilled, PlusOutlined, CheckOutlined, CloseOutlined, SearchOutlined, ClearOutlined} from '@ant-design/icons';
 import {useHistory} from "react-router";
+import ResultImage from "../../Images/results.png";
 
 const Results = () =>{
 
@@ -226,7 +227,14 @@ const Results = () =>{
                 </>
             :
             <>
-                <h3 style={header}>Results</h3>
+                <div className={"headerDiv"}>
+                    <div className={"headerDescription"}>
+                        <h3 className={"headerTitle"}>Results</h3>
+                    </div>
+                    <div className={"imageDiv"}>
+                        <img className={"imageStyle"} src={ResultImage} alt="ResultImage" />
+                    </div>
+                </div>
                 <Collapse style={{ marginBottom: 50 }} activeKey={open} onChange={() => setOpen(open === '' ? [] : ['0'])}>
                     <Panel header="Search Results" >
                     <Row>

@@ -7,6 +7,7 @@ import {Table, Space, Button, Tooltip, message, Popconfirm, Skeleton} from 'antd
 import {DeleteFilled, EditFilled, PlusOutlined, DownloadOutlined, BulbFilled} from '@ant-design/icons';
 import {useHistory} from "react-router";
 import { ROLES } from "../../constants/constant";
+import TimetableImage from "../../Images/timetable.png"
 
 export default function Timetables(){
 
@@ -142,7 +143,15 @@ export default function Timetables(){
                 </>
             :
             <>
-                <h3 style={header}>Timetables</h3>
+                <div className={"headerDiv"}>
+                    <div className={"headerDescription"}>
+                        <h3 className={"headerTitle"}>Timetables</h3>
+                    </div>
+                    <div className={"imageDiv"}>
+                        <img className={"imageStyle"} src={TimetableImage} alt="TimetableImage" />
+                    </div>
+                </div>
+                
                 <Table columns={columns} dataSource={data}/>
                 <Tooltip title="Add Timetable">
                     <Button

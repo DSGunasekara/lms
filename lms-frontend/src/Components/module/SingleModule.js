@@ -22,6 +22,7 @@ import {
   MailOutlined,
   PhoneOutlined,
   SettingOutlined,
+  MessageOutlined,
   ReadOutlined,
   UngroupOutlined,
   CaretRightOutlined,
@@ -98,7 +99,11 @@ const SingleModule = () => {
     }
   }, [id]);
 
-  const handleEditModule = () => {};
+  //const handleEditModule = () => {};
+
+  // const handleForum = () => {
+
+  // }
 
   return (
     <div>
@@ -143,9 +148,12 @@ const SingleModule = () => {
               <div style={{ margin: 15 }}>
                 <div style={{ padding: 5 }}>
                   <Tooltip placement="right" title="Update Module">
-                    <Button type="text" onClick={handleEditModule}>
+                    {/* <Button type="text" onClick={handleEditModule}>
                       <SettingOutlined style={{ marginRight: 10 }} /> Settings
-                    </Button>
+                    </Button> */}
+                    {/* <Button type="text" onClick={() => handleForum()}>
+                      <MessageOutlined />Forum
+                    </Button> */}
                   </Tooltip>
                 </div>
               </div>

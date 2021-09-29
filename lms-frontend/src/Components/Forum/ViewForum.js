@@ -5,6 +5,7 @@ import { getDiscussions, removeDiscussion } from '../../actions/discussion';
 import { Table, Button, Tooltip, message, Space, Popconfirm, Skeleton } from 'antd';
 import {DeleteFilled, EditFilled, PlusOutlined} from '@ant-design/icons';
 import Card from './Card';
+import './ViewForum.css';
 import DiscussImage from '../../Images/discuss.png';
 
 const ViewForum = () => {
@@ -48,76 +49,22 @@ const ViewForum = () => {
         history.push(`editNotice/${e.key}`);
     }
 
-    //style objects
-    const headerDiv = {
-        width: "100%",
-        height: "20%",
-        background: "#001529",
-        color: "white",
-        display: "flex",
-    }
-
-    const headerTitle = {
-        color: "white",
-        fontFamily: 'Besley',
-    }
-
-    const imageStyle = {
-        height: 150,
-        width: 175
-    }
-
-    const imageDiv = {
-        display: "flex",
-        justifyContent: "flex-end",
-        alignItems: "end",
-        width: '50%',
-        marginTop: '20px',
-        marginBottom: '20px',
-        marginRight: '100px'
-    } 
-
-    const headerDescription = {
-        width: "50%",
-        marginTop: '35px',
-        marginLeft: '75px'
-    }
-
-    const buttonStyle = {
-        width: "200px",
-        height: "50px",
-        borderRadius: "10px",
-        marginTop: "20px",
-        marginBottom: "20px"
-    }
-
-    const cardDivMain = {
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        marginTop: "20px"
-    }
-
-    const cardDiv = {
-        width: "80%",  
-    }
                        
     return (
         <div>
-            <div style={headerDiv}>
-                <div style={headerDescription}>
-                    <h3 style={headerTitle}>Module Forum</h3>
+            <div className={"headerDiv"}>
+                <div className={"headerDescription"}>
+                    <h3 className={"headerTitle"}>Module Forum</h3>
                     <p>Please post your questions related to the module here</p>
-                    <Button type="primary" style={buttonStyle} onClick={newDiscussion}>Create new discussion</Button>
+                    <Button type="primary" className={"buttonStyle"} onClick={newDiscussion}>Create new discussion</Button>
                 </div>
-                <div style={imageDiv}>
-                    <img src={DiscussImage} alt="DiscussImage" style={imageStyle} />
+                <div className={"imageDiv"}>
+                    <img className={"imageStyle"} src={DiscussImage} alt="DiscussImage" />
                 </div>
             </div>
-            <div style={cardDivMain}>
+            <div className={"cardDivMain"}>
                 {discussion?.map((discuss) => (
-                    <div key={discuss._id} style={cardDiv}>
+                    <div key={discuss._id} className={"cardDiv"}>
                         <Card discuss={discuss} deleteDis={deleteConfirm}  />
                     </div>
                 ))}
