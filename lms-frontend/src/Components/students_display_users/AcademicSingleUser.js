@@ -6,27 +6,7 @@ import { getUser } from "../../actions/Users";
 
 import "./CardStyles.css";
 
-import {
-  Row,
-  Col,
-  Layout,
-  Avatar,
-  Tag,
-  Divider,
-  Skeleton,
-  Tooltip,
-  Button,
-  PageHeader,
-} from "antd";
-import {
-  UserOutlined,
-  MailOutlined,
-  PhoneOutlined,
-  SettingOutlined,
-  ReadOutlined,
-  UngroupOutlined,
-  CaretRightOutlined,
-} from "@ant-design/icons";
+import { Layout, Divider, Skeleton } from "antd";
 
 const AcademicSingleUser = () => {
   const { Sider, Content } = Layout;
