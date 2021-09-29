@@ -5,27 +5,8 @@ import { useParams } from "react-router-dom";
 import { getSingleModule } from "../../actions/Modules";
 import { getLectures } from "../../actions/lectures";
 
-import {
-  Row,
-  Col,
-  Layout,
-  Avatar,
-  Tag,
-  Divider,
-  Skeleton,
-  Tooltip,
-  Button,
-  PageHeader,
-} from "antd";
-import {
-  UserOutlined,
-  MailOutlined,
-  PhoneOutlined,
-  SettingOutlined,
-  ReadOutlined,
-  UngroupOutlined,
-  CaretRightOutlined,
-} from "@ant-design/icons";
+import { Layout, Divider, Skeleton, Tooltip, Button } from "antd";
+import { SettingOutlined } from "@ant-design/icons";
 
 let lectureFilter = [];
 

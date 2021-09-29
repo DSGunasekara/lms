@@ -1,42 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Carousel, Skeleton, message } from 'antd';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Carousel, Skeleton, message } from "antd";
 
-import { getNotices } from '../../actions/Notices';
-import {getEvents} from '../../actions/Events'
-import { getUser, updateUser } from '../../actions/Users';
-import UserModules from '../module/UserModules';
-import Background from '../../Images/dashboard.jpg';
+import { getNotices } from "../../actions/Notices";
+import { getEvents } from "../../actions/Events";
+import { getUser, updateUser } from "../../actions/Users";
+import UserModules from "../module/UserModules";
+import Background from "../../Images/dashboard.jpg";
 
 function Dashboard() {
   const header = {
     paddingLeft: 10,
-    //fontFamily: 'Besley',
-    fontWeight: 'bold',
+    fontWeight: "bold",
     paddingTop: 25,
     paddingBottom: 15,
   };
 
   const contentStyle = {
-    height: '200px',
-    color: '#fff',
-    lineHeight: '100px',
-    textAlign: 'center',
-    background: '#1890ff',
-    padding: '60px',
-    //borderRadius: '15px',
-    //border: '2px solid #1890ff',
+    height: "200px",
+    color: "#fff",
+    lineHeight: "100px",
+    textAlign: "center",
+    background: "#1890ff",
+    padding: "60px",
   };
 
   const contentStyle1 = {
-    height: '200px',
-    color: '#fff',
-    lineHeight: '100px',
-    textAlign: 'center',
-    background: '#ff0000',
-    padding: '60px',
-    //borderRadius: '20px',
-    boxShadow: '1px 3px 5px #525252',
+    height: "200px",
+    color: "#fff",
+    lineHeight: "100px",
+    textAlign: "center",
+    background: "#ff0000",
+    padding: "60px",
+    boxShadow: "1px 3px 5px #525252",
   };
 
   const dispatch = useDispatch();
@@ -53,7 +49,7 @@ function Dashboard() {
   }, [dispatch]);
 
   useEffect(() => {
-    getUserData(JSON.parse(localStorage.getItem('profile'))?.payload.user?._id);
+    getUserData(JSON.parse(localStorage.getItem("profile"))?.payload.user?._id);
   }, []);
 
   const getUserData = async (id) => {
@@ -64,13 +60,17 @@ function Dashboard() {
   };
 
   const unenroll = async (module) => {
-    const newModules = user.modules.filter((mod) => mod.module._id !== module.key);
+    const newModules = user.modules.filter(
+      (mod) => mod.module._id !== module.key
+    );
     setUser({ ...user, modules: newModules });
-    const res = await dispatch(updateUser({ id: user._id, ...user, modules: newModules }));
+    const res = await dispatch(
+      updateUser({ id: user._id, ...user, modules: newModules })
+    );
     if (res.status === 200) {
-      message.success('Unenrolled from the module');
+      message.success("Unenrolled from the module");
     } else {
-      message.error('An Error Occurred');
+      message.error("An Error Occurred");
     }
   };
   return (
@@ -84,36 +84,35 @@ function Dashboard() {
         </>
       ) : (
         <>
-          <div className="row" style={{padding: '0 30px' }}>
-          {/* , backgroundImage: `url(${Background})` */}
-              <div className="col-6">
-                <h5>Notices</h5>
-                <Carousel autoplay>
-                  {noticeData?.map((notice) => (
-                    <div key={notice._id}>
-                      <div style={contentStyle1 }>
-                        <h3 style={{ color: 'white'}}>{notice.title}</h3>
-                        <h6 style={{ color: 'white' }}>{notice.description}</h6>
-                      </div>
+          <div className="row" style={{ padding: "0 30px" }}>
+            <div className="col-6">
+              <h5>Notices</h5>
+              <Carousel autoplay>
+                {noticeData?.map((notice) => (
+                  <div key={notice._id}>
+                    <div style={contentStyle1}>
+                      <h3 style={{ color: "white" }}>{notice.title}</h3>
+                      <h6 style={{ color: "white" }}>{notice.description}</h6>
                     </div>
-                  ))}
-                </Carousel>
-              </div>
-              <div className="col-6">
-                <h5>Events</h5>
-                  <Carousel autoplay>
-                    {eventData?.map((event) => (
-                      <div key={event._id}>
-                        <div style={contentStyle}>
-                          <h3 style={{ color: 'white' }}>{event.title}</h3>
-                          <h6 style={{ color: 'white' }}>{event.description}</h6>
-                        </div>
-                      </div>
-                      ))}
-                </Carousel>
-              </div>
+                  </div>
+                ))}
+              </Carousel>
             </div>
-          
+            <div className="col-6">
+              <h5>Events</h5>
+              <Carousel autoplay>
+                {eventData?.map((event) => (
+                  <div key={event._id}>
+                    <div style={contentStyle}>
+                      <h3 style={{ color: "white" }}>{event.title}</h3>
+                      <h6 style={{ color: "white" }}>{event.description}</h6>
+                    </div>
+                  </div>
+                ))}
+              </Carousel>
+            </div>
+          </div>
+
           <div>
             <UserModules moduleFilter={user?.modules} unenroll={unenroll} />
           </div>
