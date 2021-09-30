@@ -117,7 +117,14 @@ const EventAdmin = () =>{
         </>
       ) : (
         <>
-          <h3 style={header}>Events</h3>
+          <div className={"headerDiv"}>
+            <div className={"headerDescription"}>
+                <h3 className={"headerTitle"}>Events</h3>
+            </div>
+            <div className={"imageDiv"}>
+                <img className={"imageStyle"} src={EventImage} alt="EventsImage" />
+            </div>
+          </div>
           <Table columns={columns} dataSource={data} />
           <Tooltip title="Create New Event">
             <Button

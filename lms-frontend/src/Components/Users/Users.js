@@ -28,6 +28,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getUsers, deleteUser } from "../../actions/Users";
 import { report } from "../Reports/Report";
+import UserImage from '../../Images/user.png'
 
 function Users() {
   const history = useHistory();
@@ -227,7 +228,14 @@ function Users() {
         </>
       ) : (
         <>
-          <h3 style={header}>Users</h3>
+          <div className={"headerDiv"}>
+            <div className={"headerDescription"}>
+                <h3 className={"headerTitle"}>Users</h3>
+            </div>
+            <div className={"imageDiv"}>
+                <img className={"imageStyle"} src={UserImage} alt="UserImage" />
+            </div>
+          </div>
           <Collapse
             style={{ marginBottom: 50 }}
             activeKey={open}

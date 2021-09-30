@@ -14,6 +14,7 @@ import { useHistory } from "react-router";
 import { getNotices, removeNotice } from "../../actions/Notices";
 import moment from "moment";
 import "antd/dist/antd.css";
+import NoticeImage from '../../Images/notice.png';
 
 const NoticeAdmin = () => {
   const dispatch = useDispatch();
@@ -124,7 +125,14 @@ const NoticeAdmin = () => {
         </>
       ) : (
         <>
-          <h3 style={header}>Notices</h3>
+          <div className={"headerDiv"}>
+            <div className={"headerDescription"}>
+                <h3 className={"headerTitle"}>Notices</h3>
+            </div>
+            <div className={"imageDiv"}>
+                <img className={"imageStyle"} src={NoticeImage} alt="NoticeImage" />
+            </div>
+          </div>
           <Table columns={columns} dataSource={data} />
           <Tooltip title="Create New Notice">
             <Button

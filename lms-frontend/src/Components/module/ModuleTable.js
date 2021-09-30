@@ -31,6 +31,7 @@ import { useHistory } from "react-router";
 import moment from "moment";
 import { ROLES } from "../../constants/constant";
 import { report } from "../Reports/Report";
+import ModulesImage from "../../Images/modules.png";
 
 const ModuleTable = () => {
   const dispatch = useDispatch();
@@ -323,7 +324,14 @@ const ModuleTable = () => {
         </>
       ) : (
         <>
-          <h3 style={header}>Modules</h3>
+          <div className={"headerDiv"}>
+            <div className={"headerDescription"}>
+                <h3 className={"headerTitle"}>Modules</h3>
+            </div>
+            <div className={"imageDiv"}>
+                <img className={"imageStyle"} src={ModulesImage} alt="ModulesImage" />
+            </div>
+          </div>
 
           <Collapse
             style={{ marginBottom: 50 }}

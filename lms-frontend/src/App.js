@@ -259,22 +259,37 @@ function App() {
                     component={Timetables}
                   />
 
-                  <Route
+                  <ProtectedRoute
                     path={"/viewForum"}
                     exact
-                    roles={[ROLES.ADMIN], [ROLES.STUDENT], [ROLES.LAB_INSTRUCTOR], [ROLES.LECTURER]}
+                    roles={[
+                      ROLES.ADMIN,
+                      ROLES.LAB_INSTRUCTOR,
+                      ROLES.LECTURER,
+                      ROLES.STUDENT,
+                    ]}
                     component={ViewForum}
                   />
-                  <Route
+                  <ProtectedRoute
                     path={"/createDiscussion"}
                     exact
-                    roles={[ROLES.ADMIN]}
+                    roles={[
+                      ROLES.ADMIN,
+                      ROLES.LAB_INSTRUCTOR,
+                      ROLES.LECTURER,
+                      ROLES.STUDENT,
+                    ]}
                     component={CreateDiscussion}
                   />
-                  <Route
+                  <ProtectedRoute
                     path={"/viewDiscussion/:id"}
                     exact
-                    roles={[ROLES.ADMIN]}
+                    roles={[
+                      ROLES.ADMIN,
+                      ROLES.LAB_INSTRUCTOR,
+                      ROLES.LECTURER,
+                      ROLES.STUDENT,
+                    ]}
                     component={ViewDiscussion}
                   />
 

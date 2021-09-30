@@ -28,7 +28,7 @@ import {
 } from "@ant-design/icons";
 import { useHistory } from "react-router";
 import { ROLES } from "../../constants/constant";
-import LectureImage from "../../Images/lectures.png"
+import LectureImage from "../../Images/lecturess.png"
 
 export default function Lectures() {
   const dispatch = useDispatch();
@@ -216,7 +216,14 @@ export default function Lectures() {
         </>
       ) : (
         <>
-          <h3 style={header}>Lectures</h3>
+          <div className={"headerDiv"}>
+            <div className={"headerDescription"}>
+                <h3 className={"headerTitle"}>Lectures</h3>
+            </div>
+            <div className={"imageDiv"}>
+                <img className={"imageStyle"} src={LectureImage} alt="LecturesImage" />
+            </div>
+          </div>
           <Collapse
             style={{ marginBottom: 50 }}
             activeKey={open}

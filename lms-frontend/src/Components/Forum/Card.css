@@ -20,15 +20,18 @@
 
 .timeStyle {
     font-size: 10px;
-    padding-left: 5px
+    padding-left: 10px;
+    padding-top: 0;
 }
 
+
 .dateDiv {
-    display: 'flex',
+    display: flex;
+    flex-direction: row;
 }
 
 .cardButtons {
-    display: "flex";
+    display: flex;
     position: absolute;
     right: 30px
 }

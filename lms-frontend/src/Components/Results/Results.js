@@ -27,6 +27,7 @@ import {
   ClearOutlined,
 } from "@ant-design/icons";
 import { useHistory } from "react-router";
+import ResultsImage from '../../Images/results.png'
 
 const Results = () => {
   const dispatch = useDispatch();
@@ -252,7 +253,14 @@ const Results = () => {
         </>
       ) : (
         <>
-          <h3 style={header}>Results</h3>
+          <div className={"headerDiv"}>
+            <div className={"headerDescription"}>
+                <h3 className={"headerTitle"}>Results</h3>
+            </div>
+            <div className={"imageDiv"}>
+                <img className={"imageStyle"} src={ResultsImage} alt="ResultsImage" />
+            </div>
+          </div>
           <Collapse
             style={{ marginBottom: 50 }}
             activeKey={open}

@@ -154,7 +154,14 @@ export default function Timetables() {
         </>
       ) : (
         <>
-          <h3 style={header}>Timetables</h3>
+          <div className={"headerDiv"}>
+            <div className={"headerDescription"}>
+                <h3 className={"headerTitle"}>Timetables</h3>
+            </div>
+            <div className={"imageDiv"}>
+                <img className={"imageStyle"} src={TimetableImage} alt="TimetableImage" />
+            </div>
+          </div>
           <Table columns={columns} dataSource={data} />
           <Tooltip title="Add Timetable">
             <Button

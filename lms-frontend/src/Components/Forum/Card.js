@@ -30,7 +30,7 @@ const CardItem = ({ discuss , deleteDis }) => {
                 <div className={"cardTopic"}>
                     <p className={"topicStyle"}>{discuss.topic}</p>
                     <p>{discuss?.postedBy?.name}</p>
-                    <p>{discuss?.modulename?.name}</p>
+                    <p className={"moduleName"}>Module: {discuss?.modulename?.name}</p>
                     <div className={"dateDiv"}>
                         <p className={"dateStyle"}>{moment(discuss.date).format('YYYY-MM-DD')}</p>
                         <p className={"timeStyle"}>{moment(discuss.date).format('HH:mm')}</p>
