@@ -30,16 +30,6 @@ const EventAdmin = () =>{
         }
     }, [eventData])
 
-   const deleteConfirm = async (e) =>{
-      const res = await dispatch(removeEvent(e.key));
-      if(res?.status === 200){
-          setEvent(event.filter((mod) => mod._id !== e.key))
-          message.success('Event Removed');
-      }else {
-          message.error('An Error Occurred');
-      }
-   }
-
     const editConfirm = (e) =>{
         history.push(`editEvent/${e.key}`)
     }
@@ -52,10 +42,6 @@ const EventAdmin = () =>{
     } else {
       message.error("An Error Occurred");
     }
-  };
-
-  const editConfirm = (e) => {
-    history.push(`editEvent/${e.key}`);
   };
 
   const columns = [

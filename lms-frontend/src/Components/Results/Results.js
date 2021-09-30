@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getResults, deleteResult, updateResult } from "../../actions/result";
-<<<<<<< HEAD
-import 'antd/dist/antd.css';
-import {Table, Space, Button, Tooltip, message, Popconfirm, Skeleton, Collapse, Input, Row, Col, Select} from 'antd';
-import {DeleteFilled, EditFilled, EyeFilled, PlusOutlined, CheckOutlined, CloseOutlined, SearchOutlined, ClearOutlined} from '@ant-design/icons';
-import {useHistory} from "react-router";
-import ResultImage from "../../Images/results.png";
-=======
 import "antd/dist/antd.css";
 import {
   Table,
@@ -34,7 +27,6 @@ import {
   ClearOutlined,
 } from "@ant-design/icons";
 import { useHistory } from "react-router";
->>>>>>> main
 
 const Results = () => {
   const dispatch = useDispatch();

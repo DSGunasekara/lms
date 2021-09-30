@@ -10,11 +10,6 @@ let option_module = [];
 const CreateDiscussion = () => {
   const dispatch = useDispatch();
 
-  const [discussionData, setDiscussionData] = useState({
-    topic: "",
-    question: "",
-  });
-
     const [discussionData, setDiscussionData] = useState({
         topic: '',
         question: '',
