@@ -7,7 +7,7 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import AddReply from './AddReply';
 import { getUser } from '../../actions/Users';
-
+import './ViewDiscussion.css'
 
 
 const ViewDiscussion = () => {
@@ -69,12 +69,15 @@ const ViewDiscussion = () => {
 
     return (
         <div>
-            <Card>
-                <div>
-                    <p>{discussion.topic}</p>
-                    <p>{discussion.question}</p>
-                    <p>{moment(discussion.date).format('YYYY-MM-DD')}</p>
-                    <p>{moment(discussion.date).format('HH:mm')}</p>
+            <div className={"CardBody"}>
+                <div className={"MainCard"}>
+                    <p className={"DiscussionTopic"}>{discussion.topic}</p>
+                    <div className={"DateTime"}>
+                        <p className={"Date"}>{moment(discussion.date).format('YYYY-MM-DD')}</p>
+                        <p className={"Time"}>{moment(discussion.date).format('HH:mm')}</p>
+                    </div>
+                    <p className={"DiscussionQuestion"}>{discussion.question}</p>
+                    
                     
                     <Button
                         type="link"
@@ -83,17 +86,19 @@ const ViewDiscussion = () => {
                         onClick={handleReply}
                     />         
                 </div>
-            </Card>
+            </div>
 
-            <div>
+            <div className={"ReplyBox"}>
                 {isReply? <AddReply addReply={addReply} />: ''}
             </div>
-            <div>
+            <div className={"ReplyDiv"}>
                 {discussion.replies?.map((reply, index)=>(
-                    <Card key={index}>
-                        <p>{reply.text}</p>
-                        <p>{reply?.postedBy?.name}</p>
-                        <p>{moment(reply?.createdAt).format('YYYY-MM-DD')}</p>
+                    <Card key={index} className={"ReplyBody"}>
+                        <p className={"ReplyText"}>{reply.text}</p>
+                        <div className={"ReplyContent"}>
+                            <p className={"ReplyPerson"}>{reply?.postedBy?.name}</p>
+                            <p className={"ReplyDate"}>{moment(reply?.createdAt).format('YYYY-MM-DD')}</p>
+                        </div>
                         <Button
                             type="link"
                             icon={<DeleteOutlined />}
