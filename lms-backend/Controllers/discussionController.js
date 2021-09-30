@@ -8,7 +8,15 @@ export const getDiscussions = (async(req, res) => {
     try {
         const discussions = await Discussion.find({})
             .populate({
-                path: 'createdBy',
+                path: 'postedBy',
+                select: 'name'
+            })
+            .populate({
+                path: 'replies.postedBy',
+                select: 'name'
+            })
+            .populate({
+                path: 'modulename',
                 select: 'name'
             })
         return res.status(200).send(discussions);
@@ -23,11 +31,19 @@ export const getDiscussion = (async(req, res) => {
     try {
         const discussion = await Discussion.findOne({ _id: req.params.id })
             .populate({
-                path: 'createdBy',
+                path: 'postedBy',
                 select: 'name'
             })
-            if (!discussion) return res.status(404).send("Discussion does not exists");
-            return res.status(200).send(discussion);
+            .populate({
+                path: 'replies.postedBy',
+                select: 'name'
+            })
+            .populate({
+                path: 'modulename',
+                select: 'name'
+            })
+        if (!discussion) return res.status(404).send("Discussion does not exists");
+        return res.status(200).send(discussion);
     } catch (error) {
         console.log(error);
         return res.status(500).send(error);
@@ -67,7 +83,7 @@ export const updateDiscussion = (async(req, res) => {
 export const deleteDiscussion = (async(req, res) => {
     try {
         const discussion = await Discussion.findOne({ _id: req.params.id });
-        if (!discussion) return res.status(404).send("Discussion does not exists");
+        if (!discussion) return res.status(404).send("Discussion does not exist");
         await discussion.remove((error, _) => {
             if (error) return res.status(400).send(error);
             return res.status(200).send("Discussion Deleted");

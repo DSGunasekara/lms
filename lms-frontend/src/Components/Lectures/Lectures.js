@@ -28,6 +28,7 @@ import {
 } from "@ant-design/icons";
 import { useHistory } from "react-router";
 import { ROLES } from "../../constants/constant";
+import LectureImage from "../../Images/lectures.png"
 
 export default function Lectures() {
   const dispatch = useDispatch();

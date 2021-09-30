@@ -20,6 +20,7 @@ import {
   CalendarOutlined,
   AuditOutlined,
   ProfileOutlined,
+  MessageOutlined,
 } from "@ant-design/icons";
 
 import { useDispatch } from "react-redux";
@@ -79,6 +80,11 @@ function NavBar() {
           icon: <CalendarOutlined />,
           to: "/timetables",
         },
+        {
+          name: "Forum Module",
+          icon: <MessageOutlined />,
+          to: "/viewForum",
+        },
       ]);
     } else if (user?.role === ROLES.STUDENT) {
       setNavList([
@@ -111,6 +117,11 @@ function NavBar() {
           name: "Todo List",
           icon: <ProfileOutlined />,
           to: "/todoList",
+        },
+        {
+          name: "Forum",
+          icon: <MessageOutlined />,
+          to: "/viewForum",
         },
       ]);
     } else {
