@@ -1,18 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
-import { getDiscussions, removeDiscussion } from "../../actions/discussion";
-import {
-  Table,
-  Button,
-  Tooltip,
-  message,
-  Space,
-  Popconfirm,
-  Skeleton,
-} from "antd";
-import { DeleteFilled, EditFilled, PlusOutlined } from "@ant-design/icons";
-import Card from "./Card";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { getDiscussions, removeDiscussion } from '../../actions/discussion';
+import { Table, Button, Tooltip, message, Space, Popconfirm, Skeleton } from 'antd';
+import {DeleteFilled, EditFilled, PlusOutlined} from '@ant-design/icons';
+import Card from './Card';
+import './ViewForum.css';
+import DiscussImage from '../../Images/discuss.png';
 
 const ViewForum = () => {
   const dispatch = useDispatch();
@@ -26,11 +20,8 @@ const ViewForum = () => {
     dispatch(getDiscussions());
   }, [dispatch]);
 
-  const discussionData = useSelector(
-    (state) => state.DiscussionReducer.discussions
-  );
-  console.log(discussionData);
-
+  const discussionData = useSelector((state) => state.DiscussionReducer.discussions);
+  
   useEffect(() => {
     setDiscussion(discussionData);
     if (discussionData) {
@@ -48,32 +39,41 @@ const ViewForum = () => {
     history.push("createDiscussion");
   };
 
-  const deleteConfirm = async (e) => {
-    const res = await dispatch(removeDiscussion(e.key));
-    if (res?.status === 200) {
-      setDiscussion(discussion.filter((mod) => mod._id !== e.key));
-      message.success("Discussion Removed");
-    } else {
-      message.error("An Error Occurred");
-    }
-  };
 
-  const editConfirm = (e) => {
-    history.push(`editNotice/${e.key}`);
-  };
+  const deleteConfirm = async (id) =>{
+      const res = await dispatch(removeDiscussion(id));
+      if(res?.status === 200){
+          setDiscussion(discussion.filter((mod) => mod._id !== id))
+          message.success('Discussion Removed');
+      }else {
+          message.error('An Error Occurred');
+      }
+  }
 
+
+                       
   return (
     <div>
-      <div className="ViewForum">
-        <button onClick={newDiscussion}>Add new</button>
-        {discussionData?.map((discuss) => (
-          <div key={discuss._id}>
-            <Card discuss={discuss} />
-          </div>
+      <div className={"headerDiv"}>
+        <div className={"headerDescription"}>
+            <h3 className={"headerTitle"}>Module Forum</h3>
+            <p>Please post your questions related to the module here</p>
+            <Button type="primary" className={"buttonStyle"} onClick={newDiscussion}>Create new discussion</Button>
+        </div>
+        <div className={"imageDiv"}>
+            <img className={"imageStyle"} src={DiscussImage} alt="DiscussImage" />
+        </div>
+      </div>
+      <div className={"cardDivMain"}>
+        {discussion?.map((discuss) => (
+            <div key={discuss._id} className={"cardDiv"}>
+                <Card discuss={discuss} deleteDis={deleteConfirm}  />
+            </div>
         ))}
       </div>
     </div>
-  );
-};
+      
+  )
+}
 
 export default ViewForum;

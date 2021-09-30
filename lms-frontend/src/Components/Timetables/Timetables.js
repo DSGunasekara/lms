@@ -21,6 +21,7 @@ import {
 } from "@ant-design/icons";
 import { useHistory } from "react-router";
 import { ROLES } from "../../constants/constant";
+import TimetableImage from "../../Images/timetable.png"
 
 export default function Timetables() {
   const dispatch = useDispatch();

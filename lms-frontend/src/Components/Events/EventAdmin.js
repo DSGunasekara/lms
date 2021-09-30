@@ -1,46 +1,39 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getEvents, removeEvent } from "../../actions/Events";
-import "antd/dist/antd.css";
-import {
-  Table,
-  Space,
-  Button,
-  Tooltip,
-  message,
-  Popconfirm,
-  Skeleton,
-} from "antd";
-import {
-  DeleteFilled,
-  EditFilled,
-  EyeFilled,
-  PlusOutlined,
-} from "@ant-design/icons";
-import { useHistory } from "react-router";
-import moment from "moment";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import { getEvents, removeEvent} from "../../actions/Events";
+import 'antd/dist/antd.css';
+import {Table, Space, Button, Tooltip, message, Popconfirm, Skeleton} from 'antd';
+import {DeleteFilled, EditFilled, EyeFilled, PlusOutlined} from '@ant-design/icons';
+import {useHistory} from "react-router";
+import moment from 'moment';
+import EventImage from "../../Images/events.png"
 
-const EventAdmin = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
+const EventAdmin = () =>{
 
-  const [event, setEvent] = useState([]);
-  const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+    const history = useHistory();
 
-  useEffect(() => {
-    setLoading(true);
-    dispatch(getEvents());
-  }, [dispatch]);
+    const [event, setEvent] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-  const eventData = useSelector((state) => state.EventReducer.events);
+    useEffect(() =>{
+        setLoading(true)
+        dispatch(getEvents());
+    }, [dispatch])
 
-  useEffect(() => {
-    setEvent(eventData);
-    if (eventData) {
-      setLoading(false);
+    const eventData = useSelector( (state) => state.EventReducer.events);
+
+    useEffect( ()=>{
+        setEvent(eventData)
+        if (eventData){
+            setLoading(false)
+        }
+    }, [eventData])
+
+    const editConfirm = (e) =>{
+        history.push(`editEvent/${e.key}`)
     }
-  }, [eventData]);
-
+    
   const deleteConfirm = async (e) => {
     const res = await dispatch(removeEvent(e.key));
     if (res?.status === 200) {
@@ -49,10 +42,6 @@ const EventAdmin = () => {
     } else {
       message.error("An Error Occurred");
     }
-  };
-
-  const editConfirm = (e) => {
-    history.push(`editEvent/${e.key}`);
   };
 
   const columns = [

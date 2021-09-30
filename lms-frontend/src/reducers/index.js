@@ -11,14 +11,4 @@ import DiscussionReducer from "./discussionReducer";
 import TaskReducer from "./todoReducer";
 import TimetableReducer from "./timetableReducer";
 
-export default combineReducers({
-  auth,
-  ModuleReducer,
-  UserReducer,
-  LectureReducer,
-  NoticeReducer,
-  EventReducer,
-  ResultReducer,
-  TaskReducer,
-  TimetableReducer,
-});
+export default combineReducers({ auth, ModuleReducer, UserReducer, LectureReducer, NoticeReducer, EventReducer, ResultReducer, TaskReducer, TimetableReducer, DiscussionReducer });
