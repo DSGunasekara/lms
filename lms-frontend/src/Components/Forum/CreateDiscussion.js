@@ -8,8 +8,12 @@ import { getModules } from '../../actions/Modules';
 let option_module = [];
 
 const CreateDiscussion = () => {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
+  const [discussionData, setDiscussionData] = useState({
+    topic: "",
+    question: "",
+  });
 
     const [discussionData, setDiscussionData] = useState({
         topic: '',
@@ -91,7 +95,7 @@ const CreateDiscussion = () => {
                 </div>
             </form>
         </div>
-    )
-}
+  );
+};
 
 export default CreateDiscussion;

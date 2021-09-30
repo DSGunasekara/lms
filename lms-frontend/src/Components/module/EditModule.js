@@ -114,125 +114,149 @@ const EditSingleModule = ({ module }) => {
 
   return (
     <div>
-      {!loading ? (
-        <div style={{ width: "400px", margin: "auto" }}>
-          <h2 style={{ textAlign: "center" }}>Update Module</h2>
-          <Form
-            // {...formItemLayout}
-            layout="vertical"
-            form={form}
-            name="register"
-            onFinish={SubmitEdit}
-            scrollToFirstError
-          >
-            <Form.Item
-              name="name"
-              label="Name"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Name!",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="module_code"
-              label="Module Code"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Module Code",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
+      <div>
+        <br />
+        <div
+          style={{
+            margin: "auto",
+            width: "700px",
+            border: "2px solid #9fd1ff",
+            borderRadius: "10px",
+            padding: "30px flex",
+            alignContent: "space-around",
+          }}
+        >
+          <br />
+          {!loading ? (
+            <div style={{ width: "400px", margin: "auto" }}>
+              <h2 style={{ textAlign: "center", color: "#1890ff" }}>
+                Update Module
+              </h2>
+              <Form
+                layout="vertical"
+                form={form}
+                name="register"
+                onFinish={SubmitEdit}
+                scrollToFirstError
+              >
+                <Form.Item
+                  name="name"
+                  label="Name"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your Name!",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name="module_code"
+                  label="Module Code"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your Module Code",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
 
-            <div className="mb-3 col">
-              <label htmlFor="option_lec" className="form-label">
-                Lecture In Charge
-              </label>
-              <Select
-                value={moduleData.lecture_in_charge}
-                name="option_lec"
-                options={option_lec}
-                className="basic-multi-select"
-                style={{ width: "100%" }}
-                onChange={(e) =>
-                  setModuleData({ ...moduleData, lecture_in_charge: e })
-                }
-              />
+                <div className="mb-3 col">
+                  <label htmlFor="option_lec" className="form-label">
+                    Lecture In Charge
+                  </label>
+                  <Select
+                    value={moduleData.lecture_in_charge}
+                    name="option_lec"
+                    options={option_lec}
+                    className="basic-multi-select"
+                    style={{ width: "100%" }}
+                    onChange={(e) =>
+                      setModuleData({ ...moduleData, lecture_in_charge: e })
+                    }
+                  />
+                </div>
+
+                <div className="mb-3 col">
+                  <label htmlFor="option_lec" className="form-label">
+                    Lab Assistant
+                  </label>
+                  <Select
+                    value={moduleData.lab_assistant}
+                    name="option_lec"
+                    options={option_lab}
+                    className="basic-multi-select"
+                    style={{ width: "100%" }}
+                    onChange={(e) =>
+                      setModuleData({ ...moduleData, lab_assistant: e })
+                    }
+                  />
+                </div>
+
+                <Form.Item
+                  name="year"
+                  label="Year"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your Semester",
+                    },
+                  ]}
+                >
+                  <DatePicker picker="year" />
+                </Form.Item>
+                <Form.Item
+                  name="semester"
+                  label="Semester"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your Semester",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name="credit"
+                  label="credit"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your credit!",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+
+                <Form.Item {...tailFormItemLayout}>
+                  <div className="center">
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      loading={loadingBtn}
+                      style={{ padding: "0 180px" }}
+                    >
+                      Update
+                    </Button>
+                  </div>
+                </Form.Item>
+              </Form>
             </div>
-
-            <div className="mb-3 col">
-              <label htmlFor="option_lec" className="form-label">
-                Lab Assistant
-              </label>
-              <Select
-                value={moduleData.lab_assistant}
-                name="option_lec"
-                options={option_lab}
-                className="basic-multi-select"
-                style={{ width: "100%" }}
-                onChange={(e) =>
-                  setModuleData({ ...moduleData, lab_assistant: e })
-                }
-              />
-            </div>
-
-            <Form.Item
-              name="year"
-              label="Year"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Semester",
-                },
-              ]}
-            >
-              <DatePicker picker="year" />
-            </Form.Item>
-            <Form.Item
-              name="semester"
-              label="Semester"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Semester",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="credit"
-              label="credit"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your credit!",
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item {...tailFormItemLayout}>
-              <Button type="primary" htmlType="submit" loading={loadingBtn}>
-                Update
-              </Button>
-            </Form.Item>
-          </Form>
+          ) : (
+            <>
+              <Skeleton active />
+              <Skeleton active />
+              <Skeleton active />
+            </>
+          )}
         </div>
-      ) : (
-        <>
-          <Skeleton active />
-          <Skeleton active />
-          <Skeleton active />
-        </>
-      )}
+        <br />
+      </div>
     </div>
   );
 };

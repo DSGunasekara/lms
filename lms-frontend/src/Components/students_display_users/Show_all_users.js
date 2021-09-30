@@ -28,7 +28,6 @@ export const Show_all_users = () => {
     return user.role === "Lab Instructor" || user.role === "Lecturer";
   });
 
-  //user.role === 'labInstructor'&& user.role === 'lecturer'
   console.log("filter user", option_academic);
 
   useEffect(() => {

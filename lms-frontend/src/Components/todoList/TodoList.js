@@ -122,11 +122,11 @@ const TodoList = () => {
         ...prev,
         todo: {
           items: [
+            ...prev.todo.items,
             {
               id: v4(),
               name: text,
             },
-            ...prev.todo.items,
           ],
         },
       };
@@ -154,7 +154,7 @@ const TodoList = () => {
     } else {
       // create
       const res = await dispatch(createTask(todo));
-      if (res.state === 200) {
+      if (res.status === 200) {
         message.success("Saving All tasks");
       }
     }
@@ -173,8 +173,30 @@ const TodoList = () => {
   };
 
   const deleteConfirm = async (e) => {
-    setTodoId(todoId?.filter((mod) => mod._id !== e.key));
-    setFilterTodo(todoId?.filter((todo) => todo._id !== e));
+    // setTodoId(state?.filter((mod) => mod._id !== e.key));
+    console.log(state);
+    const todos = state?.todo?.items?.filter((todo) => todo.id !== e);
+    const inProgress = state?.in_progress?.items?.filter(
+      (todo) => todo.id !== e
+    );
+    const done = state?.done?.items?.filter((todo) => todo.id !== e);
+    console.log(todos);
+    console.log(inProgress);
+    console.log(done);
+    setState({
+      todo: {
+        items: todos,
+      },
+      in_progress: {
+        items: inProgress,
+      },
+      done: {
+        items: done,
+      },
+    });
+    // console.log(e);
+    // setFilterTodo(state?.filter((todo) => todo._id !== e));
+    // save();
   };
 
   return (
@@ -215,7 +237,7 @@ const TodoList = () => {
                                       <Popconfirm
                                         className="deleteIcon"
                                         title="Are you sure to delete this Module?"
-                                        onConfirm={() => deleteConfirm(el._id)}
+                                        onConfirm={() => deleteConfirm(el.id)}
                                         okText="Yes"
                                         cancelText="No"
                                       >
@@ -252,6 +274,7 @@ const TodoList = () => {
           icon={<PlusOutlined />}
           size="large"
           className="fabBtn"
+          style={{ position: "fixed" }}
           onClick={() => setButtonPopup(true)}
         />
       </Tooltip>
