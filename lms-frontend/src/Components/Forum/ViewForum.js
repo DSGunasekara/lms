@@ -22,7 +22,6 @@ const ViewForum = () => {
     }, [dispatch]);
 
     const discussionData = useSelector((state) => state.DiscussionReducer.discussions);
-    console.log(discussionData);
 
     useEffect(() => {
         setDiscussion(discussionData);

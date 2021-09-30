@@ -5,6 +5,10 @@ const DiscussionSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    modulename: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Module'
+    },
     question: {
         type: String,
         required: true
@@ -14,7 +18,7 @@ const DiscussionSchema = new mongoose.Schema({
         default: new Date()
     }, 
     postedBy: {
-        type: mongoose.Schema.Types.ObjectId, ref: "User",
+        type: mongoose.Schema.Types.ObjectId, 
         ref: "User"
     },
     replies: [{

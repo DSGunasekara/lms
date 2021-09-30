@@ -15,6 +15,10 @@ export const getDiscussions = (async(req, res) => {
                 path: 'replies.postedBy',
                 select: 'name'
             })
+            .populate({
+                path: 'modulename',
+                select: 'name'
+            })
         return res.status(200).send(discussions);
     } catch (error) {
         console.log(error);
@@ -32,6 +36,10 @@ export const getDiscussion = (async(req, res) => {
             })
             .populate({
                 path: 'replies.postedBy',
+                select: 'name'
+            })
+            .populate({
+                path: 'modulename',
                 select: 'name'
             })
         if (!discussion) return res.status(404).send("Discussion does not exists");
