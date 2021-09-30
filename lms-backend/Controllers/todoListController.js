@@ -18,7 +18,7 @@ export const createTask = async (req, res) => {
   }
 };
 
-//get single todo
+//get single task
 export const getTask = async (req, res) => {
   try {
     const todo = await TodoList.findOne({ _id: req.params.id }).populate({
@@ -33,7 +33,7 @@ export const getTask = async (req, res) => {
   }
 };
 
-//get all todo
+//get all tasks for the database
 export const getTasks = async (req, res) => {
   try {
     const todos = await TodoList.find({}).populate({
@@ -47,7 +47,7 @@ export const getTasks = async (req, res) => {
   }
 };
 
-//update a todo
+//update a task
 export const updateTask = async (req, res) => {
   try {
     const checkTask = await TodoList.findById({ _id: req.params.id });
@@ -61,7 +61,7 @@ export const updateTask = async (req, res) => {
   }
 };
 
-//delete a todo
+//delete a task
 export const deleteTask = async (req, res) => {
   try {
     const checkTodo = await TodoList.findOne({ _id: req.params.id });

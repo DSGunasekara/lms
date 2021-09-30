@@ -60,8 +60,11 @@ const EditNotice = ({notice}) => {
 
     return (
         <div>
+            <br />
+            <div style={{margin: 'auto', width:'700px', border: '2px solid #9fd1ff', borderRadius: '10px', padding: '30px flex', alignContent: 'space-around'}} >
+            <br />    
             <div style={{width:'400px', margin: 'auto'}}>
-                <h2 style={{textAlign: 'center'}}>Update Notice</h2>
+                <h2 style={{textAlign: 'center', color: '#1890ff'}}>Update Notice</h2>
                 <Form
                     layout="vertical"
                     form={form}
@@ -122,11 +125,14 @@ const EditNotice = ({notice}) => {
                     </Form.Item>
 
                     <Form.Item {...tailFormItemLayout}>
-                        <Button type="primary" htmlType="submit">
-                            Update
-                        </Button>
+                        <div className="center">
+                            <Button type="primary" htmlType="submit" style={{padding: '0 180px'}}>
+                                Update
+                            </Button>
+                        </div>
                     </Form.Item>
                 </Form>
+            </div>
             </div>
         </div>
     )

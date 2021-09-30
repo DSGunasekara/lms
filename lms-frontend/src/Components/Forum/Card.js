@@ -1,72 +1,77 @@
-import React from 'react';
-import { Button, Tooltip, Card, Popconfirm } from 'antd';
-import { FolderOpenOutlined, DeleteOutlined } from '@ant-design/icons';
-import { useHistory } from 'react-router';
-import { useDispatch } from 'react-redux';
-import moment from 'moment';
-import "./Card.css";
+import React from "react";
+import { Button, Tooltip, Card } from "antd";
+import { FolderOpenOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router";
+import moment from "moment";
 
+const CardItem = ({ discuss }) => {
+  const history = useHistory();
 
+  const topicStyle = {
+    fontSize: 15,
+    fontWeight: "bold",
+    fontFamily: "Besley",
+    padding: 0,
+    margin: 0,
+  };
 
-const CardItem = ({ discuss , deleteDis }) => {
+  const cardStyle = {
+    width: "75%",
+    bordered: true,
+    border: "1px solid #98d1d9",
+  };
 
-    const history = useHistory();
-    const dispatch = useDispatch();
-    
-    const singleDiscussionView = (e) => {
-        console.log(e);
-        history.push(`viewDiscussion/${e._id}`)
-    }
+  const divStyle = {
+    display: "flex",
+    justifyContent: "center",
+    paddingBottom: 15,
+  };
 
-    const handleDelete = async (e) => {
-        deleteDis(e._id)
-    }
+  const buttonStyle = {
+    background: "#278ea5",
+  };
 
-    
-    return (
-        <>
-            
-            <div className={"cardContent"}>
-                <div className={"cardTopic"}>
-                    <p className={"topicStyle"}>{discuss.topic}</p>
-                    <p>{discuss?.postedBy?.name}</p>
-                    <p>{discuss?.modulename?.name}</p>
-                    <div className={"dateDiv"}>
-                        <p className={"dateStyle"}>{moment(discuss.date).format('YYYY-MM-DD')}</p>
-                        <p className={"timeStyle"}>{moment(discuss.date).format('HH:mm')}</p>
-                    </div>
-                </div>
-                <div className={"cardDescription"}>
-                    <p>{discuss.question}</p>
-                    <div className={"cardButtons"}>
-                        <Tooltip title="View Discussion">
-                            <Button
-                                type="link"
-                                icon={<FolderOpenOutlined />}
-                                size='large'
-                                onClick={() => singleDiscussionView(discuss)}
-                            />
-                        </Tooltip>
-                        <Popconfirm
-                            title="Do you want to delete this discussion?"
-                            onConfirm={() => handleDelete(discuss)}
-                            okText="Yes"
-                            cancelText="No"
-                        >
-                            <Tooltip title="Delete">
-                                <Button
-                                    type="link"
-                                    icon={<DeleteOutlined />}
-                                    size='large'
-                                />
-                            </Tooltip>
-                        </Popconfirm>
-                    </div>  
-                </div>
-            </div>
-        </>    
-            
-    )
-}
+  const dateStyle = {
+    fontSize: 10,
+  };
+
+  const timeStyle = {
+    fontSize: 10,
+    paddingLeft: 5,
+  };
+
+  const dateDiv = {
+    display: "flex",
+  };
+
+  const singleDiscussionView = (e) => {
+    console.log(e);
+    history.push(`viewDiscussion/${e._id}`);
+  };
+
+  return (
+    <div style={divStyle}>
+      <Card style={cardStyle}>
+        <p style={topicStyle}>{discuss.topic}</p>
+        <div style={dateDiv}>
+          <p style={dateStyle}>{moment(discuss.date).format("YYYY-MM-DD")}</p>
+          <p style={timeStyle}>{moment(discuss.date).format("HH:mm")}</p>
+        </div>
+        <p>{discuss.question}</p>
+
+        <Tooltip title="View Discussion">
+          <Button
+            type="primary"
+            shape="circle"
+            icon={<FolderOpenOutlined />}
+            size="large"
+            style={buttonStyle}
+            onClick={() => singleDiscussionView(discuss)}
+          />
+        </Tooltip>
+      </Card>
+    </div>
+  );
+};
 
 export default CardItem;

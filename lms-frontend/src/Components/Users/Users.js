@@ -145,10 +145,10 @@ function Users() {
 
   const header = {
     paddingLeft: 10,
-    fontFamily: "Besley",
     fontWeight: "bold",
     paddingTop: 25,
     paddingBottom: 15,
+    color: "#1890ff",
   };
 
   const headData = columns?.map((col) => col?.title);
@@ -321,6 +321,7 @@ function Users() {
               size="large"
               className="fabBtn"
               onClick={handleCreateUser}
+              style={{position: 'fixed'}}
             />
           </Tooltip>
         </>

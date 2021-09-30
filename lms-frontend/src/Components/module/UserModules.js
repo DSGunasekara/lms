@@ -1,10 +1,9 @@
-import React from 'react';
-import 'antd/dist/antd.css';
-import { Table, Space, Tooltip, Popconfirm } from 'antd';
-import { EyeFilled, UndoOutlined } from '@ant-design/icons';
-import { useHistory } from 'react-router';
-function UserModules({moduleFilter ,unenroll}) {
-
+import React from "react";
+import "antd/dist/antd.css";
+import { Table, Space, Tooltip, Popconfirm } from "antd";
+import { EyeFilled, UndoOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router";
+function UserModules({ moduleFilter, unenroll }) {
   const history = useHistory();
 
   const SingleModuleLook = (e) => {
@@ -13,33 +12,33 @@ function UserModules({moduleFilter ,unenroll}) {
 
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: 'Module Code',
-      dataIndex: 'module_code',
-      key: 'module_code',
+      title: "Module Code",
+      dataIndex: "module_code",
+      key: "module_code",
     },
     {
-      title: 'Year',
-      dataIndex: 'year',
-      key: 'year',
+      title: "Year",
+      dataIndex: "year",
+      key: "year",
     },
     {
-      title: 'Semester',
-      dataIndex: 'semester',
-      key: 'semester',
+      title: "Semester",
+      dataIndex: "semester",
+      key: "semester",
     },
     {
-      title: 'Credits',
-      dataIndex: 'credit',
-      key: 'credit',
+      title: "Credits",
+      dataIndex: "credit",
+      key: "credit",
     },
     {
-      title: 'Action',
-      key: 'action',
+      title: "Action",
+      key: "action",
       render: (text, record) => (
         <Space size="middle">
           <Tooltip placement="bottom" title="View Module">
@@ -51,9 +50,9 @@ function UserModules({moduleFilter ,unenroll}) {
             okText="Yes"
             cancelText="No"
           >
-          <Tooltip placement="bottom" title="Unenroll From Module">
-            <UndoOutlined/>
-          </Tooltip>
+            <Tooltip placement="bottom" title="Unenroll From Module">
+              <UndoOutlined />
+            </Tooltip>
           </Popconfirm>
         </Space>
       ),
@@ -71,15 +70,15 @@ function UserModules({moduleFilter ,unenroll}) {
 
   const header = {
     paddingLeft: 10,
-    fontFamily: 'Besley',
-    fontWeight: 'bold',
+    fontFamily: "Besley",
+    fontWeight: "bold",
     paddingTop: 25,
     paddingBottom: 15,
-    fontSize: '20px'
+    fontSize: "20px",
   };
 
   return (
-    <div  style={{marginLeft: '10px'}}>
+    <div style={{ marginLeft: "10px" }}>
       <h3 style={header}>Your Modules</h3>
 
       <Table columns={columns} dataSource={data} />
