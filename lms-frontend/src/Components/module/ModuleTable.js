@@ -25,10 +25,12 @@ import {
   ClearOutlined,
   SearchOutlined,
   ExportOutlined,
+  DownloadOutlined,
 } from "@ant-design/icons";
 import { useHistory } from "react-router";
 import moment from "moment";
 import { ROLES } from "../../constants/constant";
+import { report } from "../Reports/Report";
 
 const ModuleTable = () => {
   const dispatch = useDispatch();
@@ -224,6 +226,17 @@ const ModuleTable = () => {
 
   const { Panel } = Collapse;
 
+  const headData = columns?.map((col) => col?.title);
+  const bodyData = data?.map((col) => [
+    col.name,
+    col.module_code,
+    col.lecture_in_charge,
+    col.lab_assistant,
+    col.year,
+    col.semester,
+    col.credit,
+  ]);
+
   const search = () => {
     if (
       searchAssist ||
@@ -276,7 +289,9 @@ const ModuleTable = () => {
       }
       function nameSearchFun(module) {
         return Object.keys(this).every((key) =>
-          module[key].name.toLowerCase().includes(this[key].name.toLowerCase())
+          module[key].name
+            ?.toLowerCase()
+            .includes(this[key].name?.toLowerCase())
         );
       }
 
@@ -377,6 +392,19 @@ const ModuleTable = () => {
             </Panel>
           </Collapse>
 
+          <Button
+            onClick={() => report(headData, bodyData)}
+            style={{
+              marginBottom: 10,
+              marginRight: 5,
+              display: "block",
+              marginLeft: "auto",
+            }}
+          >
+            <DownloadOutlined />
+            Download Module Report ss
+          </Button>
+
           <Table columns={columns} dataSource={data} />
           <Tooltip title="Create New Module">
             <Button
@@ -385,7 +413,7 @@ const ModuleTable = () => {
               icon={<PlusOutlined />}
               size="large"
               className="fabBtn"
-              style={{position: 'fixed'}}
+              style={{ position: "fixed" }}
               onClick={newModule}
             />
           </Tooltip>
