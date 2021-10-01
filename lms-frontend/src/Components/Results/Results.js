@@ -25,9 +25,11 @@ import {
   CloseOutlined,
   SearchOutlined,
   ClearOutlined,
+  DownloadOutlined
 } from "@ant-design/icons";
 import { useHistory } from "react-router";
 import ResultsImage from '../../Images/results.png'
+import { report } from "../Reports/Report";
 
 const Results = () => {
   const dispatch = useDispatch();
@@ -187,6 +189,16 @@ const Results = () => {
     history.push("/results/add");
   };
 
+  const headData = columns?.map((col) => col?.title);
+  headData.pop()
+  const bodyData = data?.map((col) => [
+    col.module,
+    col.status,
+    col.passedAmount,
+    col.failedAmount,
+    col.holdAmount,
+  ]);
+
   const header = {
     paddingLeft: 10,
     // fontFamily: 'Besley',
@@ -309,6 +321,18 @@ const Results = () => {
               </Row>
             </Panel>
           </Collapse>
+          <Button
+            onClick={() => report(headData, bodyData, 'Result Data')}
+            style={{
+              marginBottom: 10,
+              marginRight: 5,
+              display: "block",
+              marginLeft: "auto",
+            }}
+          >
+            <DownloadOutlined />
+            Download Result Report
+          </Button>
           <Table columns={columns} dataSource={data} />
           <Tooltip title="Create New Result">
             <Button

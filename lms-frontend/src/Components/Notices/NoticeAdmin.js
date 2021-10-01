@@ -9,12 +9,13 @@ import {
   Popconfirm,
   Skeleton,
 } from "antd";
-import { DeleteFilled, EditFilled, PlusOutlined } from "@ant-design/icons";
+import { DeleteFilled, EditFilled, PlusOutlined, DownloadOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router";
 import { getNotices, removeNotice } from "../../actions/Notices";
 import moment from "moment";
 import "antd/dist/antd.css";
 import NoticeImage from '../../Images/notice.png';
+import { report } from "../Reports/Report";
 
 const NoticeAdmin = () => {
   const dispatch = useDispatch();
@@ -107,6 +108,14 @@ const NoticeAdmin = () => {
     history.push("addNoticeForm");
   };
 
+  const headData = columns?.map((col) => col?.title);
+  const bodyData = data?.map((col) => [
+    col.name,
+    col.createdOn,
+    col.description,
+    col.inquiries,
+  ]);
+
   const header = {
     paddingLeft: 10,
     fontWeight: "bold",
@@ -133,6 +142,18 @@ const NoticeAdmin = () => {
                 <img className={"imageStyle"} src={NoticeImage} alt="NoticeImage" />
             </div>
           </div>
+          <Button
+            onClick={() => report(headData, bodyData, 'Notice Data')}
+            style={{
+              marginBottom: 10,
+              marginRight: 5,
+              display: "block",
+              marginLeft: "auto",
+            }}
+          >
+            <DownloadOutlined />
+            Download Notice Report
+          </Button>
           <Table columns={columns} dataSource={data} />
           <Tooltip title="Create New Notice">
             <Button

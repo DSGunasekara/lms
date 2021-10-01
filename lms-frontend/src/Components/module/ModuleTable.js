@@ -401,7 +401,7 @@ const ModuleTable = () => {
           </Collapse>
 
           <Button
-            onClick={() => report(headData, bodyData)}
+            onClick={() => report(headData, bodyData, 'Module Data')}
             style={{
               marginBottom: 10,
               marginRight: 5,

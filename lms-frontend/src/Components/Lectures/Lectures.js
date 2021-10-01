@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { getUser } from "../../actions/Users";
 import { useDispatch, useSelector } from "react-redux";
 import { getLectures, deleteLecture } from "../../actions/lectures";
 import "antd/dist/antd.css";
@@ -24,11 +23,10 @@ import {
   DownloadOutlined,
   ClearOutlined,
   SearchOutlined,
-  CloseOutlined,
 } from "@ant-design/icons";
 import { useHistory } from "react-router";
-import { ROLES } from "../../constants/constant";
 import LectureImage from "../../Images/lecturess.png"
+import { report } from "../Reports/Report";
 
 export default function Lectures() {
   const dispatch = useDispatch();
@@ -108,7 +106,6 @@ export default function Lectures() {
       key: "action",
       render: (text, record) => (
         <Space size="middle">
-          {user?.role === ROLES.ADMIN ? (
             <>
               <Popconfirm
                 title="Are you sure to delete this lecture?"
@@ -131,9 +128,6 @@ export default function Lectures() {
                 />
               </Tooltip>
             </>
-          ) : (
-            ""
-          )}
         </Space>
       ),
     },
@@ -152,6 +146,17 @@ export default function Lectures() {
   const newLecture = () => {
     history.push("/lecture/add");
   };
+
+  const headData = columns?.map((col) => col?.title);
+  headData.pop()
+  const bodyData = data?.map((col) => [
+    col.name,
+    col.title,
+    col.type,
+    col.module_code,
+    col.week,
+    col.description,
+  ]);
 
   const header = {
     paddingLeft: 10,
@@ -187,7 +192,7 @@ export default function Lectures() {
 
       function searchTypeFun(type) {
         return Object.keys(this).every(
-          (key) => type[key].toLowerCase() === this[key].toLowerCase()
+          (key) => type[key] === this[key]
         );
       }
 
@@ -273,6 +278,18 @@ export default function Lectures() {
               </Row>
             </Panel>
           </Collapse>
+          <Button
+            onClick={() => report(headData, bodyData, 'Lecture Data')}
+            style={{
+              marginBottom: 10,
+              marginRight: 5,
+              display: "block",
+              marginLeft: "auto",
+            }}
+          >
+            <DownloadOutlined />
+            Download Lecture Report
+          </Button>
           <Table columns={columns} dataSource={data} />
           <Tooltip title="Add Lecture">
             <Button

@@ -13,8 +13,9 @@ import {
   Select,
   Button,
 } from "antd";
-import { SearchOutlined, ClearOutlined } from "@ant-design/icons";
+import { SearchOutlined, ClearOutlined, DownloadOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router";
+import { report } from "../Reports/Report";
 
 function ViewResult() {
   const dispatch = useDispatch();
@@ -83,6 +84,15 @@ function ViewResult() {
         ? "Pending"
         : "Fail",
   }));
+
+  const headData = columns?.map((col) => col?.title);
+  headData.pop()
+  const bodyData = data?.map((col) => [
+    col.regNumber,
+    col.name,
+    col.grade,
+    col.status,
+  ]);
 
   const header = {
     paddingLeft: 10,
@@ -227,6 +237,18 @@ function ViewResult() {
               </Row>
             </Panel>
           </Collapse>
+          <Button
+            onClick={() => report(headData, bodyData, 'Result Data')}
+            style={{
+              marginBottom: 10,
+              marginRight: 5,
+              display: "block",
+              marginLeft: "auto",
+            }}
+          >
+            <DownloadOutlined />
+            Download Result Report
+          </Button>
           <Table columns={columns} dataSource={data} />
         </>
       )}

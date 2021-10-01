@@ -3,10 +3,11 @@ import {useDispatch, useSelector} from "react-redux";
 import { getEvents, removeEvent} from "../../actions/Events";
 import 'antd/dist/antd.css';
 import {Table, Space, Button, Tooltip, message, Popconfirm, Skeleton} from 'antd';
-import {DeleteFilled, EditFilled, EyeFilled, PlusOutlined} from '@ant-design/icons';
+import {DeleteFilled, EditFilled, DownloadOutlined, PlusOutlined} from '@ant-design/icons';
 import {useHistory} from "react-router";
 import moment from 'moment';
 import EventImage from "../../Images/events.png"
+import { report } from "../Reports/Report";
 
 const EventAdmin = () =>{
 
@@ -99,6 +100,14 @@ const EventAdmin = () =>{
     history.push("addEvent");
   };
 
+  const headData = columns?.map((col) => col?.title);
+  const bodyData = data?.map((col) => [
+    col.title,
+    col.date,
+    col.venue,
+    col.description,
+  ]);
+
   const header = {
     paddingLeft: 10,
     fontWeight: "bold",
@@ -125,6 +134,18 @@ const EventAdmin = () =>{
                 <img className={"imageStyle"} src={EventImage} alt="EventsImage" />
             </div>
           </div>
+          <Button
+            onClick={() => report(headData, bodyData, 'Event Data')}
+            style={{
+              marginBottom: 10,
+              marginRight: 5,
+              display: "block",
+              marginLeft: "auto",
+            }}
+          >
+            <DownloadOutlined />
+            Download Events Report
+          </Button>
           <Table columns={columns} dataSource={data} />
           <Tooltip title="Create New Event">
             <Button

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { createNotice } from "../../actions/Notices";
 import "./Notices.css";
-import { DatePicker } from "antd";
 
 const AddNotice = () => {
   const dispatch = useDispatch();
