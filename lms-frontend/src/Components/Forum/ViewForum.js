@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { getDiscussions, removeDiscussion } from '../../actions/discussion';
-import { Table, Button, Tooltip, message, Space, Popconfirm, Skeleton } from 'antd';
-import {DeleteFilled, EditFilled, PlusOutlined} from '@ant-design/icons';
+import { Button, message, Row, Col, Input, Collapse } from 'antd';
+import { ClearOutlined, SearchOutlined } from '@ant-design/icons';
 import Card from './Card';
 import './ViewForum.css';
 import DiscussImage from '../../Images/discuss.png';
@@ -13,7 +13,12 @@ const ViewForum = () => {
   const history = useHistory();
 
   const [discussion, setDiscussion] = useState([]);
+  const [discussionFilter, setDiscussionFilter] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(["0"]);
+  const [searchModule, setSearchModule] = useState("");
+  
+  const { Panel } = Collapse;
 
   useEffect(() => {
     setLoading(true);
@@ -24,16 +29,11 @@ const ViewForum = () => {
   
   useEffect(() => {
     setDiscussion(discussionData);
+    setDiscussionFilter(discussionData);
     if (discussionData) {
       setLoading(false);
     }
   }, [discussionData]);
-
-  const data = discussion?.map((mod) => ({
-    key: mod._id,
-    topic: mod.topic,
-    question: mod.question,
-  }));
 
   const newDiscussion = () => {
     history.push("createDiscussion");
@@ -44,12 +44,27 @@ const ViewForum = () => {
       const res = await dispatch(removeDiscussion(id));
       if(res?.status === 200){
           setDiscussion(discussion.filter((mod) => mod._id !== id))
+          setDiscussionFilter(discussion.filter((mod) => mod._id !== id))
           message.success('Discussion Removed');
       }else {
           message.error('An Error Occurred');
       }
   }
 
+  const search = () => {
+    if (searchModule) {
+      let data = discussionFilter?.filter(dis => dis.modulename.name.includes(searchModule));
+      setOpen([]);
+      setDiscussionFilter(data);
+    } else {
+      setOpen([]);
+      setDiscussionFilter(discussion);
+    }
+  };
+
+  const clear = () => {
+    setSearchModule("");
+  };
 
                        
   return (
@@ -64,8 +79,45 @@ const ViewForum = () => {
             <img className={"imageStyle"} src={DiscussImage} alt="DiscussImage" />
         </div>
       </div>
+      <Collapse
+            style={{ marginBottom: 50 }}
+            activeKey={open}
+            onChange={() => setOpen(open === "" ? [] : ["0"])}
+          >
+            <Panel header="Search Forums Materials">
+              <Row>
+                <Col span={6} style={{ margin: "10px" }}>
+                  <Input
+                    placeholder="Module Code"
+                    value={searchModule}
+                    onChange={(e) => setSearchModule(e.target.value)}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col
+                  span={17}
+                  style={{ margin: "10px" }}
+                  onClick={() => clear()}
+                >
+                  <Button type="secondary" icon={<ClearOutlined />}>
+                    Clear All
+                  </Button>
+                </Col>
+                <Col span={6} style={{ margin: "10px" }}>
+                  <Button
+                    type="primary"
+                    icon={<SearchOutlined />}
+                    onClick={() => search()}
+                  >
+                    Search
+                  </Button>
+                </Col>
+              </Row>
+            </Panel>
+          </Collapse>
       <div className={"cardDivMain"}>
-        {discussion?.map((discuss) => (
+        {discussionFilter?.map((discuss) => (
             <div key={discuss._id} className={"cardDiv"}>
                 <Card discuss={discuss} deleteDis={deleteConfirm}  />
             </div>
