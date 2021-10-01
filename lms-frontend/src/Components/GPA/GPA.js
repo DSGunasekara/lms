@@ -47,16 +47,16 @@ function GPA({ user }) {
       noOfCredit += result.module.credit;
       switch (result.result) {
         case "A":
-          gradePoints += 4 * 4;
+          gradePoints += result.module.credit * 4;
           break;
         case "B":
-          gradePoints += 4 * 3;
+          gradePoints += result.module.credit * 3;
           break;
         case "C":
-          gradePoints += 4 * 2;
+          gradePoints += result.module.credit * 2;
           break;
         case "D":
-          gradePoints += 4 * 1;
+          gradePoints += result.module.credit * 1;
           break;
         case "E":
           gradePoints += 0;
