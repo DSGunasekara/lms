@@ -22,7 +22,7 @@ function Dashboard() {
     lineHeight: "100px",
     textAlign: "center",
     background: "#1890ff",
-    padding: "60px",
+    padding: "20px",
   };
 
   const contentStyle1 = {
@@ -31,7 +31,7 @@ function Dashboard() {
     lineHeight: "100px",
     textAlign: "center",
     background: "#ff0000",
-    padding: "60px",
+    padding: "20px",
     boxShadow: "1px 3px 5px #525252",
   };
 
@@ -92,6 +92,9 @@ function Dashboard() {
                   <div key={notice._id}>
                     <div style={contentStyle1}>
                       <h3 style={{ color: "white" }}>{notice.title}</h3>
+                      <h6 style={{ color: "white" }}>
+                        created on:{notice.createdOn.slice(0, 10)}
+                      </h6>
                       <h6 style={{ color: "white" }}>{notice.description}</h6>
                     </div>
                   </div>
@@ -105,6 +108,10 @@ function Dashboard() {
                   <div key={event._id}>
                     <div style={contentStyle}>
                       <h3 style={{ color: "white" }}>{event.title}</h3>
+                      <h6 style={{ color: "white" }}>venue:{event.venue}</h6>
+                      <h6 style={{ color: "white" }}>
+                        date:{event.date.slice(0, 10)}
+                      </h6>
                       <h6 style={{ color: "white" }}>{event.description}</h6>
                     </div>
                   </div>

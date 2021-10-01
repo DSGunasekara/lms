@@ -28,7 +28,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getUsers, deleteUser } from "../../actions/Users";
 import { report } from "../Reports/Report";
-import UserImage from '../../Images/user.png'
+import UserImage from "../../Images/user.png";
 
 function Users() {
   const history = useHistory();
@@ -153,6 +153,7 @@ function Users() {
   };
 
   const headData = columns?.map((col) => col?.title);
+  headData.pop();
   const bodyData = data?.map((col) => [
     col.regNumber,
     col.name,
@@ -230,10 +231,10 @@ function Users() {
         <>
           <div className={"headerDiv"}>
             <div className={"headerDescription"}>
-                <h3 className={"headerTitle"}>Users</h3>
+              <h3 className={"headerTitle"}>Users</h3>
             </div>
             <div className={"imageDiv"}>
-                <img className={"imageStyle"} src={UserImage} alt="UserImage" />
+              <img className={"imageStyle"} src={UserImage} alt="UserImage" />
             </div>
           </div>
           <Collapse
@@ -309,7 +310,7 @@ function Users() {
           </Collapse>
 
           <Button
-            onClick={() => report(headData, bodyData, 'User Data')}
+            onClick={() => report(headData, bodyData, "User Data")}
             style={{
               marginBottom: 10,
               marginRight: 5,
@@ -329,7 +330,7 @@ function Users() {
               size="large"
               className="fabBtn"
               onClick={handleCreateUser}
-              style={{position: 'fixed'}}
+              style={{ position: "fixed" }}
             />
           </Tooltip>
         </>

@@ -14,7 +14,7 @@ import {
 
 import "./todoList.css";
 import Popup from "../Common/Popup";
-import TodoImage from "../../Images/todo.png"
+import TodoImage from "../../Images/todo.png";
 
 let option_filter = [];
 
@@ -193,10 +193,10 @@ const TodoList = () => {
     <div>
       <div className={"headerDiv"}>
         <div className={"headerDescription"}>
-            <h3 className={"headerTitle"}>Todo List</h3>
+          <h3 className={"headerTitle"}>Todo List</h3>
         </div>
         <div className={"imageDiv"}>
-            <img className={"imageStyle"} src={TodoImage} alt="TodoImage" />
+          <img className={"imageStyle"} src={TodoImage} alt="TodoImage" />
         </div>
       </div>
       <div className={"todo"}>
@@ -261,11 +261,6 @@ const TodoList = () => {
             );
           })}
         </DragDropContext>
-        <div className="save-btn-div">
-          <button className="save-btn" onClick={save}>
-            Save
-          </button>
-        </div>
         <Tooltip title="Create New Module">
           <Button
             type="primary"
@@ -291,8 +286,12 @@ const TodoList = () => {
           </div>
         </Popup>
       </div>
+      <div className="save-btn-div">
+        <button className="save-btn" onClick={save}>
+          Save
+        </button>
+      </div>
     </div>
-    
   );
 };
 

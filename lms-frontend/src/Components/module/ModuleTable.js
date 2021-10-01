@@ -228,6 +228,7 @@ const ModuleTable = () => {
   const { Panel } = Collapse;
 
   const headData = columns?.map((col) => col?.title);
+  headData.pop();
   const bodyData = data?.map((col) => [
     col.name,
     col.module_code,
@@ -326,10 +327,14 @@ const ModuleTable = () => {
         <>
           <div className={"headerDiv"}>
             <div className={"headerDescription"}>
-                <h3 className={"headerTitle"}>Modules</h3>
+              <h3 className={"headerTitle"}>Modules</h3>
             </div>
             <div className={"imageDiv"}>
-                <img className={"imageStyle"} src={ModulesImage} alt="ModulesImage" />
+              <img
+                className={"imageStyle"}
+                src={ModulesImage}
+                alt="ModulesImage"
+              />
             </div>
           </div>
 
@@ -401,7 +406,7 @@ const ModuleTable = () => {
           </Collapse>
 
           <Button
-            onClick={() => report(headData, bodyData, 'Module Data')}
+            onClick={() => report(headData, bodyData, "Module Data")}
             style={{
               marginBottom: 10,
               marginRight: 5,

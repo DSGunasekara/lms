@@ -1,40 +1,52 @@
-import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import { getEvents, removeEvent} from "../../actions/Events";
-import 'antd/dist/antd.css';
-import {Table, Space, Button, Tooltip, message, Popconfirm, Skeleton} from 'antd';
-import {DeleteFilled, EditFilled, DownloadOutlined, PlusOutlined} from '@ant-design/icons';
-import {useHistory} from "react-router";
-import moment from 'moment';
-import EventImage from "../../Images/events.png"
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getEvents, removeEvent } from "../../actions/Events";
+import "antd/dist/antd.css";
+import {
+  Table,
+  Space,
+  Button,
+  Tooltip,
+  message,
+  Popconfirm,
+  Skeleton,
+} from "antd";
+import {
+  DeleteFilled,
+  EditFilled,
+  DownloadOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
+import { useHistory } from "react-router";
+import moment from "moment";
+import EventImage from "../../Images/events.png";
 import { report } from "../Reports/Report";
 
-const EventAdmin = () =>{
+const EventAdmin = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-    const dispatch = useDispatch();
-    const history = useHistory();
+  const [event, setEvent] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-    const [event, setEvent] = useState([]);
-    const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(true);
+    dispatch(getEvents());
+  }, [dispatch]);
 
-    useEffect(() =>{
-        setLoading(true)
-        dispatch(getEvents());
-    }, [dispatch])
+  const eventData = useSelector((state) => state.EventReducer.events);
 
-    const eventData = useSelector( (state) => state.EventReducer.events);
-
-    useEffect( ()=>{
-        setEvent(eventData)
-        if (eventData){
-            setLoading(false)
-        }
-    }, [eventData])
-
-    const editConfirm = (e) =>{
-        history.push(`editEvent/${e.key}`)
+  useEffect(() => {
+    setEvent(eventData);
+    if (eventData) {
+      setLoading(false);
     }
-    
+  }, [eventData]);
+
+  const editConfirm = (e) => {
+    history.push(`editEvent/${e.key}`);
+  };
+
   const deleteConfirm = async (e) => {
     const res = await dispatch(removeEvent(e.key));
     if (res?.status === 200) {
@@ -101,6 +113,7 @@ const EventAdmin = () =>{
   };
 
   const headData = columns?.map((col) => col?.title);
+  headData.pop();
   const bodyData = data?.map((col) => [
     col.title,
     col.date,
@@ -128,14 +141,18 @@ const EventAdmin = () =>{
         <>
           <div className={"headerDiv"}>
             <div className={"headerDescription"}>
-                <h3 className={"headerTitle"}>Events</h3>
+              <h3 className={"headerTitle"}>Events</h3>
             </div>
             <div className={"imageDiv"}>
-                <img className={"imageStyle"} src={EventImage} alt="EventsImage" />
+              <img
+                className={"imageStyle"}
+                src={EventImage}
+                alt="EventsImage"
+              />
             </div>
           </div>
           <Button
-            onClick={() => report(headData, bodyData, 'Event Data')}
+            onClick={() => report(headData, bodyData, "Event Data")}
             style={{
               marginBottom: 10,
               marginRight: 5,
@@ -154,7 +171,7 @@ const EventAdmin = () =>{
               icon={<PlusOutlined />}
               size="large"
               className="fabBtn"
-              style={{position: 'fixed'}}
+              style={{ position: "fixed" }}
               onClick={newEvent}
             />
           </Tooltip>

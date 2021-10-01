@@ -157,7 +157,7 @@ function NavBar() {
       }}
     >
       <div className="logo" style={logoDiv}>
-        <Link to="/">
+        <Link to="/dashboard">
           <img src={Logo} style={logo} alt="Logo" />
         </Link>
       </div>

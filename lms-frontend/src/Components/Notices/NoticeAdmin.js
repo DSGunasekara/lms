@@ -9,12 +9,17 @@ import {
   Popconfirm,
   Skeleton,
 } from "antd";
-import { DeleteFilled, EditFilled, PlusOutlined, DownloadOutlined } from "@ant-design/icons";
+import {
+  DeleteFilled,
+  EditFilled,
+  PlusOutlined,
+  DownloadOutlined,
+} from "@ant-design/icons";
 import { useHistory } from "react-router";
 import { getNotices, removeNotice } from "../../actions/Notices";
 import moment from "moment";
 import "antd/dist/antd.css";
-import NoticeImage from '../../Images/notice.png';
+import NoticeImage from "../../Images/notice.png";
 import { report } from "../Reports/Report";
 
 const NoticeAdmin = () => {
@@ -109,6 +114,7 @@ const NoticeAdmin = () => {
   };
 
   const headData = columns?.map((col) => col?.title);
+  headData.pop();
   const bodyData = data?.map((col) => [
     col.name,
     col.createdOn,
@@ -136,14 +142,18 @@ const NoticeAdmin = () => {
         <>
           <div className={"headerDiv"}>
             <div className={"headerDescription"}>
-                <h3 className={"headerTitle"}>Notices</h3>
+              <h3 className={"headerTitle"}>Notices</h3>
             </div>
             <div className={"imageDiv"}>
-                <img className={"imageStyle"} src={NoticeImage} alt="NoticeImage" />
+              <img
+                className={"imageStyle"}
+                src={NoticeImage}
+                alt="NoticeImage"
+              />
             </div>
           </div>
           <Button
-            onClick={() => report(headData, bodyData, 'Notice Data')}
+            onClick={() => report(headData, bodyData, "Notice Data")}
             style={{
               marginBottom: 10,
               marginRight: 5,
@@ -162,7 +172,7 @@ const NoticeAdmin = () => {
               icon={<PlusOutlined />}
               size="large"
               className="fabBtn"
-              style={{position: 'fixed'}}
+              style={{ position: "fixed" }}
               onClick={newNotice}
             />
           </Tooltip>
