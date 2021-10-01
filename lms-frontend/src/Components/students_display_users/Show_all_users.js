@@ -23,12 +23,10 @@ export const Show_all_users = () => {
   }, [dispatch]);
 
   const academicData = useSelector((state) => state.UserReducer.users);
-  console.log("all users", academicData);
   option_academic = academicData?.filter((user) => {
     return user.role === "Lab Instructor" || user.role === "Lecturer";
   });
 
-  console.log("filter user", option_academic);
 
   useEffect(() => {
     setAcademic(option_academic);
@@ -61,8 +59,6 @@ export const Show_all_users = () => {
 };
 
 const Card = ({ user }) => {
-  console.log(user);
-
   return (
     <div className={"col-sm-3"}>
       <div className="card">

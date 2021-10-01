@@ -16,8 +16,6 @@ export const getLectures = () => async (dispatch) =>{
     try{
         const {data} = await api.fetchLectures();
         dispatch ({type: FETCH_LECTURE, payload: data});
-        console.log(data);
-
     }catch (error){
         console.log("getting lecture error" + error);
     }

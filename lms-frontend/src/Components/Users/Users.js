@@ -309,7 +309,7 @@ function Users() {
           </Collapse>
 
           <Button
-            onClick={() => report(headData, bodyData)}
+            onClick={() => report(headData, bodyData, 'User Data')}
             style={{
               marginBottom: 10,
               marginRight: 5,
@@ -318,7 +318,7 @@ function Users() {
             }}
           >
             <DownloadOutlined />
-            Download user Report ss
+            Download user Report
           </Button>
           <Table columns={columns} dataSource={data} />
           <Tooltip title="Create New User">

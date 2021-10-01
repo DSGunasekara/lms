@@ -48,21 +48,16 @@ const ViewDiscussion = () => {
 
     const handleReply = () => {
         setIsReply(true);
-        console.log(discussion)
     }
 
     const addReply = async(data) => {
         const res = await dispatch(updateSingleDiscussion({id: id, ...discussion, replies:[...discussion.replies, {text:data, postedBy: user?._id}]}))
         fetchDiscussion(id);
         setIsReply(false)
-        console.log(res);
     }
 
     const handleDelete = async (e) => {
-        console.log(e)
-        // const res = await dispatch(removeDiscussion(e._id));
         const reply = discussion?.replies.filter(reply => reply._id !== e._id)
-        // console.log(temp);
         const res = await dispatch(updateSingleDiscussion({id: id, ...discussion, replies:[...reply]}))
         fetchDiscussion(id);
     }

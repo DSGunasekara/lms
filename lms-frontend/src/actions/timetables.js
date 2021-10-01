@@ -4,7 +4,6 @@ import * as api from '../api/index.js';
 export const uploadTimetable = (timetable) => async (dispatch) => {
     try{
         const res = await api.uploadTimetable(timetable);
-        console.log(timetable);
         return{...res}
     }catch(error){
         console.log(error);
@@ -16,7 +15,6 @@ export const getTimetables = () => async (dispatch) =>{
     try{
         const {data} = await api.fetchTimetables();
         dispatch ({type: FETCH_TIMETABLE, payload: data});
-        console.log(data);
 
     }catch (error){
         console.log("getting timetable error" + error);

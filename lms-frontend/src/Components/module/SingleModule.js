@@ -28,7 +28,6 @@ const SingleModule = () => {
     const res = await dispatch(getSingleModule(ModId));
     setModule(res);
     setLoading(false);
-    console.log("module", res);
   };
 
   useEffect(() => {
@@ -158,7 +157,6 @@ const SingleModule = () => {
 export default SingleModule;
 
 const Card = ({ data, index }) => {
-  console.log("card", data);
   return (
     <div>
       <h4>Week: {index + 1}</h4>

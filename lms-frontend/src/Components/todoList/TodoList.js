@@ -48,7 +48,6 @@ const TodoList = () => {
       );
     });
 
-    console.log("before filter", option_filter);
     if (option_filter?.length > 0) {
       const todoFilter = {
         todo: {
@@ -64,7 +63,6 @@ const TodoList = () => {
           items: option_filter[0]?.done?.items,
         },
       };
-      console.log(todoFilter);
       setTodoId(option_filter[0]?._id);
       setState(todoFilter);
     }
@@ -145,7 +143,6 @@ const TodoList = () => {
         ...todo,
         _id: todoId,
       };
-      console.log(todo);
       // Patch
       const res = await dispatch(updateTodo(todo));
       if (res.status === 200) {
@@ -173,16 +170,11 @@ const TodoList = () => {
   };
 
   const deleteConfirm = async (e) => {
-    // setTodoId(state?.filter((mod) => mod._id !== e.key));
-    console.log(state);
     const todos = state?.todo?.items?.filter((todo) => todo.id !== e);
     const inProgress = state?.in_progress?.items?.filter(
       (todo) => todo.id !== e
     );
     const done = state?.done?.items?.filter((todo) => todo.id !== e);
-    console.log(todos);
-    console.log(inProgress);
-    console.log(done);
     setState({
       todo: {
         items: todos,
@@ -194,9 +186,6 @@ const TodoList = () => {
         items: done,
       },
     });
-    // console.log(e);
-    // setFilterTodo(state?.filter((todo) => todo._id !== e));
-    // save();
   };
 
   return (

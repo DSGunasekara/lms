@@ -49,7 +49,6 @@ export const removeNotice = (id) => async (dispatch) =>{
 //update single notice
 export const updateSingleNotice = (notice) => async (dispatch) =>{
     try {
-        console.log(notice);
         const res = await api.updateNotice(notice);
         dispatch(getNotices())
         return res;

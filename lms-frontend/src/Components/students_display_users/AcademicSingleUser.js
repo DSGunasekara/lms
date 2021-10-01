@@ -19,7 +19,6 @@ const AcademicSingleUser = () => {
   const fetchUser = async (userId) => {
     setLoading(true);
     const res = await dispatch(getUser(userId));
-    console.log(res);
     setSingleUser(res);
     setLoading(false);
   };

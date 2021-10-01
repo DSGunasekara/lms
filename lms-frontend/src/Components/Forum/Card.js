@@ -14,7 +14,6 @@ const CardItem = ({ discuss , deleteDis }) => {
     const dispatch = useDispatch();
     
     const singleDiscussionView = (e) => {
-        console.log(e);
         history.push(`viewDiscussion/${e._id}`)
     }
 

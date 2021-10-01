@@ -410,7 +410,7 @@ const ModuleTable = () => {
             }}
           >
             <DownloadOutlined />
-            Download Module Report ss
+            Download Module Report
           </Button>
 
           <Table columns={columns} dataSource={data} />

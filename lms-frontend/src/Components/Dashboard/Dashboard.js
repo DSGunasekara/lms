@@ -39,7 +39,6 @@ function Dashboard() {
   const [user, setUser] = useState([]);
   const [loading, setLoading] = useState(false);
   const noticeData = useSelector((state) => state.NoticeReducer.notices);
-  console.log(noticeData);
   const eventData = useSelector((state) => state.EventReducer.events);
 
   useEffect(() => {
