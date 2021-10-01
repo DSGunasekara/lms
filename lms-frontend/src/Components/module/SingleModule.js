@@ -6,7 +6,6 @@ import { getSingleModule } from "../../actions/Modules";
 import { getLectures } from "../../actions/lectures";
 
 import { Layout, Divider, Skeleton, Tooltip, Button } from "antd";
-import { SettingOutlined } from "@ant-design/icons";
 
 let lectureFilter = [];
 
@@ -161,7 +160,12 @@ const Card = ({ data, index }) => {
     <div>
       <h4>Week: {index + 1}</h4>
       {data?.map((lec) => (
-        <h6>{lec?.title}</h6>
+        <div  key={lec._id}>
+            <span>{lec?.type}</span><h6>{lec?.title}</h6>
+          <Button onClick={() => window.open(`http://localhost:5000/${lec?.filePath}`)}>
+            Download
+          </Button>
+        </div>
       ))}
       <hr></hr>
     </div>
