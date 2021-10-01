@@ -10,7 +10,8 @@
 
 .droppable-col {
   width: 110%;
-  background-color: rgb(68, 96, 128);
+  border-style: solid;
+  border-color: rgb(68, 96, 128);
   padding: 10px 10px 0 10px;
   border-radius: 7px;
   display: flex;
