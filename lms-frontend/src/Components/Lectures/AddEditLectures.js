@@ -108,140 +108,162 @@ function AddEditLecture() {
         }
       },
     };
+
+    const MainDiv = {
+      width: "70%",
+      border: "1px solid #98d1d9",
+      marginTop: "35px",
+      borderRadius: "10px",
+    }
+
+    const FormDiv = {
+      display: "flex",
+      justifyContent: "center"
+    }
     
+    const FormStyles = {
+      width: "80%"
+    }
+
+    const FormCenterDiv = {
+      display:"flex",
+      flexDirection: "column",
+      alignItems: "center"
+    }
+
   return (
     <>
-    { loading ? 
-      <>
-      <Skeleton active /> 
-      <Skeleton active /> 
-      <Skeleton active /> 
-      <Skeleton active /> 
-    </>
-    :
-    <div>
-      <br />
-      <div style={{margin: 'auto', width:'700px', border: '2px solid #9fd1ff', borderRadius: '10px', padding: '30px flex', alignContent: 'space-around'}}>
-      <br />
-      <div className="center">
-      <div style={{width:'400px', margin: 'auto' }}>
-          <h2 style={{textAlign: 'center', color: '#1890ff'}}>{id ? 'Update' : 'Upload'} Lecture</h2>
-          <Form
-            layout="vertical"
-            form={form}
-            name="register"
-            onFinish={onFinish}
-            scrollToFirstError
-          >
-            <Form.Item
-              name="title"
-              label="Title"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input a Title!',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              name="type"
-              label="Type"
-              rules={[
-                 {
-                  required: true,
-                  message: 'Please select the Type',
-                },
-              ]}
-            > 
-               <Select style={{ width: '100%' }}>
-                  <Option value='Lecture'>Lecture</Option>
-                  <Option value='Labs'>Labs</Option>
-                  <Option value='Tutorial'>Tutorial</Option>
-               </Select>
-            </Form.Item>
-            <Form.Item
-              name="module_code"
-              label="Module Code"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please select a Module',
-                },
-              ]}
-            >
-              <Select style={{ width: '100%' }}>
-                {children}
-              </Select>
-            </Form.Item>
-              <Form.Item
-                name="week"
-                label="Week"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input a week!',
-                  },
-                ]}
+      { loading ? 
+        <>
+        <Skeleton active /> 
+        <Skeleton active /> 
+        <Skeleton active /> 
+        <Skeleton active /> 
+      </>
+      :
+      <div style={FormDiv}>
+        <div style={MainDiv}>
+          <br />
+          <div>
+            <div style={FormCenterDiv}>
+              <h2 style={{textAlign: 'center', color: '#1890ff'}}>{id ? 'Update' : 'Upload'} Lecture</h2>
+              <Form
+                layout="vertical"
+                form={form}
+                name="register"
+                onFinish={onFinish}
+                scrollToFirstError
+                style={FormStyles}
               >
-                <Input
-                  style={{
-                    width: '100%',
-                  }}
-                />
-              </Form.Item>
-              <Form.Item
-                name="description"
-                label="Description"
-              >
-                <TextArea
-                  rows={4}
-                />
-              </Form.Item>
-              {(id && !filePath) || !id ?
-                <Form.Item>
-                    <Dragger {...props}>
-                        <p className="ant-upload-drag-icon">
-                        <InboxOutlined />
-                        </p>
-                        <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                        <p className="ant-upload-hint">
-                        Support for a single uploads only.
-                        </p>
-                    </Dragger>
-                </Form.Item>
-              :
-              <>
-                <h6>{filePath.slice(8)}</h6>
-                <Popconfirm
-                title="Are you sure to delete this user?"
-                onConfirm={() => setFilePath('')}
-                okText="Yes"
-                cancelText="No"
+                <Form.Item
+                  name="title"
+                  label="Title"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input a Title!',
+                    },
+                  ]}
                 >
-                      <Tooltip placement="left" title="Delete Lecture File">
-                        <Button icon={<DeleteOutlined />} style={{marginRight: '5px'}}/>
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name="type"
+                  label="Type"
+                  rules={[
+                      {
+                      required: true,
+                      message: 'Please select the Type',
+                    },
+                  ]}
+                > 
+                    <Select style={{ width: '100%' }}>
+                      <Option value='Lecture'>Lecture</Option>
+                      <Option value='Labs'>Labs</Option>
+                      <Option value='Tutorial'>Tutorial</Option>
+                    </Select>
+                </Form.Item>
+                <Form.Item
+                  name="module_code"
+                  label="Module Code"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please select a Module',
+                    },
+                  ]}
+                >
+                  <Select style={{ width: '100%' }}>
+                    {children}
+                  </Select>
+                </Form.Item>
+                  <Form.Item
+                    name="week"
+                    label="Week"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please input a week!',
+                      },
+                    ]}
+                  >
+                    <Input
+                      style={{
+                        width: '100%',
+                      }}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    name="description"
+                    label="Description"
+                  >
+                    <TextArea
+                      rows={4}
+                    />
+                  </Form.Item>
+                  {(id && !filePath) || !id ?
+                    <Form.Item>
+                        <Dragger {...props}>
+                            <p className="ant-upload-drag-icon">
+                            <InboxOutlined />
+                            </p>
+                            <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                            <p className="ant-upload-hint">
+                            Support for a single uploads only.
+                            </p>
+                        </Dragger>
+                    </Form.Item>
+                  :
+                  <>
+                    <h6>{filePath.slice(8)}</h6>
+                    <Popconfirm
+                    title="Are you sure to delete this user?"
+                    onConfirm={() => setFilePath('')}
+                    okText="Yes"
+                    cancelText="No"
+                    >
+                          <Tooltip placement="left" title="Delete Lecture File">
+                            <Button icon={<DeleteOutlined />} style={{marginRight: '5px'}}/>
+                          </Tooltip>
+                      </Popconfirm>
+                      <Tooltip placement="right" title="Download Lecture File">
+                        <Button icon={<DownloadOutlined />} onClick={() => window.open(`http://localhost:5000/${filePath}`)}/>
                       </Tooltip>
-                  </Popconfirm>
-                  <Tooltip placement="right" title="Download Lecture File">
-                    <Button icon={<DownloadOutlined />} onClick={() => window.open(`http://localhost:5000/${filePath}`)}/>
-                  </Tooltip>
-                </>
-              }
+                    </>
+                  }
 
-              <Form.Item {...tailFormItemLayout}>
-                <div className="center">
-                  <Button type="primary" htmlType="submit" loading={loadingBtn} style={{padding: '0 175px'}}>
-                      Upload
-                  </Button>
-                </div>
-              </Form.Item>
-            </Form>   
+                  <Form.Item {...tailFormItemLayout}>
+                    <div className="center">
+                      <Button type="primary" htmlType="submit" loading={loadingBtn} style={{padding: '0 175px'}}>
+                          Upload
+                      </Button>
+                    </div>
+                  </Form.Item>
+              </Form>   
             </div> 
-      </div>
-      </div> 
-      <br /> 
+          </div>
+        </div> 
+        <br /> 
       </div>
     }
     </>

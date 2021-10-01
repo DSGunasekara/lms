@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import "./CardStyles.css";
 
 import { Skeleton } from "antd";
+import StaffImage from "../../Images/staff.png"
 
 let option_academic = [];
 
@@ -47,7 +48,14 @@ export const Show_all_users = () => {
       ) : (
         <>
           <div class="row container-lg mx-auto mt-5 px-0">
-            <h1 className="display-5 text-center mb-5">Academic Staff</h1>
+            <div className={"headerDiv"}>
+              <div className={"headerDescription"}>
+                  <h3 className={"headerTitle"}>Academic Staff</h3>
+              </div>
+              <div className={"imageDiv"}>
+                  <img className={"imageStyle"} src={StaffImage} alt="StaffImage" />
+              </div>
+            </div>
             {academic?.map((user) => {
               return <Card user={user} key={user._id} />;
             })}

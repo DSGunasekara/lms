@@ -14,6 +14,7 @@ import {
 
 import "./todoList.css";
 import Popup from "../Common/Popup";
+import TodoImage from "../../Images/todo.png"
 
 let option_filter = [];
 
@@ -189,98 +190,109 @@ const TodoList = () => {
   };
 
   return (
-    <div className={"todo"}>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        {_.map(state, (data, key) => {
-          return (
-            <div key={key} className={"column"}>
-              <h3>{data.title}</h3>
-              <Droppable droppableId={key}>
-                {(provided, snapshot) => {
-                  return (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.droppableProps}
-                      className={"droppable-col"}
-                    >
-                      {data.items?.map((el, index) => {
-                        return (
-                          <Draggable
-                            key={el.id}
-                            index={index}
-                            draggableId={el.id}
-                          >
-                            {(provided, snapshot) => {
-                              return (
-                                <div
-                                  className={`item ${
-                                    snapshot.isDragging && "dragging"
-                                  }`}
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                >
-                                  <div className="delete">
-                                    {el.name}
-                                    <div className="deleteIcon">
-                                      <Popconfirm
-                                        className="deleteIcon"
-                                        title="Are you sure to delete this Module?"
-                                        onConfirm={() => deleteConfirm(el.id)}
-                                        okText="Yes"
-                                        cancelText="No"
-                                      >
-                                        <Tooltip title="Delete Module">
-                                          <DeleteFilled />
-                                        </Tooltip>
-                                      </Popconfirm>
+    <div>
+      <div className={"headerDiv"}>
+        <div className={"headerDescription"}>
+            <h3 className={"headerTitle"}>Todo List</h3>
+        </div>
+        <div className={"imageDiv"}>
+            <img className={"imageStyle"} src={TodoImage} alt="TodoImage" />
+        </div>
+      </div>
+      <div className={"todo"}>
+        <DragDropContext onDragEnd={handleDragEnd}>
+          {_.map(state, (data, key) => {
+            return (
+              <div key={key} className={"column"}>
+                <h3>{data.title}</h3>
+                <Droppable droppableId={key}>
+                  {(provided, snapshot) => {
+                    return (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                        className={"droppable-col"}
+                      >
+                        {data.items?.map((el, index) => {
+                          return (
+                            <Draggable
+                              key={el.id}
+                              index={index}
+                              draggableId={el.id}
+                            >
+                              {(provided, snapshot) => {
+                                return (
+                                  <div
+                                    className={`item ${
+                                      snapshot.isDragging && "dragging"
+                                    }`}
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                  >
+                                    <div className="delete">
+                                      {el.name}
+                                      <div className="deleteIcon">
+                                        <Popconfirm
+                                          className="deleteIcon"
+                                          title="Are you sure to delete this Module?"
+                                          onConfirm={() => deleteConfirm(el.id)}
+                                          okText="Yes"
+                                          cancelText="No"
+                                        >
+                                          <Tooltip title="Delete Module">
+                                            <DeleteFilled />
+                                          </Tooltip>
+                                        </Popconfirm>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                              );
-                            }}
-                          </Draggable>
-                        );
-                      })}
-                      {provided.placeholder}
-                    </div>
-                  );
-                }}
-              </Droppable>
-            </div>
-          );
-        })}
-      </DragDropContext>
-      <div className="save-btn-div">
-        <button className="save-btn" onClick={save}>
-          Save
-        </button>
-      </div>
-      <Tooltip title="Create New Module">
-        <Button
-          type="primary"
-          shape="circle"
-          icon={<PlusOutlined />}
-          size="large"
-          className="fabBtn"
-          style={{ position: "fixed" }}
-          onClick={() => setButtonPopup(true)}
-        />
-      </Tooltip>
-      <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
-        <div>
-          <Input
-            className="add-todo"
-            type="text"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-          />
-          <Button type="primary" onClick={addItem}>
-            Add
-          </Button>
+                                );
+                              }}
+                            </Draggable>
+                          );
+                        })}
+                        {provided.placeholder}
+                      </div>
+                    );
+                  }}
+                </Droppable>
+              </div>
+            );
+          })}
+        </DragDropContext>
+        <div className="save-btn-div">
+          <button className="save-btn" onClick={save}>
+            Save
+          </button>
         </div>
-      </Popup>
+        <Tooltip title="Create New Module">
+          <Button
+            type="primary"
+            shape="circle"
+            icon={<PlusOutlined />}
+            size="large"
+            className="fabBtn"
+            style={{ position: "fixed" }}
+            onClick={() => setButtonPopup(true)}
+          />
+        </Tooltip>
+        <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+          <div>
+            <Input
+              className="add-todo"
+              type="text"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+            />
+            <Button type="primary" onClick={addItem}>
+              Add
+            </Button>
+          </div>
+        </Popup>
+      </div>
     </div>
+    
   );
 };
 
