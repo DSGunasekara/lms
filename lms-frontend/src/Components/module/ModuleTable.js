@@ -419,6 +419,8 @@ const ModuleTable = () => {
           </Button>
 
           <Table columns={columns} dataSource={data} />
+          {user?.role === ROLES.ADMIN ?
+          
           <Tooltip title="Create New Module">
             <Button
               type="primary"
@@ -430,6 +432,7 @@ const ModuleTable = () => {
               onClick={newModule}
             />
           </Tooltip>
+          : ''}
         </>
       )}
     </div>

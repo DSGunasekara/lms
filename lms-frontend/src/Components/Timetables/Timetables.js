@@ -163,6 +163,8 @@ export default function Timetables() {
             </div>
           </div>
           <Table columns={columns} dataSource={data} />
+            {user?.role === ROLES.ADMIN?
+            
           <Tooltip title="Add Timetable">
             <Button
               type="primary"
@@ -174,6 +176,7 @@ export default function Timetables() {
               onClick={newTimetable}
             />
           </Tooltip>
+          : '' }
         </>
       )}
     </div>
