@@ -2,30 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getLectures, deleteLecture } from "../../actions/lectures";
 import "antd/dist/antd.css";
-import {
-  Table,
-  Space,
-  Button,
-  Tooltip,
-  message,
-  Popconfirm,
-  Skeleton,
-  Collapse,
-  Input,
-  Row,
-  Col,
-  Select,
-} from "antd";
-import {
-  DeleteFilled,
-  EditFilled,
-  PlusOutlined,
-  DownloadOutlined,
-  ClearOutlined,
-  SearchOutlined,
-} from "@ant-design/icons";
+import { Table, Space, Button, Tooltip, message, Popconfirm, Skeleton, Collapse, Input, Row, Col, Select } from "antd";
+import { DeleteFilled, EditFilled, PlusOutlined, DownloadOutlined, ClearOutlined, SearchOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router";
-import LectureImage from "../../Images/lecturess.png"
+import LectureImage from "../../Images/lecturess.png";
 import { report } from "../Reports/Report";
 
 export default function Lectures() {
@@ -106,28 +86,19 @@ export default function Lectures() {
       key: "action",
       render: (text, record) => (
         <Space size="middle">
-            <>
-              <Popconfirm
-                title="Are you sure to delete this lecture?"
-                onConfirm={() => deleteConfirm(record)}
-                okText="Yes"
-                cancelText="No"
-              >
-                <Tooltip placement="bottom" title="Delete Lecture">
-                  <DeleteFilled />
-                </Tooltip>
-              </Popconfirm>
-              <Tooltip placement="bottom" title="Edit Lecture">
-                <EditFilled onClick={() => editConfirm(record)} />
+          <>
+            <Popconfirm title="Are you sure to delete this lecture?" onConfirm={() => deleteConfirm(record)} okText="Yes" cancelText="No">
+              <Tooltip placement="bottom" title="Delete Lecture">
+                <DeleteFilled />
               </Tooltip>
-              <Tooltip placement="bottom" title="Download Lecture">
-                <DownloadOutlined
-                  onClick={() =>
-                    window.open(`http://localhost:5000/${record.filePath}`)
-                  }
-                />
-              </Tooltip>
-            </>
+            </Popconfirm>
+            <Tooltip placement="bottom" title="Edit Lecture">
+              <EditFilled onClick={() => editConfirm(record)} />
+            </Tooltip>
+            <Tooltip placement="bottom" title="Download Lecture">
+              <DownloadOutlined onClick={() => window.open(`http://localhost:5000/${record.filePath}`)} />
+            </Tooltip>
+          </>
         </Space>
       ),
     },
@@ -148,15 +119,8 @@ export default function Lectures() {
   };
 
   const headData = columns?.map((col) => col?.title);
-  headData.pop()
-  const bodyData = data?.map((col) => [
-    col.name,
-    col.title,
-    col.type,
-    col.module_code,
-    col.week,
-    col.description,
-  ]);
+  headData.pop();
+  const bodyData = data?.map((col) => [col.title, col.type, col.module_code, col.week, col.description]);
 
   const header = {
     paddingLeft: 10,
@@ -185,15 +149,11 @@ export default function Lectures() {
       }
 
       function searchFun(module) {
-        return Object.keys(this).every((key) =>
-          module[key].toLowerCase().includes(this[key].toLowerCase())
-        );
+        return Object.keys(this).every((key) => module[key].toLowerCase().includes(this[key].toLowerCase()));
       }
 
       function searchTypeFun(type) {
-        return Object.keys(this).every(
-          (key) => type[key] === this[key]
-        );
+        return Object.keys(this).every((key) => type[key] === this[key]);
       }
 
       let data = lecture?.filter(searchFun, query);
@@ -223,32 +183,20 @@ export default function Lectures() {
         <>
           <div className={"headerDiv"}>
             <div className={"headerDescription"}>
-                <h3 className={"headerTitle"}>Lectures</h3>
+              <h3 className={"headerTitle"}>Lectures</h3>
             </div>
             <div className={"imageDiv"}>
-                <img className={"imageStyle"} src={LectureImage} alt="LecturesImage" />
+              <img className={"imageStyle"} src={LectureImage} alt="LecturesImage" />
             </div>
           </div>
-          <Collapse
-            style={{ marginBottom: 50 }}
-            activeKey={open}
-            onChange={() => setOpen(open === "" ? [] : ["0"])}
-          >
+          <Collapse style={{ marginBottom: 50 }} activeKey={open} onChange={() => setOpen(open === "" ? [] : ["0"])}>
             <Panel header="Search Lecture Materials">
               <Row>
                 <Col span={6} style={{ margin: "10px" }}>
-                  <Input
-                    placeholder="Module Code"
-                    value={searchModule}
-                    onChange={(e) => setSearchModule(e.target.value)}
-                  />
+                  <Input placeholder="Module Code" value={searchModule} onChange={(e) => setSearchModule(e.target.value)} />
                 </Col>
                 <Col span={6} style={{ margin: "10px" }}>
-                  <Select
-                    value={searchType}
-                    style={{ width: "100%" }}
-                    onChange={(e) => setSearchType(e)}
-                  >
+                  <Select value={searchType} style={{ width: "100%" }} onChange={(e) => setSearchType(e)}>
                     <Option value="">All</Option>
                     <Option value="Lecture">Lectures</Option>
                     <Option value="Labs">Labs</Option>
@@ -257,21 +205,13 @@ export default function Lectures() {
                 </Col>
               </Row>
               <Row>
-                <Col
-                  span={17}
-                  style={{ margin: "10px" }}
-                  onClick={() => clear()}
-                >
+                <Col span={17} style={{ margin: "10px" }} onClick={() => clear()}>
                   <Button type="secondary" icon={<ClearOutlined />}>
                     Clear All
                   </Button>
                 </Col>
                 <Col span={6} style={{ margin: "10px" }}>
-                  <Button
-                    type="primary"
-                    icon={<SearchOutlined />}
-                    onClick={() => search()}
-                  >
+                  <Button type="primary" icon={<SearchOutlined />} onClick={() => search()}>
                     Search
                   </Button>
                 </Col>
@@ -279,7 +219,7 @@ export default function Lectures() {
             </Panel>
           </Collapse>
           <Button
-            onClick={() => report(headData, bodyData, 'Lecture Data')}
+            onClick={() => report(headData, bodyData, "Lecture Data")}
             style={{
               marginBottom: 10,
               marginRight: 5,
@@ -292,15 +232,7 @@ export default function Lectures() {
           </Button>
           <Table columns={columns} dataSource={data} />
           <Tooltip title="Add Lecture">
-            <Button
-              type="primary"
-              shape="circle"
-              icon={<PlusOutlined />}
-              size="large"
-              className="fabBtn"
-              style={{position: 'fixed'}}
-              onClick={newLecture}
-            />
+            <Button type="primary" shape="circle" icon={<PlusOutlined />} size="large" className="fabBtn" style={{ position: "fixed" }} onClick={newLecture} />
           </Tooltip>
         </>
       )}
