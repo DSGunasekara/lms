@@ -92,7 +92,7 @@ export default function Timetables() {
       key: "action",
       render: (text, record) => (
         <Space size="middle">
-          {user?.role === ROLES.ADMIN ? (
+          {user?.role !== ROLES.STUDENT ? (
             <>
               <Popconfirm
                 title="Are you sure to delete this timetable?"
@@ -163,7 +163,7 @@ export default function Timetables() {
             </div>
           </div>
           <Table columns={columns} dataSource={data} />
-            {user?.role === ROLES.ADMIN?
+            {user?.role !== ROLES.STUDENT?
             
           <Tooltip title="Add Timetable">
             <Button
