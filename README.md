@@ -14,27 +14,30 @@
 
 - Project Description.
 
-  Purpose of the application.
-  developed a Learning Management System for a small institute.
-  Learning Management System is the most reliable way to deliver the lecture materials to the students because of the current pandemic situation.
+  - Purpose of the application.
+
+    developed a Learning Management System for a small institute.
+    Learning Management System is the most reliable way to deliver the lecture materials to the students because of the current pandemic situation.
 
 - Technologies
 
-  Used Technologies
-  Frontend - HTML, css, Ant,React js with redux-thunk
-  Backend - Node js with express
-  Database - MongoDB
+  - Used Technologies
+
+        * Frontend - HTML, css, Ant,React js with redux-thunk
+        * Backend - Node js with express
+        * Database - MongoDB
 
 - How to get started with your Application
 
-  Prerequisites
-  1.To Clone the project git need to be installed
-  2.Need the latest version of Node installed
-  3.Used visual studio code as the code editor
-  4.Need to create a MongoDB cluster in order to connect the database
+  - Prerequisites
 
-  Procedure of setting of prerequisites and the run the project
-  1.Get the clone or the zip file from the main branch of the repository
-  2.Run npm install in the backend folder and in the frontend folder of the project
-  3.create a .env file in the backend folder of the project and add the MongoDB cluster and jwt-secret to the file
-  4.Run npm Start in both the frontend and backend of project to run the project locally.
+    1. To Clone the project git need to be installed
+    2. Need the latest version of Node installed
+    3. Used visual studio code as the code editor
+    4. Need to create a MongoDB cluster in order to connect the database
+
+  - Procedure of setting of prerequisites and the run the project
+    1. Get the clone or the zip file from the main branch of the repository
+    2. Run npm install in the backend folder and in the frontend folder of the project
+    3. create a .env file in the backend folder of the project and add the MongoDB cluster and jwt-secret to the file
+    4. Run npm Start in both the frontend and backend of project to run the project locally.
